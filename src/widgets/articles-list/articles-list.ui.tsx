@@ -1,17 +1,22 @@
 import {
   Avatar,
-  Box,
   Card,
   CardActionArea,
   CardContent,
   CardHeader,
   CardMedia,
   Divider,
+  IconButton,
 } from '@mui/material';
+
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 const ArticlesList = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-6">
+      <ArticleCard />
+      <ArticleCard />
+      <ArticleCard />
       <ArticleCard />
     </div>
   );
@@ -20,14 +25,19 @@ const ArticlesList = () => {
 function ArticleCard() {
   return (
     <Card sx={{ maxWidth: 800, boxShadow: 'none' }}>
-      <CardHeader
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
+      <div className="flex justify-between items-center bg-slate-100">
+        <CardHeader
+          avatar={<Avatar aria-label="recipe">R</Avatar>}
+          title="Shrimp and Chorizo Paella"
+          subheader="September 14, 2016"
+        />
+        <IconButton style={{ color: 'gray' }} color="inherit">
+          <BookmarkAddIcon />
+        </IconButton>
+      </div>
       <Divider component="div" className="bg-zinc-400" />
       <CardActionArea>
-        <Box className="flex justify-between mt-3">
+        <div className="flex justify-between mt-3">
           <CardContent className="flex flex-col">
             <h4 className="font-bold text-xl pb-3">
               4 Custom React Hooks Every Developer Should Know
@@ -45,7 +55,7 @@ function ArticleCard() {
             image="https://miro.medium.com/v2/da:true/resize:fill:140:140/0*oWPJ3CuWUJcgMOo1"
             alt="Live from space album cover"
           />
-        </Box>
+        </div>
       </CardActionArea>
     </Card>
   );
