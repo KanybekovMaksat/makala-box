@@ -1,4 +1,4 @@
-export function ExplorePage() {
+export function FeedPage() {
   return (
   <div>
     Explroe

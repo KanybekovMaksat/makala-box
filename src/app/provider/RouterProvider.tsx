@@ -4,7 +4,7 @@ import {
   useRouteError,
 } from 'react-router-dom';
 import GenericLayout from '~pages/Layout';
-import { explorePageRoute } from '~pages/explore';
+import { feedPageRoute } from '~pages/feed';
 import { homePageRoute } from '~pages/home';
 
 function BubbleError() {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <GenericLayout />,
-        children: [explorePageRoute, homePageRoute],
+        children: [homePageRoute, feedPageRoute],
       },
     ],
   },
