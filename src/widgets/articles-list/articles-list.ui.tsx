@@ -11,18 +11,7 @@ import {
 
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
-const ArticlesList = () => {
-  return (
-    <div className="flex flex-col gap-6">
-      <ArticleCard />
-      <ArticleCard />
-      <ArticleCard />
-      <ArticleCard />
-    </div>
-  );
-};
-
-function ArticleCard() {
+export function ArticleCard() {
   return (
     <Card sx={{ maxWidth: 800, boxShadow: 'none' }}>
       <div className="flex justify-between items-center bg-slate-100">
@@ -61,4 +50,12 @@ function ArticleCard() {
   );
 }
 
-export { ArticlesList };
+export default function ArticlesList() {
+  return (
+    <div className="flex flex-col items-center mt-40 gap-5">
+      <ArticleCard />
+      <ArticleCard />
+      <ArticleCard />
+    </div>
+  );
+}

@@ -6,6 +6,9 @@ export const pathKeys = {
   explore() {
     return pathKeys.root.concat('explore/');
   },
+  home(){
+    return pathKeys.root;
+  },
   page404() {
     return pathKeys.root.concat('404/');
   },

@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function TopBar() {
+export function TopBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -136,4 +136,3 @@ function TopBar() {
   );
 }
 
-export { TopBar };
