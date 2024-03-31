@@ -4,9 +4,9 @@ export const pathKeys = {
     return pathKeys.root.concat('login/');
   },
   explore() {
-    return pathKeys.root.concat('explore/');
+    return pathKeys.root.concat('feed/');
   },
-  home(){
+  home() {
     return pathKeys.root;
   },
   page404() {

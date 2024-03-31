@@ -1,138 +1,178 @@
 import { useState } from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import {
   AppBar,
   Box,
   Toolbar,
   IconButton,
-  InputBase,
   MenuItem,
   Menu,
+  Container,
+  Typography,
+  Tooltip,
+  Avatar,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Link, useNavigate } from 'react-router-dom';
+import { pathKeys } from '~shared/lib/react-router';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: theme.spacing(3),
-  marginRight: theme.spacing(2),
-  width: 'auto',
-}));
+const pages = {
+  feed: 'Лента',
+  favorites: 'Избранные',
+  news: 'Новости',
+};
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '25ch',
-  },
-}));
+const settings = ['Профиль', 'Выйти'];
 
 export function TopBar() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const isMenuOpen = Boolean(anchorEl);
+  const navigate = useNavigate();
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleNavigateToPage = (pageName: string) => {
+    const path = `/${pageName.toLowerCase()}`;
+    navigate(path);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <>
       <AppBar
         position="fixed"
+        sx={{ boxShadow: 'none', background: '#00443c', color: 'white' }}
         color="inherit"
-        style={{ color: 'white', background: 'teal' }}
       >
-        <Toolbar>
-          <h2 className="font-bold text-xl">Makala Box</h2>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <NewspaperIcon sx={{ mr: 1 }} />
+              <Link to={pathKeys.home()} className="font-bold text-xl">
+                Makala Box
+              </Link>
+            </Box>
 
-          <Search sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Поиск..."
-              inputProps={{ 'aria-label': 'search' }}
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {Object.keys(pages).map((pageKey) => (
+                  <MenuItem
+                    key={pageKey}
+                    onClick={() => {
+                      handleNavigateToPage(pageKey);
+                      handleCloseNavMenu();
+                    }}
+                  >
+                    <Typography textAlign="center">{pages[pageKey]}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <NewspaperIcon
+              sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
             />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+            <Typography
+              variant="h5"
+              noWrap
+              component="h2"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
             >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton size="large" color="inherit" aria-label="explore">
-              <SearchIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+              Makala Box
+            </Typography>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+                gap: 5,
+                ml: 3,
+              }}
             >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
+              {Object.keys(pages).map((pageKey) => (
+                <Link className="font-bold" to={pageKey}>
+                  {pages[pageKey]}
+                </Link>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar>
-      {renderMenu}
-    </Box>
+    </>
   );
 }
-
