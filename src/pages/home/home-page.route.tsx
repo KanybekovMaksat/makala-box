@@ -1,5 +1,4 @@
-// import { createElement } from 'react';
-// import { pathKeys } from '~shared/lib/react-router';
+
 import { RouteObject } from 'react-router-dom';
 import { HomePage } from './home-page.ui';
 import { createElement } from 'react';

@@ -3,9 +3,10 @@ import {
   createBrowserRouter,
   useRouteError,
 } from 'react-router-dom';
-import GenericLayout from '~pages/Layout';
+import GenericLayout from '~pages/layout';
 import { feedPageRoute } from '~pages/feed';
 import { homePageRoute } from '~pages/home';
+import { favoritesPageRoute } from '~pages/favorites';
 
 function BubbleError() {
   const error = useRouteError();
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <GenericLayout />,
-        children: [homePageRoute, feedPageRoute],
+        children: [homePageRoute, feedPageRoute, favoritesPageRoute],
       },
     ],
   },

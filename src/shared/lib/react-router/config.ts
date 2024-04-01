@@ -3,8 +3,11 @@ export const pathKeys = {
   login() {
     return pathKeys.root.concat('login/');
   },
-  explore() {
+  feed() {
     return pathKeys.root.concat('feed/');
+  },
+  favorites() {
+    return pathKeys.root.concat('favorites/');
   },
   home() {
     return pathKeys.root;

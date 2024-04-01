@@ -4,6 +4,6 @@ import { pathKeys } from '~shared/lib/react-router';
 import { FeedPage } from './feed-page.ui';
 
 export const feedPageRoute: RouteObject = {
-  path: pathKeys.explore(),
-  element: createElement(FeedPage)
+  path: pathKeys.feed(),
+  element: createElement(FeedPage),
 };
