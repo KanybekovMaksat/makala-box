@@ -19,7 +19,6 @@ import { pathKeys } from '~shared/lib/react-router';
 const pages = {
   feed: 'Лента',
   favorites: 'Избранные',
-  news: 'Новости',
 };
 
 const settings = ['Профиль', 'Выйти'];

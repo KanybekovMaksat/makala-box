@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { Footer } from '~widgets/footer';
 import { TopBar } from '~widgets/top-bar';
 
 const GenericLayout = () => {
@@ -6,6 +7,7 @@ const GenericLayout = () => {
     <>
       <TopBar />
       <Outlet />
+      <Footer />
     </>
   );
 };

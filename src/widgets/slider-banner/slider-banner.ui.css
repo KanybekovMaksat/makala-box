@@ -1,0 +1,30 @@
+.slider-banner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.slider-banner img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: 1 1;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+.slider-banner .swiper-pagination-bullet {
+  width: 15px;
+  height: 6px;
+  display: inline-block;
+  background: #0c1672;
+  margin: 0 5px;
+  border-radius: 20px;
+  transition: opacity 0.5s, background-color 0.5s, width 0.5s;
+  transition-delay: 0.5s, 0.5s, 0s;
+}
+.swiper-pagination-clickable .swiper-pagination-bullet {
+  cursor: pointer;
+}
+.slider-banner .swiper-pagination-bullet-active {
+  background: #028d53;
+  width: 45px;
+  transition-delay: 0s;
+}

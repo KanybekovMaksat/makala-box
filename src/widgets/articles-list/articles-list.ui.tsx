@@ -93,7 +93,7 @@ export function ArticleCard() {
 
 export default function ArticlesList() {
   return (
-    <div className="flex flex-col items-center mt-40 gap-5">
+    <div className="flex flex-col items-center  gap-5">
       <ArticleCard />
       <ArticleCard />
       <ArticleCard />
