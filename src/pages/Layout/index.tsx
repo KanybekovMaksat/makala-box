@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import { Footer } from '~widgets/footer';
-import { TopBar } from '~widgets/top-bar';
+import { GuestBar } from '~widgets/guest-bar';
 
 const GenericLayout = () => {
   return (
     <>
-      <TopBar />
+      <GuestBar />
       <Outlet />
       <Footer />
     </>
