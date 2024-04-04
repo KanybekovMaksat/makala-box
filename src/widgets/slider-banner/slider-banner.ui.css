@@ -1,20 +1,22 @@
 .slider-banner {
-  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
 }
 .slider-banner img {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   object-position: 1 1;
   border-radius: 5px;
   margin-bottom: 30px;
+  filter: contrast(100%) brightness(90%) saturate(180%);
 }
+
 .slider-banner .swiper-pagination-bullet {
   width: 15px;
   height: 6px;
   display: inline-block;
-  background: #0c1672;
+  background: #444444;
   margin: 0 5px;
   border-radius: 20px;
   transition: opacity 0.5s, background-color 0.5s, width 0.5s;
@@ -24,7 +26,7 @@
   cursor: pointer;
 }
 .slider-banner .swiper-pagination-bullet-active {
-  background: #028d53;
+  background: #686868;
   width: 45px;
   transition-delay: 0s;
 }

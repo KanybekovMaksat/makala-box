@@ -1,8 +1,5 @@
 import { Box } from '@mui/material';
-import ArticlesList from '~widgets/articles-list/articles-list.ui';
-
-
-
+import { ArticlesList } from '~widgets/articles-list';
 
 export function FeedPage() {
   return (

@@ -1,23 +1,44 @@
+import { Container } from '@mui/material';
+
 import InstagramIcon from '@mui/icons-material/Instagram';
 import EmailIcon from '@mui/icons-material/Email';
+import TelegramIcon from '@mui/icons-material/Telegram';
 
 export function Footer() {
   return (
-    <footer className="flex justify-between bg-slate-700 px-20 py-7 mt-20 text-white">
-      <p>© 2024–{new Date().getFullYear()}, Makala Box</p>
-      <p>Legacy from Usta Soft</p>
-      <ul className="flex gap-5">
-        <li>
-          <a href="">
-            <InstagramIcon />
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <EmailIcon />
-          </a>
-        </li>
-      </ul>
+    <footer className="bg-zinc-100">
+      <Container
+        maxWidth="lg"
+        sx={{
+          p: 3,
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div>
+          <p className="font-bold">
+            © 2024–{new Date().getFullYear()}, Comtehno
+          </p>
+          <p className="text-sm font-semibold">Legacy by Usta Soft</p>
+        </div>
+        <ul className="flex gap-5">
+          <li>
+            <a href="">
+              <InstagramIcon />
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <EmailIcon />
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <TelegramIcon />
+            </a>
+          </li>
+        </ul>
+      </Container>
     </footer>
   );
 }
