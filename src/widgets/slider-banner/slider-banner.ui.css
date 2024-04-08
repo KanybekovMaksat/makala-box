@@ -1,0 +1,61 @@
+.slider-banner {
+  width: 65%;
+}
+.slider-banner img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  object-position: 1 1;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  filter: contrast(100%) brightness(90%) saturate(180%);
+}
+
+.slider-banner .swiper-pagination-bullet {
+  width: 15px;
+  height: 6px;
+  display: inline-block;
+  background: #444444;
+  margin: 0 5px;
+  border-radius: 20px;
+  transition: opacity 0.5s, background-color 0.5s, width 0.5s;
+  transition-delay: 0.5s, 0.5s, 0s;
+}
+.swiper-pagination-clickable .swiper-pagination-bullet {
+  cursor: pointer;
+}
+.slider-banner .swiper-pagination-bullet-active {
+  background: #686868;
+  width: 45px;
+  transition-delay: 0s;
+}
+
+
+.slider-card{
+  position: relative;
+}
+
+
+.slider-card::after {
+  border-radius: 4px;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%; 
+  transition: all 0.5s ease-in-out;
+  background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(2, 2, 2, 0.8) 55%, rgb(6, 6, 6) 100%)!important; /* Градиент от прозрачного до черного с 70% прозрачности */
+}
+
+.slider-card:hover::after {
+  background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(2,2, 2, 0.9) 55%, rgba(6, 6, 6) 100%)!important; /* Градиент от прозрачного до черного с 70% прозрачности */
+}
+
+.slider-card h3 {
+  position: relative;
+  top: 60%;
+  z-index: 1; 
+  color: white;
+  padding: 20px; 
+}
