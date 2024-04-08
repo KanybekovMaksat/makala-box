@@ -1,5 +1,3 @@
-import { Box } from '@mui/material';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 
@@ -7,10 +5,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './slider-banner.ui.css';
 
-
 export function SliderBanner() {
   return (
-    <Box className="slider-banner">
+    <div className="slider-banner">
       <Swiper
         modules={[Pagination, EffectFade, Autoplay]}
         spaceBetween={15}
@@ -47,6 +44,6 @@ export function SliderBanner() {
           />
         </SwiperSlide>
       </Swiper>
-    </Box>
+    </div>
   );
 }

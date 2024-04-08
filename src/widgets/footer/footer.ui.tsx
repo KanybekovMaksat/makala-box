@@ -6,15 +6,8 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 
 export function Footer() {
   return (
-    <footer className="bg-zinc-100">
-      <Container
-        maxWidth="lg"
-        sx={{
-          p: 3,
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+    <footer className="border-t-2 border-pc-200">
+      <Container maxWidth="lg" className="py-6 flex justify-between ">
         <div>
           <p className="font-bold">
             © 2024–{new Date().getFullYear()}, Comtehno

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   AppBar,
-  Box,
   Toolbar,
   IconButton,
   MenuItem,
@@ -11,12 +10,15 @@ import {
   Tooltip,
   Avatar,
 } from '@mui/material';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import MenuIcon from '@mui/icons-material/Menu';
+
 import { Link, useNavigate } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
+
+
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SearchIcon from '@mui/icons-material/Search';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const pages = {
   feed: 'Лента',
@@ -54,19 +56,19 @@ export function TopBar() {
   return (
     <AppBar
       position="fixed"
-      sx={{ boxShadow: 'none', borderBottom: '1px solid  #EFEFEF' }}
+      className="shadow-none border-b-2 border-sc-100"
       color="inherit"
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters className="flex justify-between">
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <NewspaperIcon sx={{ mr: 1 }} />
+          <div className="hidden md:flex">
+            <NewspaperIcon className="mr-1" />
             <Link to={pathKeys.home()} className="font-bold text-xl">
               Makala Box
             </Link>
-          </Box>
+          </div>
 
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <div className="flex md:hidden">
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -91,9 +93,7 @@ export function TopBar() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+              className="block md:hidden"
             >
               {Object.keys(pages).map((pageKey) => (
                 <MenuItem
@@ -107,22 +107,16 @@ export function TopBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+          </div>
+          <div className="flex md:hidden">
             <NewspaperIcon />
-            <Link to={pathKeys.home()} className=" font-bold text-xl">
+            <Link to={pathKeys.home()} className="font-bold text-xl">
               Makala Box
             </Link>
-          </Box>
+          </div>
 
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                alignItems: 'center',
-                ml: 3,
-              }}
-            >
+          <div className="flex gap-2">
+            <div className="hidden md:flex items-center ml-3">
               <Link to={pathKeys.favorites()}>
                 <IconButton aria-label="navigate to favorites article page">
                   <BookmarkAddedIcon />
@@ -133,8 +127,8 @@ export function TopBar() {
                   <SearchIcon />
                 </IconButton>
               </Link>
-            </Box>
-            <Box>
+            </div>
+            <div>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -162,8 +156,8 @@ export function TopBar() {
                   </MenuItem>
                 ))}
               </Menu>
-            </Box>
-          </Box>
+            </div>
+          </div>
         </Toolbar>
       </Container>
     </AppBar>

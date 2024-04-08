@@ -16,30 +16,33 @@ export function GuestBar() {
   return (
     <AppBar
       position="fixed"
-      sx={{ boxShadow: 'none', borderBottom: '1px solid  #EFEFEF' }}
       color="inherit"
+      className="bg-pc-100 shadow-none border-b-1 border-sc-100"
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters className="flex justify-between">
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <NewspaperIcon sx={{ mr: 1 }} />
-            <Link to={pathKeys.home()} className="font-bold text-xl">
+          <Box className="flex items-center">
+            <NewspaperIcon className="mr-1 text-pc-500" />
+            <Link
+              to={pathKeys.home()}
+              className="font-bold text-xl text-pc-500"
+            >
               Makala Box
             </Link>
           </Box>
-          <Box
-            sx={{ display: 'flex', gap: 1, justifyContent: 'space-between' }}
-          >
+          <Box className="flex items-center gap-1">
             <Link to={pathKeys.feed()}>
               <IconButton
-                sx={{ display: 'flex' }}
-                aria-label="navigate to article  page"
+                className="hidden md:flex"
+                aria-label="navigate to article page"
               >
                 <SearchIcon />
               </IconButton>
             </Link>
-
-            <Button sx={{ color: 'gray' }} color="inherit" variant="outlined">
+            <Button
+              variant="outlined"
+              className="font-serif border-pc-400 text-pc-500 "
+            >
               Авторизоваться
             </Button>
           </Box>
