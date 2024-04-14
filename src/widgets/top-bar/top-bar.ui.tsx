@@ -14,7 +14,6 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
 
-
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SearchIcon from '@mui/icons-material/Search';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -129,7 +128,7 @@ export function TopBar() {
               </Link>
             </div>
             <div>
-              <Tooltip title="Open settings">
+              <Tooltip title="Открыть профиль">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>

@@ -7,12 +7,13 @@ import './slider-banner.ui.css';
 
 export function SliderBanner() {
   return (
-    <div className="flex gap-10 max-h-[450px]">
-      <div className="slider-banner">
+    <div className="flex flex-col md:flex-row gap-5  md:max-h-[450px]">
+      <div className="slider-banner md:w-[65%]">
         <Swiper
           modules={[Pagination, EffectFade, Autoplay]}
           spaceBetween={15}
           slidesPerView={1}
+          loop
           autoplay={{
             delay: 1500,
             disableOnInteraction: false,
@@ -21,57 +22,67 @@ export function SliderBanner() {
           pagination={{ clickable: true }}
         >
           <SwiperSlide>
-          <div
-          className=" bg-center bg-cover rounded"
-          style={{
-            height:"450px" ,
-            backgroundImage: `url('https://the-tech.kz/wp-content/uploads/2024/04/378516037_338027448658224_8911445700177030421_n.jpg')`,
-          }}
-        >
-          <h3 className='text-pc-100 font-bold'>
-          4 Custom React Hooks Every Developer Should Know
-          </h3>
-        </div>
+            <div
+              className="swiper-card rounded p-1"
+              style={{
+                backgroundSize: 'cover',
+                height: '450px',
+                backgroundImage: `url('https://i.pinimg.com/564x/a9/a6/92/a9a692e48d3887d66938f26930e412a9.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                Как дизайнеру и любителю технологий жить после Apple Vision Pro
+              </h3>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src="https://i.pinimg.com/564x/f7/a8/9d/f7a89ddb7fc4dfe1dd704f0c51a5b0f5.jpg"
-              alt=""
-            />
+            <div
+              className="swiper-card bg-center bg-cover rounded"
+              style={{
+                height: '450px',
+                backgroundImage: `url('https://habrastorage.org/r/w780/getpro/habr/upload_files/453/128/8f0/4531288f06638490cc72b5a387d92412.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                Трансляция видео посредством P2P-сетей
+              </h3>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src="https://i.pinimg.com/564x/f4/05/e9/f405e94ace11d60ff68176590646eb25.jpg"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://i.pinimg.com/736x/95/2b/5a/952b5a371c5e0e411afaaca340f7ab8d.jpg"
-              alt=""
-            />
+            <div
+              className="swiper-card bg-center bg-cover rounded"
+              style={{
+                height: '450px',
+                backgroundImage: `url('https://habrastorage.org/r/w780/getpro/habr/upload_files/840/4b8/7ce/8404b87ced286d27eda1425c08e022ab.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                История геймдизайна от классических игр до современных
+                технологий
+              </h3>
+            </div>
           </SwiperSlide>
         </Swiper>
       </div>
-      <div className='flex flex-col justify-between'>
+      <div className="flex flex-col justify-between gap-2 md:gap-0">
         <div
-          className="h-[45%] bg-center bg-cover rounded slider-card"
+          className="h-[200px] md:h-[48%] bg-center bg-cover rounded slider-card"
           style={{
-            backgroundImage: `url('https://the-tech.kz/wp-content/uploads/2024/04/378516037_338027448658224_8911445700177030421_n.jpg')`,
+            backgroundImage: `url('https://i.pinimg.com/564x/02/58/db/0258dbaa164be3099767cc7fa830e604.jpg')`,
           }}
         >
-          <h3 className='text-pc-100 font-bold'>
-          4 Custom React Hooks Every Developer Should Know
+          <h3 className="text-pc-100 font-bold">
+            4 Кастомных React хука которые должен знать каждый Developer
           </h3>
         </div>
         <div
-          className="h-[45%] bg-center bg-cover rounded slider-card"
+          className="h-[200px] md:h-[48%] bg-center bg-cover rounded slider-card"
           style={{
-            backgroundImage: `url('https://the-tech.kz/wp-content/uploads/2024/04/378516037_338027448658224_8911445700177030421_n.jpg')`,
+            backgroundImage: `url('https://i.pinimg.com/564x/7b/fb/98/7bfb98ac655ba6b6e912211808c516f2.jpg')`,
           }}
         >
-          <h3 className='text-pc-100 font-bold'>
-          4 Custom React Hooks Every Developer Should Know
+          <h3 className="text-pc-100 font-bold">
+            12 Лайвхаков как учиться эффективно
           </h3>
         </div>
       </div>

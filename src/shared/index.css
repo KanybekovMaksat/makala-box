@@ -1,14 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background: #f9f9f9;
+  background: #009dff0e;
   overflow-x: hidden;
 }
 
+.bn-container[data-changing-font-demo] .bn-editor * {
+  font-family: 'Golos Text', sans-serif;
+}
+.bn-container[data-changing-font-demo] .bn-editor{
+  padding: 0;
+}
+.bn-container[data-changing-font-demo]  .bn-default-styles{
+  font-size: 20px;
+}
+.bn-container[data-changing-font-demo] .bn-editor .bn-image-and-caption-wrapper {
+  margin: 15px 0px;
+}
+.bn-container[data-changing-font-demo] .bn-editor .bn-block-outer:not([data-prev-type])>.bn-block>.bn-block-content[data-content-type="heading"]{
+  font-size: 1.5em;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
@@ -23,11 +38,12 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #0000003e;
 }
-.card,.title{
+.card,
+.title {
   transition: 0.2s ease-out;
   cursor: pointer;
 }
 
-.card:hover .title{
-  color: #2C9D62;
+.card:hover .title {
+  color: #2c9d62;
 }
