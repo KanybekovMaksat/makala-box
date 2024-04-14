@@ -1,4 +1,4 @@
-import '~shared/index.css';
+import '../theme/index.css';
 import { BrowserRouter } from './RouterProvider';
 import { StyledEngineProvider } from '@mui/material';
 

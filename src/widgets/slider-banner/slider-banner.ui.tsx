@@ -3,7 +3,7 @@ import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import './slider-banner.ui.css';
+import 'swiper/css/effect-fade';
 
 export function SliderBanner() {
   return (
@@ -13,12 +13,14 @@ export function SliderBanner() {
           modules={[Pagination, EffectFade, Autoplay]}
           spaceBetween={15}
           slidesPerView={1}
-          loop
+          loop={true}
           autoplay={{
-            delay: 1500,
+            delay: 2000,
             disableOnInteraction: false,
           }}
           effect="fade"
+          fadeEffect={{ crossFade: true }}
+          centeredSlides
           pagination={{ clickable: true }}
         >
           <SwiperSlide>

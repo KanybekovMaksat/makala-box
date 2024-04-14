@@ -60,13 +60,12 @@ export function TopBar() {
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters className="flex justify-between">
-          <div className="hidden md:flex">
+          
+            <Link to={pathKeys.home()} className="hidden md:flex font-bold text-xl hover:text-second-100 duration-300">
             <NewspaperIcon className="mr-1" />
-            <Link to={pathKeys.home()} className="font-bold text-xl">
               Makala Box
             </Link>
-          </div>
-
+      
           <div className="flex md:hidden">
             <IconButton
               size="large"
@@ -118,12 +117,12 @@ export function TopBar() {
             <div className="hidden md:flex items-center ml-3">
               <Link to={pathKeys.favorites()}>
                 <IconButton aria-label="navigate to favorites article page">
-                  <BookmarkAddedIcon />
+                  <BookmarkAddedIcon className='hover:text-second-100' />
                 </IconButton>
               </Link>
               <Link to={pathKeys.feed()}>
                 <IconButton aria-label="navigate to article  page">
-                  <SearchIcon />
+                  <SearchIcon className='hover:text-second-100' />
                 </IconButton>
               </Link>
             </div>

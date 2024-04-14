@@ -47,7 +47,7 @@ export function FilterSide() {
       <div className="mt-4">
         <FilterSelect />
       </div>
-      <Button className="w-full bg-[#2C9D62]" variant="contained">
+      <Button className="w-full bg-second-100" variant="contained">
         Применить
       </Button>
     </div>

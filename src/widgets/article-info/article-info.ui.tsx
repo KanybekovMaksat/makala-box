@@ -1,10 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Chip, IconButton, Tooltip } from '@mui/material';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import ShareIcon from '@mui/icons-material/Share';
+import { Chip,  Tooltip } from '@mui/material';
 
 export function ArticleInfo() {
   return (
@@ -33,26 +30,6 @@ export function ArticleInfo() {
             variant="outlined"
             className="text-pc-400 font-bold"
           />
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="flex items-center ">
-            <Tooltip title="Нравится">
-              <IconButton aria-label="нравится">
-                <ThumbUpIcon />
-              </IconButton>
-            </Tooltip>
-            <p className="text-sm text-pc-400">66</p>
-          </div>
-          <Tooltip title="В Избранное">
-            <IconButton aria-label="В Избранное">
-              <BookmarkAddIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Поделиться">
-            <IconButton aria-label="поделиться">
-              <ShareIcon />
-            </IconButton>
-          </Tooltip>
         </div>
       </div>
       <img

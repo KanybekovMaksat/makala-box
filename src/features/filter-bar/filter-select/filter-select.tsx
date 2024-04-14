@@ -57,7 +57,7 @@ export function FilterSelect() {
             onClick={() => handleCategorySelect(name)}
             className={`overflow-hidden max-w-[300px] duration-300 flex justify-between p-4 border-b border-solid  ${
               isCategorySelected(name)
-                ? 'bg-[#2C9D62] text-pc-100'
+                ? 'bg-second-100/80 text-pc-100'
                 : 'bg-white text-pc-400'
             }`}
           >

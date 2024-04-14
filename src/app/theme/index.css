@@ -1,4 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #009dff0e;
+  overflow-x: hidden;
+}
+
+/* Scroll */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0000003e;
+}
+/* Scroll */
+
+/* Blocknote viewer */
+.bn-container[data-changing-font-demo] .bn-editor * {
+  font-family: 'Golos Text', sans-serif;
+}
+.bn-container[data-changing-font-demo] .bn-editor {
+  padding: 0;
+}
+.bn-container[data-changing-font-demo] .bn-default-styles {
+  font-size: 20px;
+}
+.bn-container[data-changing-font-demo]
+  .bn-editor
+  .bn-image-and-caption-wrapper {
+  margin: 15px 0px;
+}
+.bn-container[data-changing-font-demo]
+  .bn-editor
+  .bn-block-outer:not([data-prev-type])
+  > .bn-block
+  > .bn-block-content[data-content-type='heading'] {
+  font-size: 1.5em;
+}
+/* Blocknote viewer */
+
+/* Article Card */
+
+.card-info:hover .title {
+  color: #0a85d1;
+}
+
+.card-header h5::after {
+  content: '↗';
+  opacity: 0;
+  color: #0a85d1;
+  transform: translateY(0px) translateX(0px);
+  transition: transform 0.6s, opacity 0.3s;
+}
+.card-header:hover h5::after {
+  opacity: 1;
+  transform: translateY(-2px) translateX(2px); 
+}
+.card-header:hover h5 {
+  color: #0a85d1;
+}
+
+.card-header:hover .card-avatar {
+  border: 2px solid #0a85d1 !important;
+}
+
+/* Article Card */
+
+/* Slider */
 .swiper-card {
   filter: contrast(100%) brightness(90%) saturate(180%);
 }
@@ -41,7 +117,7 @@
   cursor: pointer;
 }
 .slider-banner .swiper-pagination-bullet-active {
-  background: #2C9D62;
+  background: #0a85d1;
   width: 45px;
   transition-delay: 0s;
 }
@@ -66,7 +142,7 @@
     rgba(11, 11, 11, 0) 0%,
     rgba(2, 2, 2, 0.8) 55%,
     rgb(6, 6, 6) 100%
-  ) !important; /* Градиент от прозрачного до черного с 70% прозрачности */
+  ) !important;
 }
 
 .slider-card:hover::after {
@@ -75,7 +151,7 @@
     rgba(11, 11, 11, 0) 0%,
     rgba(2, 2, 2, 0.9) 55%,
     rgba(6, 6, 6) 100%
-  ) !important; /* Градиент от прозрачного до черного с 70% прозрачности */
+  ) !important;
 }
 
 .slider-card h3 {
@@ -85,3 +161,4 @@
   color: white;
   padding: 20px;
 }
+/* Slider */

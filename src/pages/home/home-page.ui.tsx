@@ -3,13 +3,14 @@ import { ArticlesList } from '~widgets/articles-list';
 import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { IntroBlock } from '~widgets/intro-block';
 
 export function HomePage() {
   return (
     <div className="max-w-[1000px] mx-5 md:mx-auto my-24">
+      <IntroBlock/>
       <SliderBanner />
-
-      <h2 className="my-3 text-2xl font-bold">Популярные статьи </h2>
+      <h2 className="mt-14 mb-5 text-2xl font-bold">Популярные статьи</h2>
       <ArticlesList />
       <Link
         className="flex justify-end underline text-pc-500 my-3"
