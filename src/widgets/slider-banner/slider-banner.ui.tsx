@@ -19,8 +19,6 @@ export function SliderBanner() {
             disableOnInteraction: false,
           }}
           effect="fade"
-          fadeEffect={{ crossFade: true }}
-          centeredSlides
           pagination={{ clickable: true }}
         >
           <SwiperSlide>
