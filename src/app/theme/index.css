@@ -62,7 +62,7 @@ body {
 }
 .card-header:hover h5::after {
   opacity: 1;
-  transform: translateY(-2px) translateX(2px); 
+  transform: translateY(-2px) translateX(2px);
 }
 .card-header:hover h5 {
   color: #0a85d1;

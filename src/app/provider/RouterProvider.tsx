@@ -8,6 +8,7 @@ import { feedPageRoute } from '~pages/feed';
 import { homePageRoute } from '~pages/home';
 import { favoritesPageRoute } from '~pages/favorites';
 import { articlePageRoute } from '~pages/article';
+import { registerPageRoute } from '~pages/register';
 
 
 function BubbleError() {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <GenericLayout />,
-        children: [homePageRoute, feedPageRoute, favoritesPageRoute, articlePageRoute],
+        children: [homePageRoute, feedPageRoute, favoritesPageRoute, articlePageRoute, registerPageRoute],
       },
     ],
   }

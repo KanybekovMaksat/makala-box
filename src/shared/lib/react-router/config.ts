@@ -3,6 +3,12 @@ export const pathKeys = {
   login() {
     return pathKeys.root.concat('login/');
   },
+  register() {
+    return pathKeys.root.concat('register/');
+  },
+  verify() {
+    return pathKeys.root.concat('/otp/verify');
+  },
   feed() {
     return pathKeys.root.concat('feed/');
   },
