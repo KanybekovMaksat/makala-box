@@ -10,6 +10,7 @@ import { favoritesPageRoute } from '~pages/favorites';
 import { articlePageRoute } from '~pages/article';
 import { registerPageRoute } from '~pages/register';
 import { loginPageRoute } from '~pages/login';
+import { editorPageRoute } from '~pages/editor';
 
 function BubbleError() {
   const error = useRouteError();
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
           articlePageRoute,
           registerPageRoute,
           loginPageRoute,
+          editorPageRoute,
         ],
       },
     ],

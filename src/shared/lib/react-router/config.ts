@@ -1,10 +1,13 @@
 export const pathKeys = {
   root: '/',
-  login() {
-    return pathKeys.root.concat('login/');
+  home() {
+    return pathKeys.root;
   },
   register() {
     return pathKeys.root.concat('register/');
+  },
+  login() {
+    return pathKeys.root.concat('login/');
   },
   verify() {
     return pathKeys.root.concat('/otp/verify');
@@ -15,15 +18,17 @@ export const pathKeys = {
   favorites() {
     return pathKeys.root.concat('favorites/');
   },
-  home() {
-    return pathKeys.root;
-  },
   page404() {
     return pathKeys.root.concat('404/');
   },
   article: {
     root() {
       return pathKeys.root.concat('article/');
+    },
+  },
+  editor: {
+    root() {
+      return pathKeys.root.concat('sandbox/');
     },
   },
   profile: {

@@ -46,7 +46,40 @@ body {
   font-size: 1.5em;
 }
 /* Blocknote viewer */
+.bn-container[data-editor-mode] .bn-editor *{
+  font-family: 'Golos Text', sans-serif; 
+}
+.bn-container[data-editor-mode] .bn-editor{
+  padding:20px ;
+  margin: 20px 0px;
+  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.206);
+}
+.slash-menu {
+  z-index: 9999;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  top: 8px;
+}
 
+.slash-menu-item {
+  background-color: white;
+  border-radius: 2px;
+
+  cursor: pointer;
+
+
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.slash-menu-item:hover, .slash-menu-item.selected {
+  background-color: lightgray;
+}
 /* Article Card */
 
 .card-info:hover .title {
