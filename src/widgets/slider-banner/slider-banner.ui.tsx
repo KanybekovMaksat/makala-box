@@ -15,7 +15,7 @@ export function SliderBanner() {
           slidesPerView={1}
           loop={true}
           autoplay={{
-            delay: 2000,
+            delay: 5000,
             disableOnInteraction: false,
           }}
           effect="fade"

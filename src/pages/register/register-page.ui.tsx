@@ -111,7 +111,7 @@ export function RegisterPage() {
                 Зарегистрироваться
             </Button>
             <p className='flex justify-center gap-1'>
-            Уже есть аккаунт?<Link className='underline text-second-100' to={pathKeys.root}>Войти</Link>
+            Уже есть аккаунт?<Link className='underline text-second-100' to={pathKeys.login()}>Войти</Link>
             </p>
             
           </Form>

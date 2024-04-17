@@ -9,7 +9,7 @@ import { homePageRoute } from '~pages/home';
 import { favoritesPageRoute } from '~pages/favorites';
 import { articlePageRoute } from '~pages/article';
 import { registerPageRoute } from '~pages/register';
-
+import { loginPageRoute } from '~pages/login';
 
 function BubbleError() {
   const error = useRouteError();
@@ -17,21 +17,25 @@ function BubbleError() {
   return null;
 }
 
-
-
 const router = createBrowserRouter([
   {
     errorElement: <BubbleError />,
     children: [
       {
         element: <GenericLayout />,
-        children: [homePageRoute, feedPageRoute, favoritesPageRoute, articlePageRoute, registerPageRoute],
+        children: [
+          homePageRoute,
+          feedPageRoute,
+          favoritesPageRoute,
+          articlePageRoute,
+          registerPageRoute,
+          loginPageRoute,
+        ],
       },
     ],
-  }
+  },
 ]);
 
 export function BrowserRouter() {
-
-  return <RouterProvider  router={router} />;
+  return <RouterProvider router={router} />;
 }
