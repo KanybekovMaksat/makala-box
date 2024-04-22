@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CreateArticle } from '~widgets/create-article';
 import { Container, Stepper, Step, StepLabel, Button } from '@mui/material';
-import { sessionQueries } from '~entities/session';
+import { userQueries } from '~entities/user';
 import { pathKeys } from '~shared/lib/react-router';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ interface StepperViewProps {
 const steps = ['Оформление статьи', 'Составление статьи', 'Публикация статьи'];
 
 export function EditorPage() {
-  const { data: userData } = sessionQueries.useloginUserQuery();
+  const { data: userData } = userQueries.useLoginUserQuery();
 
   const role = userData?.data?.role || '';
 

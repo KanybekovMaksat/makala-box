@@ -3,7 +3,7 @@ import {
   LoginUserDtoSchema,
   TokensDtoSchema,
   UserDtoSchema,
-} from './session.contracts';
+} from './user.contracts';
 
 export type UserDtoSchema = z.infer<typeof UserDtoSchema>;
 export type LoginUserDto = z.infer<typeof LoginUserDtoSchema>;

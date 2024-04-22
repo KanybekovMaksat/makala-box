@@ -46,11 +46,11 @@ body {
   font-size: 1.5em;
 }
 /* Blocknote viewer */
-.bn-container[data-editor-mode] .bn-editor *{
-  font-family: 'Golos Text', sans-serif; 
+.bn-container[data-editor-mode] .bn-editor * {
+  font-family: 'Golos Text', sans-serif;
 }
-.bn-container[data-editor-mode] .bn-editor{
-  padding:20px ;
+.bn-container[data-editor-mode] .bn-editor {
+  padding: 20px;
   margin: 20px 0px;
   border-radius: 5px;
   border: 1px solid rgba(128, 128, 128, 0.206);
@@ -71,13 +71,13 @@ body {
 
   cursor: pointer;
 
-
   align-items: center;
   display: flex;
   flex-direction: row;
 }
 
-.slash-menu-item:hover, .slash-menu-item.selected {
+.slash-menu-item:hover,
+.slash-menu-item.selected {
   background-color: lightgray;
 }
 /* Article Card */
@@ -196,7 +196,6 @@ body {
 }
 /* Slider */
 
-
-.intro{
+.intro {
   height: 100vh;
 }

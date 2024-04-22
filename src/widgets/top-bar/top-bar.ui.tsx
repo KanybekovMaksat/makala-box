@@ -19,7 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import EditIcon from '@mui/icons-material/Edit';
 import { removeCookie } from 'typescript-cookie';
 import { pathKeys } from '~shared/lib/react-router';
-import { sessionQueries } from '~entities/session';
+import { userQueries } from '~entities/user';
 
 const pages = {
   feed: 'Лента',
@@ -29,12 +29,11 @@ const pages = {
 export function TopBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const { data: userData } = sessionQueries.useloginUserQuery();
+  const { data: userData } = userQueries.useLoginUserQuery();
+  const {
+    data: { firstName = '', lastName = '', role = '', photo = '' } = {},
+  } = userData || {};
 
-  const firstName = userData?.data?.firstName || '';
-  const lastName = userData?.data?.lastName || '';
-  const role = userData?.data?.role || '';
-  const photo = userData?.data?.photo || '';
   const navigate = useNavigate();
 
   const handleNavigateToPage = (pageName: string) => {
@@ -137,7 +136,7 @@ export function TopBar() {
               </Link>
               {role === 'writer' ? (
                 <Button
-                onClick={() => navigate(pathKeys.editor.root())}
+                  onClick={() => navigate(pathKeys.editor.root())}
                   size="small"
                   className=" text-second-100 hover:bg-second-100 hover:text-[white]"
                   variant="outlined"

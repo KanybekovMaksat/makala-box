@@ -1,12 +1,12 @@
 import { Avatar, Container } from '@mui/material';
-import { sessionQueries } from '~entities/session';
+import { userQueries } from '~entities/user';
 
 export function ProfilePage() {
   const {
     data: userData,
     isLoading,
     isError,
-  } = sessionQueries.useloginUserQuery();
+  } = userQueries.useLoginUserQuery();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -18,7 +18,6 @@ export function ProfilePage() {
 
   const { email, firstName, lastName, role, photo } = userData.data;
 
-  
   return (
     <Container maxWidth="lg" className="my-20">
       <div className="w-full mx-auto h-20 bg-[white] border-2 border-sc-100 rounded flex items-center justify-between px-6">
