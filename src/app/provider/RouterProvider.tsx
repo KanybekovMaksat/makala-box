@@ -36,20 +36,6 @@ const router = createBrowserRouter([
         ],
       },
       {
-        element: <GenericLayout />,
-        children: [
-          homePageRoute,
-          feedPageRoute,
-          favoritesPageRoute,
-          articlePageRoute,
-          profilePageRoute,
-        ],
-      },
-      {
-        element: <GenericLayout />,
-        children: [homePageRoute, feedPageRoute],
-      },
-      {
         element: <IntroLayout />,
         children: [registerPageRoute, loginPageRoute],
       },

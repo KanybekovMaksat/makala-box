@@ -9,6 +9,7 @@ import {
   Typography,
   Tooltip,
   Avatar,
+  Button,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
@@ -60,6 +61,8 @@ export function TopBar() {
   const handleLogout = () => {
     removeCookie('access');
     removeCookie('refresh');
+    navigate(`${pathKeys.home()}`);
+    window.location.reload();
   };
 
   return (
@@ -120,17 +123,8 @@ export function TopBar() {
             </Link>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             <div className="hidden md:flex items-center ml-3">
-              {role === 'writer' ? (
-                <Tooltip title="Написать статью">
-                  <Link to={pathKeys.editor.root()}>
-                    <IconButton aria-label="navigate to sandbox">
-                      <EditIcon className="hover:text-second-100" />
-                    </IconButton>
-                  </Link>
-                </Tooltip>
-              ) : null}
               <Link to={pathKeys.favorites()}>
                 <IconButton aria-label="navigate to favorites article page">
                   <BookmarkAddedIcon className="hover:text-second-100" />
@@ -141,6 +135,17 @@ export function TopBar() {
                   <SearchIcon className="hover:text-second-100" />
                 </IconButton>
               </Link>
+              {role === 'writer' ? (
+                <Button
+                onClick={() => navigate(pathKeys.editor.root())}
+                  size="small"
+                  className=" text-second-100 hover:bg-second-100 hover:text-[white]"
+                  variant="outlined"
+                  endIcon={<EditIcon />}
+                >
+                  Написать
+                </Button>
+              ) : null}
             </div>
 
             <div>

@@ -2,23 +2,20 @@ import { Outlet } from 'react-router-dom';
 import { sessionQueries } from '~entities/session';
 import ScrollTop from '~shared/lib/react-router/scroll-top';
 import { Footer } from '~widgets/footer';
+import { GuestBar } from '~widgets/guest-bar';
 import { TopBar } from '~widgets/top-bar';
 
 export function GenericLayout() {
-  const { data: userData, isLoading } = sessionQueries.useloginUserQuery();
-  const { role } = userData.data;
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
+  const { data: userData } = sessionQueries.useloginUserQuery();
   return (
-    <>
-      <ScrollTop />
-      <TopBar />
-      <Outlet />
+    <div className="flex flex-col h-screen">
+      <div className="flex-grow">
+        <ScrollTop />
+        {userData ? <TopBar /> : <GuestBar />}
+        <Outlet />
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

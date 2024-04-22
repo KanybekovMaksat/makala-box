@@ -1,11 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Container,
-  Button,
-} from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
 
@@ -39,12 +32,12 @@ export function GuestBar() {
                 <SearchIcon />
               </IconButton>
             </Link>
-            <Button
-              variant="outlined"
-              className="font-serif border-pc-400 text-pc-500 "
+            <Link
+              to={pathKeys.login()}
+              className="font-serif p-2 rounded border border-pc-400 text-pc-500 "
             >
               Авторизоваться
-            </Button>
+            </Link>
           </Box>
         </Toolbar>
       </Container>

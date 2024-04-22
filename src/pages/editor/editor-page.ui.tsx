@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { CreateArticle } from '~widgets/create-article';
-import { Container, Stepper, Step, StepLabel, Button} from '@mui/material';
+import { Container, Stepper, Step, StepLabel, Button } from '@mui/material';
+import { sessionQueries } from '~entities/session';
+import { pathKeys } from '~shared/lib/react-router';
+import { useNavigate } from 'react-router-dom';
 
 interface StepperViewProps {
   activeStep: number;
@@ -9,6 +12,16 @@ interface StepperViewProps {
 const steps = ['Оформление статьи', 'Составление статьи', 'Публикация статьи'];
 
 export function EditorPage() {
+  const { data: userData } = sessionQueries.useloginUserQuery();
+
+  const role = userData?.data?.role || '';
+
+  const navigate = useNavigate();
+
+  if (role === 'reader') {
+    navigate(pathKeys.home());
+  }
+
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -22,7 +35,7 @@ export function EditorPage() {
   return (
     <div className="my-20">
       <Container maxWidth="lg" className="h-[700px]">
-      <StepperView activeStep={activeStep}/>
+        <StepperView activeStep={activeStep} />
         {activeStep === 0 && (
           <div className="w-full my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
             <div>
@@ -91,4 +104,4 @@ const StepperView: React.FC<StepperViewProps> = ({ activeStep }) => {
       ))}
     </Stepper>
   );
-}
+};
