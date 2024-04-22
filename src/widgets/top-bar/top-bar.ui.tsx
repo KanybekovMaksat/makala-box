@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -10,26 +10,30 @@ import {
   Tooltip,
   Avatar,
 } from '@mui/material';
-
 import { Link, useNavigate } from 'react-router-dom';
-import { pathKeys } from '~shared/lib/react-router';
-
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SearchIcon from '@mui/icons-material/Search';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import MenuIcon from '@mui/icons-material/Menu';
+import EditIcon from '@mui/icons-material/Edit';
+import { removeCookie } from 'typescript-cookie';
+import { pathKeys } from '~shared/lib/react-router';
+import { sessionQueries } from '~entities/session';
 
 const pages = {
   feed: 'Лента',
   favorites: 'Избранные',
 };
 
-const settings = ['Профиль', 'Выйти'];
-
 export function TopBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const { data: userData } = sessionQueries.useloginUserQuery();
 
+  const firstName = userData?.data?.firstName || '';
+  const lastName = userData?.data?.lastName || '';
+  const role = userData?.data?.role || '';
+  const photo = userData?.data?.photo || '';
   const navigate = useNavigate();
 
   const handleNavigateToPage = (pageName: string) => {
@@ -40,6 +44,7 @@ export function TopBar() {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -52,6 +57,11 @@ export function TopBar() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    removeCookie('access');
+    removeCookie('refresh');
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -60,12 +70,14 @@ export function TopBar() {
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters className="flex justify-between">
-          
-            <Link to={pathKeys.home()} className="hidden md:flex font-bold text-xl hover:text-second-100 duration-300">
+          <Link
+            to={pathKeys.home()}
+            className="hidden md:flex font-bold text-xl hover:text-second-100 duration-300"
+          >
             <NewspaperIcon className="mr-1" />
-              Makala Box
-            </Link>
-      
+            Makala Box
+          </Link>
+
           <div className="flex md:hidden">
             <IconButton
               size="large"
@@ -80,15 +92,9 @@ export function TopBar() {
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
               keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
+              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               className="block md:hidden"
@@ -106,6 +112,7 @@ export function TopBar() {
               ))}
             </Menu>
           </div>
+
           <div className="flex md:hidden">
             <NewspaperIcon />
             <Link to={pathKeys.home()} className="font-bold text-xl">
@@ -115,44 +122,47 @@ export function TopBar() {
 
           <div className="flex gap-2">
             <div className="hidden md:flex items-center ml-3">
+              {role === 'writer' ? (
+                <Tooltip title="Написать статью">
+                  <Link to={pathKeys.editor.root()}>
+                    <IconButton aria-label="navigate to sandbox">
+                      <EditIcon className="hover:text-second-100" />
+                    </IconButton>
+                  </Link>
+                </Tooltip>
+              ) : null}
               <Link to={pathKeys.favorites()}>
                 <IconButton aria-label="navigate to favorites article page">
-                  <BookmarkAddedIcon className='hover:text-second-100' />
+                  <BookmarkAddedIcon className="hover:text-second-100" />
                 </IconButton>
               </Link>
               <Link to={pathKeys.feed()}>
-                <IconButton aria-label="navigate to article  page">
-                  <SearchIcon className='hover:text-second-100' />
+                <IconButton aria-label="navigate to article page">
+                  <SearchIcon className="hover:text-second-100" />
                 </IconButton>
               </Link>
             </div>
+
             <div>
               <Tooltip title="Открыть профиль">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={`${firstName} ${lastName}`} src={photo} />
                 </IconButton>
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link to={pathKeys.profile.root()}>Профиль</Link>
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>Выйти</MenuItem>
               </Menu>
             </div>
           </div>

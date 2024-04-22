@@ -10,9 +10,9 @@ export function Footer() {
       <Container maxWidth="lg" className="py-6 flex justify-between ">
         <div>
           <p className="font-bold">
-            © 2024–{new Date().getFullYear()}, Comtehno
+            © {new Date().getFullYear()} Comtehno
           </p>
-          {/* <p className="text-sm font-semibold">Legacy by Usta Soft</p> */}
+          <p className="text-sm font-semibold">Legacy by Usta Soft</p>
         </div>
         <ul className="flex gap-5">
           <li>

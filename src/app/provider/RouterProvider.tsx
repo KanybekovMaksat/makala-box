@@ -3,7 +3,7 @@ import {
   createBrowserRouter,
   useRouteError,
 } from 'react-router-dom';
-import GenericLayout from '~pages/Layout';
+
 import { feedPageRoute } from '~pages/feed';
 import { homePageRoute } from '~pages/home';
 import { favoritesPageRoute } from '~pages/favorites';
@@ -11,6 +11,8 @@ import { articlePageRoute } from '~pages/article';
 import { registerPageRoute } from '~pages/register';
 import { loginPageRoute } from '~pages/login';
 import { editorPageRoute } from '~pages/editor';
+import { profilePageRoute } from '~pages/profile';
+import { GenericLayout, IntroLayout } from '~pages/layout';
 
 function BubbleError() {
   const error = useRouteError();
@@ -29,10 +31,27 @@ const router = createBrowserRouter([
           feedPageRoute,
           favoritesPageRoute,
           articlePageRoute,
-          registerPageRoute,
-          loginPageRoute,
           editorPageRoute,
+          profilePageRoute,
         ],
+      },
+      {
+        element: <GenericLayout />,
+        children: [
+          homePageRoute,
+          feedPageRoute,
+          favoritesPageRoute,
+          articlePageRoute,
+          profilePageRoute,
+        ],
+      },
+      {
+        element: <GenericLayout />,
+        children: [homePageRoute, feedPageRoute],
+      },
+      {
+        element: <IntroLayout />,
+        children: [registerPageRoute, loginPageRoute],
       },
     ],
   },

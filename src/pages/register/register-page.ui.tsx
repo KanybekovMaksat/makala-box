@@ -17,7 +17,9 @@ const SignupSchema = z.object({
 export function RegisterPage() {
   return (
     <div className="my-20 w-[400px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
-      <h1 className='font-bold text-center text-2xl text-pc-500'>Регистрация</h1>
+      <h1 className="font-bold text-center text-2xl text-pc-500">
+        Регистрация
+      </h1>
       <Formik
         initialValues={{
           email: '',
@@ -48,7 +50,6 @@ export function RegisterPage() {
                 id="email"
                 name="email"
                 label="Email"
-
                 size="small"
               />
               <ErrorMessage
@@ -107,16 +108,25 @@ export function RegisterPage() {
               />
               <ErrorMessage name="confirmPassword" component="div" />
             </div>
-            <Button variant="contained" className="w-full my-2 bg-second-100" type="submit">
-                Зарегистрироваться
+            <Button
+              variant="contained"
+              className="w-full my-2 mb-3 bg-second-100"
+              type="submit"
+            >
+              Зарегистрироваться
             </Button>
-            <p className='flex justify-center gap-1'>
-            Уже есть аккаунт?<Link className='underline text-second-100' to={pathKeys.login()}>Войти</Link>
-            </p>
-            
           </Form>
         )}
       </Formik>
+      {/* <Button variant="contained" className="w-full mb-1 bg-[red]">
+        Войти с Google
+      </Button> */}
+      <p className="flex justify-center gap-1">
+        Уже есть аккаунт?
+        <Link className="underline text-second-100" to={pathKeys.login()}>
+          Войти
+        </Link>
+      </p>
     </div>
   );
 }
