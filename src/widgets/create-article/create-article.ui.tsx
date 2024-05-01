@@ -1,21 +1,103 @@
+import $api from '~shared/api';
+import {
+  Block,
+  BlockNoteEditor,
+  BlockNoteSchema,
+  PartialBlock,
+  defaultBlockSpecs,
+  defaultStyleSpecs,
+  filterSuggestionItems,
+  insertOrUpdateBlock,
+} from '@blocknote/core';
 import '@blocknote/core/fonts/inter.css';
 import {
   BlockNoteView,
-  DefaultReactSuggestionItem,
   SuggestionMenuController,
-  SuggestionMenuProps,
-  useCreateBlockNote,
+  getDefaultReactSlashMenuItems,
 } from '@blocknote/react';
 import '@blocknote/react/style.css';
+import { CodeBlock, insertCode } from '@defensestation/blocknote-code';
+import { AlertBlock } from '~features/blocknote/alert-block';
+import { RiAlertFill } from 'react-icons/ri';
+import { CustomSlashMenu } from '~features/blocknote/custom-slash';
+import {
+  commentStyleSpec,
+  CommentToolbarController,
+} from '@defensestation/blocknote-comments';
+import { codeStyleSpec } from './../../features/blocknote/code-toolbar/code-toolbar.stylespec';
+import { CustomToolbar } from '~features/blocknote/custom-toolbar';
+import { useEffect, useMemo, useState } from 'react';
+
+const schema = BlockNoteSchema.create({
+  blockSpecs: {
+    ...defaultBlockSpecs,
+    alert: AlertBlock,
+    procode: CodeBlock,
+  },
+  styleSpecs: {
+    ...defaultStyleSpecs,
+    comment: commentStyleSpec,
+    code: codeStyleSpec,
+  },
+});
+
+async function saveToStorage(jsonBlocks: Block[]) {
+  localStorage.setItem('editorContent', JSON.stringify(jsonBlocks));
+}
+
+async function loadFromStorage() {
+  const storageString = localStorage.getItem('editorContent');
+  return storageString
+    ? (JSON.parse(storageString) as PartialBlock[])
+    : undefined;
+}
+
+const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
+  title: 'Напоминание',
+  onItemClick: () => {
+    insertOrUpdateBlock(editor, {
+      type: 'alert',
+    });
+  },
+  aliases: ['alert', 'notification', 'info'],
+  group: 'Advanced',
+  icon: <RiAlertFill />,
+});
+
+async function uploadFile(file: File) {
+  const body = new FormData();
+  body.append('image', file);
+  try {
+    console.log(file);
+    const response = await $api.post('posts/image-upload/', body);
+    return response.data.image;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    throw new Error('File upload failed');
+  }
+}
 
 export function CreateArticle() {
-  const editor = useCreateBlockNote({
-    initialContent: [
-      {
-        type: 'paragraph',
-      },
-    ],
-  });
+  const [initialContent, setInitialContent] = useState<
+    PartialBlock[] | undefined | 'loading'
+  >('loading');
+
+  useEffect(() => {
+    loadFromStorage().then((content) => {
+      setInitialContent(content);
+    });
+  }, []);
+
+  const editor = useMemo(() => {
+    if (initialContent === 'loading') {
+      return undefined;
+    }
+    return BlockNoteEditor.create({ schema, initialContent, uploadFile });
+  }, [initialContent]);
+
+  if (editor === undefined) {
+    return 'Loading content...';
+  }
 
   return (
     <BlockNoteView
@@ -23,90 +105,27 @@ export function CreateArticle() {
       slashMenu={false}
       editor={editor}
       theme={'light'}
+      formattingToolbar={false}
+      onChange={() => {
+        saveToStorage(editor.document);
+      }}
     >
+      <CustomToolbar />
+      <CommentToolbarController />
       <SuggestionMenuController
         triggerCharacter={'/'}
         suggestionMenuComponent={CustomSlashMenu}
+        getItems={async (query) =>
+          filterSuggestionItems(
+            [
+              ...getDefaultReactSlashMenuItems(editor),
+              insertAlert(editor),
+              insertCode(),
+            ],
+            query
+          )
+        }
       />
     </BlockNoteView>
-  );
-}
-
-function getTranslatedСategory(title: string): string {
-  switch (title) {
-    case 'Headings':
-      return 'Заголовки';
-    case 'Basic blocks':
-      return 'Базовые блоки';
-    case 'Advanced':
-      return 'Продвинутый';
-    case 'Media':
-      return 'Изображения';
-    default:
-      return title;
-  }
-}
-
-function getTranslatedText(title: string): string {
-  switch (title) {
-    case 'Heading 1':
-      return 'Заголовок 1';
-    case 'Heading 2':
-      return 'Заголовок 2';
-    case 'Heading 3':
-      return 'Заголовок 3';
-    case 'Numbered List':
-      return 'Нумерованный список';
-    case 'Bullet List':
-      return 'Маркированный список';
-    case 'Paragraph':
-      return 'Параграф';
-    case 'Table':
-      return 'Таблица';
-    case 'Image':
-      return 'Вставить изображение';
-    default:
-      return title;
-  }
-}
-
-function CustomSlashMenu(
-  props: SuggestionMenuProps<DefaultReactSuggestionItem>
-) {
-  const categories = Array.from(new Set(props.items.map((item) => item.group)));
-
-  return (
-    <div className="slash-menu">
-      {categories.map((category) => (
-        <div key={category}>
-          <div className="text-sm font-medium p-2">
-            {getTranslatedСategory(category)}
-          </div>
-          {props.items.map(
-            (item, index) =>
-              item.group === category && (
-                <div
-                  key={index}
-                  className={`slash-menu-item p-3${
-                    props.selectedIndex === index ? ' selected' : ''
-                  }`}
-                  onClick={() => {
-                    props.onItemClick?.(item);
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <div className=" bg-[lightgray] p-1 rounded slash-icon">
-                      {item.icon}
-                    </div>
-                    <div className="text-md text-md">
-                      {getTranslatedText(item.title)}
-                    </div>
-                  </div>
-                </div>
-              )
-          )}
-        </div>
-      ))}
-    </div>
   );
 }
