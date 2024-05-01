@@ -1,4 +1,4 @@
-import { getTokenMutation, loginUserQuery } from './user.api';
+import { emailActivationMutation, getTokenMutation, loginUserQuery, registerUserMutation } from './user.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { pathKeys } from '~shared/lib/react-router';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ const keys = {
   root: () => ['user'],
   getToken: () => [...keys.root(), 'getToken'] as const,
   loginUser: () => [...keys.root(), 'loginUser'] as const,
+  registerUser: () => [keys.root(), 'registerUser'] as const,
 };
 
 export function useLoginUserQuery() {
@@ -35,5 +36,31 @@ export function useGetTokenMutation() {
         : 'Ошибка при выполнении запроса';
       toast.error(errorMessage);
     },
+  });
+}
+
+export function useRegisterMutation() {
+  return useMutation({
+    mutationKey: keys.registerUser(),
+    mutationFn: registerUserMutation,
+    onSuccess: async (response) =>{
+      toast.success("Success")
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+}
+
+export function useActivationMutation() {
+  return useMutation({
+    mutationKey: keys.registerUser(),
+    mutationFn: emailActivationMutation,
+    onSuccess: async (response) =>{
+      toast.success("Success")
+    },
+    onError: (error) => {
+      console.log(error);
+    }
   });
 }
