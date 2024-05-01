@@ -9,8 +9,13 @@ export const pathKeys = {
   login() {
     return pathKeys.root.concat('login/');
   },
-  verify() {
-    return pathKeys.root.concat('/otp/verify');
+  verify: {
+    root() {
+      return pathKeys.root.concat('#/activate/');
+    },
+    byId(params: { uid: string, token:string }) {
+      return pathKeys.article.root().concat(params.uid, "/", params.token, "/")
+    },
   },
   feed() {
     return pathKeys.root.concat('feed/');
@@ -24,6 +29,9 @@ export const pathKeys = {
   article: {
     root() {
       return pathKeys.root.concat('article/');
+    },
+    byId(params: { id: number }) {
+      return pathKeys.article.root().concat(String(params.id), '/');
     },
   },
   editor: {
