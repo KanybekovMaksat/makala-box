@@ -4,36 +4,81 @@ import {
   Card,
   CardContent,
   CardMedia,
-  IconButton,
   Tooltip,
+  CircularProgress,
 } from '@mui/material';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 
 // import icons
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import ShareIcon from '@mui/icons-material/Share';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
+import { articleQueries, articleTypes } from '~entities/article';
+import { ShareButton } from '~features/article/share-button';
+import { LikeButton } from '~features/article/like-button';
+import { FavoriteButton } from '~features/article/favorite-button';
+import { userQueries } from '~entities/user';
 
-export function ArticlesList() {
+dayjs.locale('ru');
+
+export function ArticlesList({ fetchType = false }) {
+  const {
+    data: articleData,
+    isLoading,
+    isSuccess,
+    isError,
+  } = fetchType
+    ? userQueries.useLoginUserQuery()
+    : articleQueries.useGetArticles();
+
+  if (isLoading) {
+    return (
+      <div>
+        <CircularProgress className="w-[50px] mx-auto flex justify-center" />
+        <p className="text-center mt-2">Загрузка статей...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div className="my-20">Error fetching user data.</div>;
+  }
+
+  const articles = fetchType
+    ? articleData?.data?.favoritePosts
+    : articleData?.data?.results;
+
+  const publishedArticles = articles.filter(
+    (article) => article.status === 'published'
+  );
+  console.log(publishedArticles);
+
+  if (publishedArticles.length == 0) {
+    return (
+      <div className="text-center font-medium">
+        К сожалению, у вас нет избранных статей📖
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center gap-5">
-      <ArticleCard />
-      <ArticleCard />
-      <ArticleCard />
-      <ArticleCard />
-      <ArticleCard />
-      <ArticleCard />
+    <div className="flex flex-wrap gap-5">
+      {isSuccess &&
+        publishedArticles.map((article) => (
+          <ArticleCard article={article} key={article.id} />
+        ))}
     </div>
   );
 }
 
 // Article Card Component
-function ArticleCard() {
+type ArticleCardProps = { article: articleTypes.Article };
+
+function ArticleCard(props: ArticleCardProps) {
   return (
-    <Card className="max-w-full  shadow-none border border-sc-100 p-2 card">
+    <Card className="min-w-full max-w-full  shadow-none border border-sc-100 p-2 card">
       <div className="flex flex-col-reverse md:flex-row items-center md:justify-between">
         <CardContent className="md:p-[12px] p-2">
           <div className="flex justify-between items-center pb-3">
@@ -41,75 +86,69 @@ function ArticleCard() {
               <div className="flex items-center gap-1 cursor-pointer card-header">
                 <Avatar
                   className="duration-500 card-avatar border-2 border-[white]"
-                  alt="A"
-                  src=""
+                  alt={props.article.author}
+                  src={props.article.authorPhoto}
                 />
                 <h5 className="flex gap-1 text-md font-bold duration-300">
-                  Asanov Kurmanbek
+                  {props.article.author}
                 </h5>
                 <Tooltip title="Время чтения">
                   <p className="text-md text-pc-400 flex items-center md:hidden gap-1 text-sm">
                     <AccessTimeFilledIcon className="w-4" />
-                    12 мин
+                    {props.article.readTime} мин
                   </p>
                 </Tooltip>
               </div>
-              <div className="flex  items-center gap-3">
-                <p className="text-md text-pc-400 text-sm ">Апрель 2, 2024</p>
+              <div className="flex items-center gap-3">
+                <p className="text-md text-pc-400 text-sm ">
+                  {dayjs(props.article.created)
+                    .format('MMMM D, YYYY')
+                    .toUpperCase()}
+                </p>
                 <p className="text-md text-pc-400 flex items-center gap-1 text-sm">
                   <VisibilityIcon className="w-5" />
-                  566
+                  {props.article.viewCount}
                 </p>
                 <Tooltip title="Время чтения">
                   <p className="text-md text-pc-400 hidden md:flex items-center gap-1 text-sm">
                     <AccessTimeFilledIcon className="w-4" />
-                    12 мин
+                    {props.article.readTime} мин
                   </p>
                 </Tooltip>
               </div>
             </div>
           </div>
           <div>
-            <Link className="card-info" to={pathKeys.article.root()}>
+            <Link
+              className="card-info"
+              to={pathKeys.article.byId({ id: props.article.id })}
+            >
               <h4 className="font-bold text-xl title duration-300">
-                Как дизайнеру и любителю технологий жить после Apple Vision Pro
+                {props.article.title}
               </h4>
-              <p className="text-md text-pc-500">
-                После релиза Apple Vision Pro интерфейсы перестают быть
-                концептами из фантастических фильмов и формируют новую
-                реальность. Какой она будет? Информации пока немного, а купить
-                очки от Apple могут пока лишь единицы....
+              <p className="text-md text-pc-500 min-h-[70px]">
+                {props.article.subtitle}...
               </p>
             </Link>
             <div className="pt-2 flex items-center gap-1">
-              <div className="flex items-center ">
-                <Tooltip title="Нравится">
-                  <IconButton aria-label="нравится">
-                    <ThumbUpIcon />
-                  </IconButton>
-                </Tooltip>
-                <p className="text-sm text-pc-400">66</p>
-              </div>
-              <Tooltip title="В Избранное">
-                <IconButton aria-label="В Избранное">
-                  <BookmarkAddIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Поделиться">
-                <IconButton aria-label="поделиться">
-                  <ShareIcon />
-                </IconButton>
-              </Tooltip>
+              <LikeButton
+                like={{
+                  id: props.article.id,
+                  likeCount: props.article.likeCount,
+                  likes: props.article.likes,
+                }}
+              />
+              <FavoriteButton id={props.article.id} />
+              <ShareButton id={props.article.id} />
             </div>
           </div>
         </CardContent>
-
         <CardMedia
           component="img"
-          className="w-full md:max-w-[300px] h-[200px] md:max-h-[200px] md:min-h-[200px] rounded  md:mr-[12px] cursor-pointer"
-          image="https://i.pinimg.com/564x/b4/1a/8a/b41a8acccf85813efcddf1d93061ecc6.jpg"
-          alt="Live from space album cover"
-          title="Makala Box"
+          className="w-[95%] md:max-w-[250px] min-h-[230px] max-h-[230px] rounded md:mr-[12px] cursor-pointer"
+          image={props.article.photo}
+          alt={props.article.title}
+          title={props.article.title}
         />
       </div>
     </Card>
