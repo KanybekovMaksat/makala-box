@@ -5,22 +5,29 @@ import { getCookie } from 'typescript-cookie';
 import { articleQueries } from '~entities/article';
 import { userQueries } from '~entities/user';
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { pathKeys } from '~shared/lib/react-router';
 
 type FavoriteButtonProps = { id: number };
 
 export function FavoriteButton(props: FavoriteButtonProps) {
   const isAuth = getCookie('access');
+  const navigate = useNavigate();
+
+  const redirectToRegisterPage = () => {
+    navigate(pathKeys.register());
+  };
 
   const { mutate: saveFavorite } = articleQueries.useFavoriteArticle(props.id);
 
   const { data: userData } = userQueries.useLoginUserQuery();
   const favoritePosts = userData?.data?.favoritePosts;
 
-  if (!userData || !favoritePosts) {
+  if (!userData || !favoritePosts || !isAuth) {
     return (
       <Tooltip title={'Нужна авторизация'}>
         <span>
-          <IconButton disabled aria-label="В Избранное">
+          <IconButton onClick={redirectToRegisterPage} aria-label="В Избранное">
             <BookmarkAddIcon />
           </IconButton>
         </span>
@@ -37,18 +44,10 @@ export function FavoriteButton(props: FavoriteButtonProps) {
   return (
     <Tooltip
       title={
-        isAuth
-          ? isFavoritedPosts
-            ? 'Удалить из избранных'
-            : 'Сохранить в избранные'
-          : 'Нужна авторизация'
+        isFavoritedPosts ? 'Удалить из избранных' : 'Сохранить в избранные'
       }
     >
-      <IconButton
-        disabled={!isAuth}
-        onClick={handleSaveFavorite}
-        aria-label="В Избранное"
-      >
+      <IconButton onClick={handleSaveFavorite} aria-label="В Избранное">
         {isFavoritedPosts ? (
           <BookmarkAddedIcon className="text-second-100" />
         ) : (

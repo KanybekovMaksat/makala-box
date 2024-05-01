@@ -1,15 +1,21 @@
- import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import { articleQueries, articleTypes } from '~entities/article';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { getCookie } from 'typescript-cookie';
 import { userQueries } from '~entities/user';
+import { useNavigate } from 'react-router-dom';
+import { pathKeys } from '~shared/lib/react-router';
 
 type LikeButtonProps = { like: articleTypes.ArticleLike };
 
 export function LikeButton(props: LikeButtonProps) {
   const isAuth = getCookie('access');
+  const navigate = useNavigate();
 
+  const redirectToRegisterPage = () => {
+    navigate(pathKeys.register());
+  };
   const { data: userData } = userQueries.useLoginUserQuery();
 
   const userId = userData?.data?.id;
@@ -35,9 +41,8 @@ export function LikeButton(props: LikeButtonProps) {
       >
         <span>
           <IconButton
-            disabled={!isAuth}
             aria-label="нравится"
-            onClick={handleLike}
+            onClick={isAuth ? handleLike : redirectToRegisterPage}
           >
             {isLikedByUser ? (
               <ThumbUpIcon className="text-second-100" />
