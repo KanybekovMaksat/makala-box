@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -31,7 +30,7 @@ body {
   padding: 0;
 }
 .bn-container[data-changing-font-demo] .bn-default-styles {
-  font-size: 20px;
+  font-size: 18px;
 }
 .bn-container[data-changing-font-demo]
   .bn-editor
@@ -43,7 +42,8 @@ body {
   .bn-block-outer:not([data-prev-type])
   > .bn-block
   > .bn-block-content[data-content-type='heading'] {
-  font-size: 1.5em;
+  font-size: 1.8em;
+  font-weight: 500;
 }
 /* Blocknote viewer */
 .bn-container[data-editor-mode] .bn-editor * {
@@ -51,9 +51,11 @@ body {
 }
 .bn-container[data-editor-mode] .bn-editor {
   padding: 20px;
-  margin: 20px 0px;
   border-radius: 5px;
-  border: 1px solid rgba(128, 128, 128, 0.206);
+  min-height: 300px;
+}
+.cm-editor {
+  height: auto !important;
 }
 .slash-menu {
   z-index: 9999;
@@ -79,6 +81,13 @@ body {
 .slash-menu-item:hover,
 .slash-menu-item.selected {
   background-color: lightgray;
+}
+.code-toolbar {
+  color: #eb5757;
+  font-family: 'Roboto Mono' !important;
+  border-radius: 3px;
+  padding: 1px;
+  font-weight: 500;
 }
 /* Article Card */
 
