@@ -8,7 +8,7 @@ import { TopBar } from '~widgets/top-bar';
 export function GenericLayout() {
   const { data: userData } = userQueries.useLoginUserQuery();
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <ScrollTop />
         {userData ? <TopBar /> : <GuestBar />}

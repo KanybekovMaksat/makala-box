@@ -7,6 +7,7 @@ import { IntroBlock } from '~widgets/intro-block';
 import { Container } from '@mui/material';
 
 export function HomePage() {
+
   return (
     <Container maxWidth="lg" className="mx-5 md:mx-auto my-20">
       <div className=" bg-[white] my-5  p-5 rounded-md flex flex-col-reverse md:flex-row items-center md:justify-center gap-5 translate-y-5 md:translate-y-px border-2 border-[#eae8e885]">

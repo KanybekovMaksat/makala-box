@@ -10,27 +10,29 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export function LoginPage() {
   const [visibility, setVisibility] = useState(false);
+
   const handleClickShowPassword = () =>
     setVisibility((visibility) => !visibility);
+
   const {
     mutate: loginToken,
     isPending,
     isError,
   } = userQueries.useGetTokenMutation();
+
   return (
     <div className="my-[200px] bg-[white] w-[400px]  border border-sc-100 mx-auto rounded-md px-5 py-7 ">
       <h1 className="font-bold text-center text-2xl text-pc-500">
         Авторизация
       </h1>
-
       <Formik
         initialValues={initialUser}
         validate={validateForm}
         onSubmit={(user) => loginToken({ user })}
       >
         <Form>
-          <fieldset className="text-xs text-[red]">
-            <fieldset disabled={isPending} className="my-5">
+          <fieldset disabled={isPending} className="text-xs text-[red]">
+            <fieldset  className="my-5">
               <Field
                 as={TextField}
                 fullWidth
