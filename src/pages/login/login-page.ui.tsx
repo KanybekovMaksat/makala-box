@@ -73,7 +73,7 @@ export function LoginPage() {
       </Formik>
       {isError && (
         <p className="text-center text-xs text-[red]">
-          Неправильный пароль или логин!
+          Ошибка при выполнении запроса
         </p>
       )}
       <Link

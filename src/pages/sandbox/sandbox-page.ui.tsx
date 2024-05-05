@@ -23,9 +23,9 @@ interface StepperViewProps {
   activeStep: number;
 }
 
-const steps = ['Оформление статьи', 'Составление статьи', 'Публикация статьи'];
+const steps = ['Составление статьи', 'Публикация статьи'];
 
-export function EditorPage() {
+export function SandboxPage() {
   const { data: userData } = userQueries.useLoginUserQuery();
   const role = userData?.data?.role || '';
   const navigate = useNavigate();
@@ -44,19 +44,13 @@ export function EditorPage() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const {
-    mutate: createArticle,
-    isPending,
-    isError,
-  } = articleQueries.useCreateArticleMutation();
+  const { mutate: createArticle, isPending } =
+    articleQueries.useCreateArticleMutation();
 
   const [title, setTitle] = useState('');
-
   const [selectedValues, setSelectedValues] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState();
-  const [status, setStatus] = useState('published');
-
-  console.log(selectedValues);
+  const [status, setStatus] = useState('pending');
 
   const handleSubmit = async () => {
     try {
@@ -64,7 +58,6 @@ export function EditorPage() {
       const blocks = blocksString ? JSON.parse(blocksString) : [];
 
       let firstParagraphText = '';
-
       for (const block of blocks) {
         if (
           block.type === 'paragraph' &&
@@ -76,11 +69,12 @@ export function EditorPage() {
           break;
         }
       }
+
       const trimmedSubtitle = firstParagraphText.substring(0, 250).toString();
       console.log(trimmedSubtitle);
-      
+
       const imageBlob = localStorage.getItem('savedImage');
-      const file = await URLtoFile(imageBlob);
+      const file = await URLtoFile(imageBlob, imageBlob);
       const formData = new FormData();
       formData.append('photo', file);
       formData.append('title', title);
@@ -109,31 +103,26 @@ export function EditorPage() {
   const handleChangeOrg = (selectedOptions) => {
     setSelectedOrg(selectedOptions);
   };
+
   const handleChangeTitle = (event) => {
     setTitle(event.target.value);
   };
 
-  if (isError) {
-    return <div className="my-20 text-center">Ошибка при отправке данных</div>;
-  }
-
   return (
     <div className="my-20">
-      <Container maxWidth="lg" className="min-h-[700px]">
+      <Container maxWidth="md" className="min-h-[700px]">
         <StepperView activeStep={activeStep} />
         {activeStep === 0 && (
           <div className="w-full my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
             <div className="w-full px-[20px] mb-5">
-              <h3 className="text-xl font-bold  mb-4">
-                Оформление обложки вашей статьи
-              </h3>
               <TextField
-                className="w-full font-bold"
-                placeholder="Введите заголовок статьи"
+                className="w-full font-bold mb-3"
+                placeholder="ЗАГОЛОВОК"
                 value={title}
+                variant="filled"
                 onChange={handleChangeTitle}
               />
-              <CoverCropper />
+              <CreateArticle update={false} />
             </div>
             <Button
               className="self-end"
@@ -145,28 +134,6 @@ export function EditorPage() {
           </div>
         )}
         {activeStep === 1 && (
-          <div className="w-full h-auto my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
-            <h3 className="text-xl font-bold pl-[20px]">Составление статьи</h3>
-            <CreateArticle />
-            <div className="flex justify-between ">
-              <Button
-                className="self-start"
-                variant="contained"
-                onClick={handleBack}
-              >
-                Назад
-              </Button>
-              <Button
-                className="self-end"
-                variant="contained"
-                onClick={handleNext}
-              >
-                Далее
-              </Button>
-            </div>
-          </div>
-        )}
-        {activeStep === 2 && (
           <div className="w-full my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
             <h3 className="text-xl font-bold text-center">Публикация</h3>
             <h4 className="text-lg font-medium mt-3">
@@ -180,12 +147,6 @@ export function EditorPage() {
               status={status}
               handleStatusChange={handleStatusChange}
             />
-            <h4 className="text-lg font-medium mt-3">Выбор категорий</h4>
-            <em className="text-xs">Можете выбрать только до 3 категорий</em>
-            <CategorySelect
-              selectCategory={selectedValues}
-              handleChange={handleChange}
-            />
             <h4 className="text-lg font-medium mt-3">Выбор организации</h4>
             <em className="text-xs">
               Выберите только одну организацию, от которой будете публиковать
@@ -195,6 +156,16 @@ export function EditorPage() {
               selectOrg={selectedOrg}
               handleChange={handleChangeOrg}
             />
+            <h4 className="text-lg font-medium mt-3">Выбор категорий</h4>
+            <em className="text-xs">Можете выбрать только до 3 категорий</em>
+            <CategorySelect
+              selectCategory={selectedValues}
+              handleChange={handleChange}
+            />
+            <h4 className="text-lg font-medium mt-3">
+              Загрузите обложку для статьи
+            </h4>
+            <CoverCropper />
             <div className="mt-4 flex justify-between">
               <Button variant="contained" onClick={handleBack}>
                 Назад

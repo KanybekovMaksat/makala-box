@@ -31,7 +31,7 @@ export function ArticlePage() {
   }
 
   return (
-    <div className="max-w-[890px] mx-auto my-[65px] bg-[white] px-10">
+    <div className="max-w-[890px] mx-auto my-[65px] bg-[white] px-5">
       {isSuccess && articleData && (
         <>
           <ArticleInfo article={articleData.data} />

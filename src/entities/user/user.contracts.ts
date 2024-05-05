@@ -9,8 +9,8 @@ export const LoginUserDtoSchema = z.object({
 export const createUserSchema = z.object({
   email: z.string().email(),
   username: z.string().min(3),
-  firstName: z.string().min(2),
-  lastName: z.string().min(2),
+  firstName: z.string(),
+  lastName: z.string(),
   password: z.string().min(6),
 });
 
@@ -28,6 +28,7 @@ export const UserDtoSchema = z.object({
   id: z.number(),
   email: z.string().email(),
   firstName: z.string(),
+  official: z.boolean(),
   lastName: z.string(),
   role: z.string(),
   photo: z.string(),

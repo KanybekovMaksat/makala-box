@@ -7,8 +7,8 @@ import 'swiper/css/effect-fade';
 
 export function SliderBanner() {
   return (
-    <div className="flex flex-col md:flex-row gap-5  md:max-h-[450px]">
-      <div className="slider-banner md:w-[65%]">
+    <div className="flex flex-col md:flex-row gap-5  md:min-h-[450px]">
+      <div className="slider-banner md:max-w-[50%] md:min-w-[50%]">
         <Swiper
           modules={[Pagination, EffectFade, Autoplay]}
           spaceBetween={15}
@@ -23,11 +23,39 @@ export function SliderBanner() {
         >
           <SwiperSlide>
             <div
-              className="swiper-card rounded p-1"
+              className="swiper-card rounded "
               style={{
                 backgroundSize: 'cover',
                 height: '450px',
-                backgroundImage: `url('https://i.pinimg.com/564x/a9/a6/92/a9a692e48d3887d66938f26930e412a9.jpg')`,
+                backgroundImage: `url('https://i.pinimg.com/564x/a9/a2/f3/a9a2f3487118b187b72e410db0ed07c3.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                Как дизайнеру и любителю технологий жить после Apple Vision Pro
+              </h3>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div
+              className="swiper-card rounded "
+              style={{
+                backgroundSize: 'cover',
+                height: '450px',
+                backgroundImage: `url('https://i.pinimg.com/564x/a9/a2/f3/a9a2f3487118b187b72e410db0ed07c3.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                Как дизайнеру и любителю технологий жить после Apple Vision Pro
+              </h3>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div
+              className="swiper-card rounded "
+              style={{
+                backgroundSize: 'cover',
+                height: '450px',
+                backgroundImage: `url('https://i.pinimg.com/564x/a9/a2/f3/a9a2f3487118b187b72e410db0ed07c3.jpg')`,
               }}
             >
               <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
@@ -44,7 +72,7 @@ export function SliderBanner() {
               }}
             >
               <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
-                Трансляция видео посредством P2P-сетей
+                A JavaScript Interview Question That 90% of People Get Wrong
               </h3>
             </div>
           </SwiperSlide>
@@ -64,25 +92,26 @@ export function SliderBanner() {
           </SwiperSlide>
         </Swiper>
       </div>
-      <div className="flex flex-col justify-between gap-2 md:gap-0">
+      <div className="flex flex-col min-w-[30%] max-w-[30%]  h-[450px]">
         <div
-          className="h-[200px] md:h-[48%] bg-center bg-cover rounded slider-card"
+          className="h-[200px] md:h-full bg-center bg-cover rounded slider-card "
           style={{
-            backgroundImage: `url('https://i.pinimg.com/564x/02/58/db/0258dbaa164be3099767cc7fa830e604.jpg')`,
+            backgroundImage: `url('/public/maka.png')`,
           }}
         >
-          <h3 className="text-pc-100 font-bold">
-            4 Кастомных React хука которые должен знать каждый Developer
+          <h3 className="text-pc-100 text-lg font-bold">
+            Освоение инструментов редактора Makala Box.Практическое Руководство
           </h3>
         </div>
+
         <div
-          className="h-[200px] md:h-[48%] bg-center bg-cover rounded slider-card"
+          className="h-[200px] md:h-full bg-center bg-cover rounded slider-card "
           style={{
-            backgroundImage: `url('https://i.pinimg.com/564x/7b/fb/98/7bfb98ac655ba6b6e912211808c516f2.jpg')`,
+            backgroundImage: `url('/public/maka.png')`,
           }}
         >
-          <h3 className="text-pc-100 font-bold">
-            12 Лайвхаков как учиться эффективно
+          <h3 className="text-pc-100 text-lg font-bold">
+            Освоение инструментов редактора Makala Box.Практическое Руководство
           </h3>
         </div>
       </div>

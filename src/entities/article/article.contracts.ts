@@ -11,7 +11,7 @@ export const ArticleSchema = z.object({
   likeCount: z.number(),
   viewCount: z.number(),
   readTime: z.number(),
-  status: z.enum(['draft', 'pending', 'approved', 'rejected', 'published']),
+  status: z.enum(['draft', 'pending', 'approved', 'rejected']),
   moderatorComment:z.string(),
   updated: z.string(),
   created: z.string(),

@@ -1,9 +1,15 @@
-import { Formik, Form, ErrorMessage, useFormikContext, Field } from 'formik';
+import {
+  Formik,
+  Form,
+  ErrorMessage,
+  useFormikContext,
+  Field,
+  FormikValues,
+} from 'formik';
 import { Button, IconButton, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
-import { userContracts, userQueries, userTypes } from '~entities/user';
-import { formikContract } from '~shared/lib/zod';
+import { userQueries, userTypes } from '~entities/user';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
@@ -25,7 +31,18 @@ export function RegisterPage() {
     mutate: registerUser,
     isPending,
     isError,
+    isSuccess,
   } = userQueries.useRegisterMutation();
+
+  if (isSuccess) {
+    return (
+      <div className="my-20 w-[400px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
+        <h1 className="font-bold text-center text-2xl text-pc-500">
+          На вашу почту отправлено письмо для подтверждения вашей почты.
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="my-20 w-[400px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
@@ -137,7 +154,11 @@ export function RegisterPage() {
                 type={visibility ? 'text' : 'password'}
                 size="small"
               />
-              <ErrorMessage name="confirmPassword" component="div" />
+              <ErrorMessage
+                name="confirmPassword"
+                component="div"
+                className="text-xs text-[red]"
+              />
             </fieldset>
           </fieldset>
           <SubmitButton />
@@ -145,7 +166,7 @@ export function RegisterPage() {
       </Formik>
       {isError && (
         <p className="text-center text-xs text-[red]">
-          Неправильный пароль или логин!
+          Ошибка при выполнении запроса
         </p>
       )}
       {/* <Button variant="contained" className="w-full mb-1 bg-[red]">
@@ -170,13 +191,13 @@ function SubmitButton() {
       className="w-full mb-2 bg-second-100"
       disabled={!isValid || isValidating}
     >
-      Войти
+      Зарегистрироваться
     </Button>
   );
 }
 
 const validateForm = (values) => {
-  const errors = {};
+  const errors: Partial<FormikValues> = {};
 
   if (!values.email) {
     errors.email = 'Обязательное поле';
@@ -186,6 +207,8 @@ const validateForm = (values) => {
 
   if (!values.username) {
     errors.username = 'Обязательное поле';
+  } else if (values.lastName.length < 3) {
+    errors.username = 'Псевдоним должен содержать минимум 3 символа';
   }
 
   if (!values.firstName) {
@@ -198,8 +221,8 @@ const validateForm = (values) => {
 
   if (!values.password) {
     errors.password = 'Обязательное поле';
-  } else if (values.password.length < 8) {
-    errors.password = 'Пароль должен содержать минимум 8 символов';
+  } else if (values.password.length < 6) {
+    errors.password = 'Пароль должен содержать минимум 6 символов';
   }
 
   if (!values.confirmPassword) {

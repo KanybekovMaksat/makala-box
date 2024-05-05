@@ -44,7 +44,7 @@ export function CategorySelect({
 
   return (
     <Select
-      className="my-2 w-[600px]"
+      className="my-2 w-[450px]"
       closeMenuOnSelect={false}
       isMulti
       isClearable

@@ -9,6 +9,10 @@ export function getArticleDetailsQuery(id: number) {
   return $api.get<Article>(`posts/${id}`);
 }
 
+export function getWriterArticles() {
+  return $api.get<Article>('posts/me');
+}
+
 export function updateViewQuery(id: number) {
   return $api.get(`posts/update-view/${id}`);
 }
@@ -25,10 +29,14 @@ export function createArticleMutation(props: CreateArticleDto = {}) {
   return $api.post(`posts/`, props);
 }
 
+export function updateArticle(props = {}, id) {
+  return $api.patch(`posts/9/`, props); // Make sure the endpoint is correct
+}
+
 export function favoriteArticleQuery(id: number) {
   return $api.get(`users/favorite/${id}/`);
 }
 
-export function getFavoriteArticle() {
-  return $api.get('users/favorite');
+export function deleteArticle(id: number) {
+  return $api.delete(`posts/${id}/`);
 }

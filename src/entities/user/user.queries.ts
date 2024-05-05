@@ -44,10 +44,18 @@ export function useRegisterMutation() {
     mutationKey: keys.registerUser(),
     mutationFn: registerUserMutation,
     onSuccess: async (response) =>{
-      toast.success("Success")
+      toast.success("На вашу почту отправлено письмо для подтверждения вашей почты.")
+
     },
     onError: (error) => {
-      console.log(error);
+      if (error.response && error.response.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach(field => {
+          toast.error(`${field}: ${errors[field][0]}`);
+        });
+      } else {
+        toast.error('Ошибка при выполнении запроса');
+      }
     }
   });
 }
@@ -60,7 +68,14 @@ export function useActivationMutation() {
       toast.success("Success")
     },
     onError: (error) => {
-      console.log(error);
+      if (error.response && error.response.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach(field => {
+          toast.error(`${field}: ${errors[field][0]}`);
+        });
+      } else {
+        toast.error('Ошибка при выполнении запроса');
+      }
     }
   });
 }

@@ -4,31 +4,31 @@ import AvatarEditor from 'react-avatar-editor';
 import React, { useRef, useState } from 'react';
 
 const boxStyle = {
-  width: '300px',
-  height: '300px',
+  width: '500px',
+  height: '370px',
   display: 'flex',
   flexFlow: 'column',
   justifyContent: 'center',
+  objectFit: 'cover',
   alignItems: 'center',
 };
 const modalStyle = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  objectFit: 'cover',
 };
 
 interface CropperModalProps {
   src: string | null;
   modalOpen: boolean;
   setModalOpen: (open: boolean) => void;
-  setPreview: (preview: string | null) => void;
 }
 
 const CropperModal: React.FC<CropperModalProps> = ({
   src,
   modalOpen,
   setModalOpen,
-  setPreview,
 }) => {
   const [slideValue, setSlideValue] = useState<number>(10);
   const cropRef = useRef<HTMLImageElement | null>(null);
@@ -38,7 +38,6 @@ const CropperModal: React.FC<CropperModalProps> = ({
       const dataUrl = cropRef.current.getImage().toDataURL();
       const result = await fetch(dataUrl);
       const blob = await result.blob();
-      setPreview(URL.createObjectURL(blob));
       localStorage.setItem('savedImage', URL.createObjectURL(blob));
       setModalOpen(false);
     }
@@ -51,7 +50,7 @@ const CropperModal: React.FC<CropperModalProps> = ({
           ref={cropRef}
           image={src || ''}
           border={20}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           color={[0, 0, 0, 0.72]}
           scale={slideValue / 10}
           rotate={0}
@@ -92,8 +91,13 @@ const CropperModal: React.FC<CropperModalProps> = ({
   );
 };
 
-export function CoverCropper() {
-  const [preview, setPreview] = useState<string | null>(null);
+interface CoverCropperProps {
+  update: boolean;
+  data?: string;
+  setUpdate?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function CoverCropper({ update, setUpdate, data }: CoverCropperProps) {
   const [src, setSrc] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -104,14 +108,41 @@ export function CoverCropper() {
 
   const handleSelectAnotherPhoto = () => {
     setSrc(null);
-    setPreview(null);
-    localStorage.setItem('savedImage', null);
+    localStorage.setItem('savedImage', '');
   };
   const imageRef = localStorage.getItem('savedImage');
 
+  if (update) {
+    return (
+      <div>
+        <div className="">
+          <img
+            src={data}
+            alt=""
+            className="min-w-[94%] max-w-[100%] min-h-[400px] max-h-[400px] object-cover rounded "
+          />
+          <p>Примерное отображения обложки на больших экранах</p>
+          <img
+            src={data}
+            alt=""
+            className="min-w-[350px] max-w-[350px] min-h-[270px] max-h-[270px] object-cover rounded mt-3"
+          />
+          <p>Примерное отображения обложки на маленьких экранах</p>
+        </div>
+        <Button
+          variant="outlined"
+          className="my-3"
+          onClick={() => setUpdate(false)}
+        >
+          Выбрать другое фото
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full mt-2 flex gap-5">
-      {imageRef === 'null' ? (
+      {!imageRef || imageRef.length === 0 ? (
         <Dropzone
           onDrop={handleDrop}
           noKeyboard
@@ -141,12 +172,25 @@ export function CoverCropper() {
         </Dropzone>
       ) : (
         <div>
-          <img
-            src={imageRef}
-            alt=""
-            className="min-w-[250px] max-w-[250px] min-h-[230px] max-h-[230px] object-cover rounded mb-2"
-          />
-          <Button variant="outlined" onClick={handleSelectAnotherPhoto}>
+          <div className="">
+            <img
+              src={imageRef}
+              alt=""
+              className="min-w-[700px] max-w-[700px] min-h-[400px] max-h-[400px] object-cover rounded "
+            />
+            <p>Примерное отображения обложки на больших экранах</p>
+            <img
+              src={imageRef}
+              alt=""
+              className="min-w-[350px] max-w-[350px] min-h-[270px] max-h-[270px] object-cover rounded mt-3"
+            />
+            <p>Примерное отображения обложки на маленьких экранах</p>
+          </div>
+          <Button
+            variant="outlined"
+            className="my-3"
+            onClick={handleSelectAnotherPhoto}
+          >
             Выбрать другое фото
           </Button>
         </div>
@@ -155,7 +199,6 @@ export function CoverCropper() {
       <CropperModal
         modalOpen={modalOpen}
         src={src}
-        setPreview={setPreview}
         setModalOpen={setModalOpen}
       />
     </div>

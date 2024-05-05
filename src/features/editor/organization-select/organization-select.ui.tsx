@@ -20,7 +20,7 @@ export function OrganizationSelect({
     isError,
   } = OrganizationQueries.useGetOrganization();
 
-  console.log(organizationOptions);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -46,7 +46,7 @@ export function OrganizationSelect({
 
   return (
     <Select
-      className="my-2 w-[600px]"
+      className="my-2 w-[450px]"
       isClearable
       isSearchable
       placeholder="Организации"

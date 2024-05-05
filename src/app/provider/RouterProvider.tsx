@@ -9,10 +9,11 @@ import { favoritesPageRoute } from '~pages/favorites';
 import { articlePageRoute } from '~pages/article';
 import { registerPageRoute } from '~pages/register';
 import { loginPageRoute } from '~pages/login';
-import { editorPageRoute } from '~pages/editor';
+import { sandboxPageRoute } from '~pages/sandbox';
 import { profilePageRoute } from '~pages/profile';
 import { verifyPageRoute } from '~pages/verify';
 import { GenericLayout, IntroLayout } from '~pages/layout';
+import { editPageRoute } from '~pages/edit';
 
 function BubbleError() {
   const error = useRouteError();
@@ -31,8 +32,9 @@ const router = createBrowserRouter([
           feedPageRoute,
           favoritesPageRoute,
           articlePageRoute,
-          editorPageRoute,
           profilePageRoute,
+          sandboxPageRoute,
+          editPageRoute
         ],
       },
       {

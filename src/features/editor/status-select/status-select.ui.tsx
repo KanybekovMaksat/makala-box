@@ -2,7 +2,7 @@ import { ButtonGroup, Button } from '@mui/material';
 
 enum ArticleStatus {
   Draft = 'draft',
-  Published = 'published',
+  Published = 'pending',
 }
 
 type ArticleStatusProps = {

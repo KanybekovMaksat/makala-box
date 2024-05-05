@@ -13,8 +13,8 @@ export const pathKeys = {
     root() {
       return pathKeys.root.concat('#/activate/');
     },
-    byId(params: { uid: string, token:string }) {
-      return pathKeys.article.root().concat(params.uid, "/", params.token, "/")
+    byId(params: { uid: string; token: string }) {
+      return pathKeys.article.root().concat(params.uid, '/', params.token, '/');
     },
   },
   feed() {
@@ -32,6 +32,9 @@ export const pathKeys = {
     },
     byId(params: { id: number }) {
       return pathKeys.article.root().concat(String(params.id), '/');
+    },
+    update(params: { id: number }) {
+      return pathKeys.article.root().concat('edit/', String(params.id), '/');
     },
   },
   editor: {

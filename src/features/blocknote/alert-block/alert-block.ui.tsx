@@ -7,7 +7,7 @@ import "./styles.css";
 
 const alertTypes = [
   {
-    title: "Warning",
+    title: "Важное",
     value: "warning",
     icon: MdError,
     color: "#e69819",
@@ -17,7 +17,7 @@ const alertTypes = [
     },
   },
   {
-    title: "Error",
+    title: "Проблема",
     value: "error",
     icon: MdCancel,
     color: "#d80d0d",
@@ -27,7 +27,7 @@ const alertTypes = [
     },
   },
   {
-    title: "Info",
+    title: "Информация",
     value: "info",
     icon: MdInfo,
     color: "#507aff",
@@ -37,7 +37,7 @@ const alertTypes = [
     },
   },
   {
-    title: "Success",
+    title: "Правильно",
     value: "success",
     icon: MdCheckCircle,
     color: "#0bc10b",
@@ -55,7 +55,7 @@ export const AlertBlock = createReactBlockSpec(
       textAlignment: defaultProps.textAlignment,
       textColor: defaultProps.textColor,
       type: {
-        default: "warning",
+        default: "info",
         values: ["warning", "error", "info", "success"],
       },
     },
@@ -80,7 +80,7 @@ export const AlertBlock = createReactBlockSpec(
               </div>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Label>Тип напоминания</Menu.Label>
+              <Menu.Label>Тип заметки</Menu.Label>
               <Menu.Divider />
               {alertTypes.map((type) => {
                 const ItemIcon = type.icon;

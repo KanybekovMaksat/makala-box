@@ -46,14 +46,6 @@ body {
   font-weight: 500;
 }
 /* Blocknote viewer */
-.bn-container[data-editor-mode] .bn-editor * {
-  font-family: 'Golos Text', sans-serif;
-}
-.bn-container[data-editor-mode] .bn-editor {
-  padding: 20px;
-  border-radius: 5px;
-  min-height: 300px;
-}
 .cm-editor {
   height: auto !important;
 }
@@ -136,13 +128,13 @@ body {
   background: linear-gradient(
     to bottom,
     rgba(11, 11, 11, 0) 0%,
-    rgba(2, 2, 2, 0.8) 55%,
+    rgba(2, 2, 2, 0.8) 45%,
     rgb(6, 6, 6) 100%
   ) !important; /* Градиент от прозрачного до черного с 70% прозрачности */
 }
 .swiper-card h3 {
   position: relative;
-  top: 67%;
+  top: 65%;
   z-index: 1;
 }
 .slider-banner .swiper-pagination-bullet {
@@ -182,26 +174,19 @@ body {
   background: linear-gradient(
     to bottom,
     rgba(11, 11, 11, 0) 0%,
-    rgba(2, 2, 2, 0.8) 55%,
+    rgba(2, 2, 2, 0.8) 25%,
     rgb(6, 6, 6) 100%
   ) !important;
 }
 
-.slider-card:hover::after {
-  background: linear-gradient(
-    to bottom,
-    rgba(11, 11, 11, 0) 0%,
-    rgba(2, 2, 2, 0.9) 55%,
-    rgba(6, 6, 6) 100%
-  ) !important;
-}
 
 .slider-card h3 {
   position: relative;
-  top: 55%;
+  top: 60%;
   z-index: 1;
   color: white;
-  padding: 20px;
+  line-height: 18px;
+  padding: 10px;
 }
 /* Slider */
 

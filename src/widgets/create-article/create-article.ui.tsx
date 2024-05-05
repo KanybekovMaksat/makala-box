@@ -28,6 +28,11 @@ import { codeStyleSpec } from './../../features/blocknote/code-toolbar/code-tool
 import { CustomToolbar } from '~features/blocknote/custom-toolbar';
 import { useEffect, useMemo, useState } from 'react';
 
+interface CreateArticleProps {
+  update: boolean;
+  data?: PartialBlock[];
+}
+
 const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs,
@@ -42,10 +47,21 @@ const schema = BlockNoteSchema.create({
 });
 
 async function saveToStorage(jsonBlocks: Block[]) {
+  localStorage.setItem('sandboxContent', JSON.stringify(jsonBlocks));
+}
+
+async function saveToStorageUpdate(jsonBlocks: Block[]) {
   localStorage.setItem('editorContent', JSON.stringify(jsonBlocks));
 }
 
 async function loadFromStorage() {
+  const storageString = localStorage.getItem('sandboxContent');
+  return storageString
+    ? (JSON.parse(storageString) as PartialBlock[])
+    : undefined;
+}
+
+async function loadFromStorageUpdate() {
   const storageString = localStorage.getItem('editorContent');
   return storageString
     ? (JSON.parse(storageString) as PartialBlock[])
@@ -53,13 +69,13 @@ async function loadFromStorage() {
 }
 
 const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
-  title: 'Напоминание',
+  title: 'Заметки',
   onItemClick: () => {
     insertOrUpdateBlock(editor, {
       type: 'alert',
     });
   },
-  aliases: ['alert', 'notification', 'info'],
+  aliases: ['alert', 'notification', 'info', 'note'],
   group: 'Advanced',
   icon: <RiAlertFill />,
 });
@@ -77,15 +93,31 @@ async function uploadFile(file: File) {
   }
 }
 
-export function CreateArticle() {
+export function CreateArticle({ update, data }: CreateArticleProps) {
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | 'loading'
   >('loading');
 
-  useEffect(() => {
-    loadFromStorage().then((content) => {
-      setInitialContent(content);
+   function isBlocksUpdate() {
+    let blocks;
+    loadFromStorageUpdate().then((content) => {
+      blocks = content;
     });
+    return blocks
+  }
+
+  useEffect(() => {
+    if (true) {
+      loadFromStorageUpdate().then((content) => {
+        setInitialContent(content);
+      });
+    } else if (update) {
+      setInitialContent(data);
+    } else {
+      loadFromStorage().then((content) => {
+        setInitialContent(content);
+      });
+    }
   }, []);
 
   const editor = useMemo(() => {
@@ -101,14 +133,12 @@ export function CreateArticle() {
 
   return (
     <BlockNoteView
-      data-editor-mode
+      data-changing-font-demo
       slashMenu={false}
       editor={editor}
       theme={'light'}
       formattingToolbar={false}
-      onChange={() => {
-        saveToStorage(editor.document);
-      }}
+      onChange={() => {update ? saveToStorageUpdate(editor.document) : saveToStorage(editor.document)}}
     >
       <CustomToolbar />
       <CommentToolbarController />
