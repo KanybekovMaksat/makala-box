@@ -11,24 +11,21 @@ export function calculateReadingTime(article) {
       if (item.type === 'text' && item.text) {
         totalCharacters += item.text.trim().length;
       } else if (item.type === 'image') {
-        totalImages++;
+        totalImages+=1;
       } else if (item.content && item.content.length > 0) {
         countCharacters(item.content);
       }
     });
   };
-
+  
+  
   countCharacters(article);
-
-  const charactersPerImage = 100;
-  const totalCharactersWithImages =
-    totalCharacters + totalImages * charactersPerImage;
+  
+  const charactersPerImage = 150;
+  const totalCharactersWithImages = totalCharacters + totalImages * charactersPerImage;
 
   const charactersPerMinute = 1500;
-  const readingTime = Math.round(
-    totalCharactersWithImages / charactersPerMinute
-  );
-
+  const readingTime = Math.ceil(totalCharactersWithImages / charactersPerMinute);
   return readingTime;
 }
 

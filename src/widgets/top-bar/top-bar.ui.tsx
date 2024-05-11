@@ -138,7 +138,7 @@ export function TopBar() {
                 <Button
                   onClick={() => navigate(pathKeys.editor.root())}
                   size="small"
-                  className=" text-second-100 hover:bg-second-100 hover:text-[white]"
+                  className="border-pc-400 text-pc-400  hover:bg-second-100 hover:text-[white]"
                   variant="outlined"
                   endIcon={<EditIcon />}
                 >

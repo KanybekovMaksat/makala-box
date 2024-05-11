@@ -69,7 +69,7 @@ export function ShareButton(props: ShareButtonProps) {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <ShareIcon />
+          <ShareIcon className='hover:text-second-100' />
         </IconButton>
       </Tooltip>
       <Menu

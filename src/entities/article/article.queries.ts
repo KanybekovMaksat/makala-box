@@ -11,7 +11,6 @@ import {
   updateViewQuery,
 } from './article.api';
 import { toast } from 'react-toastify';
-import { CreateArticleDto } from './article.types';
 
 const keys = {
   root: () => ['article'],
@@ -92,7 +91,7 @@ export function useCreateArticleMutation() {
     mutationFn: createArticleMutation,
     onSuccess: async () => {
       toast.success('Статья успешна отправлена на модерацию');
-      localStorage.setItem('savedImage', null);
+      localStorage.removeItem('savedImage');
     },
     onError: (error) => {
       if (error.response && error.response.data) {
@@ -127,3 +126,5 @@ export function useUpdateArticle() {
     },
   });
 }
+
+

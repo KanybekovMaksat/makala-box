@@ -1,4 +1,4 @@
-import { CircularProgress, Divider } from '@mui/material';
+import { CircularProgress, Container, Divider } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { articleQueries } from '~entities/article';
 import { ArticleInfo } from '~widgets/article-info';
@@ -31,14 +31,14 @@ export function ArticlePage() {
   }
 
   return (
-    <div className="max-w-[890px] mx-auto my-[65px] bg-[white] px-5">
+    <Container  maxWidth="md" className="mx-auto my-[65px]">
       {isSuccess && articleData && (
-        <>
+        <div className='max-w-[95%] bg-[white] px-5'>
           <ArticleInfo article={articleData.data} />
           <Divider />
           <ArticleViewer body={articleData.data.body} />
-        </>
+        </div>
       )}
-    </div>
+    </Container>
   );
 }

@@ -47,7 +47,7 @@ export function LikeButton(props: LikeButtonProps) {
             {isLikedByUser ? (
               <ThumbUpIcon className="text-second-100" />
             ) : (
-              <ThumbUpOutlinedIcon />
+              <ThumbUpOutlinedIcon className='hover:text-second-100' />
             )}
           </IconButton>
         </span>

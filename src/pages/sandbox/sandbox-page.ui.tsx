@@ -6,7 +6,6 @@ import {
   Step,
   StepLabel,
   Button,
-  TextField,
   CircularProgress,
 } from '@mui/material';
 import { userQueries } from '~entities/user';
@@ -54,7 +53,7 @@ export function SandboxPage() {
 
   const handleSubmit = async () => {
     try {
-      const blocksString = localStorage.getItem('editorContent');
+      const blocksString = localStorage.getItem('sandboxContent');
       const blocks = blocksString ? JSON.parse(blocksString) : [];
 
       let firstParagraphText = '';
@@ -71,7 +70,6 @@ export function SandboxPage() {
       }
 
       const trimmedSubtitle = firstParagraphText.substring(0, 250).toString();
-      console.log(trimmedSubtitle);
 
       const imageBlob = localStorage.getItem('savedImage');
       const file = await URLtoFile(imageBlob, imageBlob);
@@ -115,14 +113,13 @@ export function SandboxPage() {
         {activeStep === 0 && (
           <div className="w-full my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
             <div className="w-full px-[20px] mb-5">
-              <TextField
-                className="w-full font-bold mb-3"
+              <textarea
+                className="w-full font-bold mb-3 text-[32px] text-pc-500 resize-none leading-8  outline-none max-h-[300px]"
                 placeholder="ЗАГОЛОВОК"
                 value={title}
-                variant="filled"
                 onChange={handleChangeTitle}
               />
-              <CreateArticle update={false} />
+              <CreateArticle />
             </div>
             <Button
               className="self-end"
@@ -136,17 +133,6 @@ export function SandboxPage() {
         {activeStep === 1 && (
           <div className="w-full my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
             <h3 className="text-xl font-bold text-center">Публикация</h3>
-            <h4 className="text-lg font-medium mt-3">
-              Статус для вашей статьи
-            </h4>
-            <em className="text-xs">
-              Пока статья в статусе "черновик", она не доступна для модерации и
-              публики.
-            </em>
-            <StatusSelect
-              status={status}
-              handleStatusChange={handleStatusChange}
-            />
             <h4 className="text-lg font-medium mt-3">Выбор организации</h4>
             <em className="text-xs">
               Выберите только одну организацию, от которой будете публиковать
@@ -163,9 +149,21 @@ export function SandboxPage() {
               handleChange={handleChange}
             />
             <h4 className="text-lg font-medium mt-3">
+              Статус для вашей статьи
+            </h4>
+            <em className="text-xs">
+              Пока статья в статусе "черновик", она не доступна для модерации и
+              публики.
+            </em>
+            <StatusSelect
+              status={status}
+              handleStatusChange={handleStatusChange}
+            />
+            <h4 className="text-lg font-medium mt-3">
               Загрузите обложку для статьи
             </h4>
-            <CoverCropper />
+            <CoverCropper update={false} />
+
             <div className="mt-4 flex justify-between">
               <Button variant="contained" onClick={handleBack}>
                 Назад

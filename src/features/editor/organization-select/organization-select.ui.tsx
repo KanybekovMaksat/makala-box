@@ -1,16 +1,14 @@
-import Select, { ValueType } from 'react-select';
-import makeAnimated from 'react-select/animated';
+import Select from 'react-select';
 import { OrganizationQueries } from '~entities/organization';
-
-const animatedComponents = makeAnimated();
 
 type OrganizationSelectProps = {
   selectOrg: number | null;
   handleChange: (selectedOption: number | null) => void;
 };
 
+type ValueType<T> = T | T[] | null | undefined;
+
 export function OrganizationSelect({
-  selectOrg,
   handleChange,
 }: OrganizationSelectProps) {
   
@@ -20,7 +18,6 @@ export function OrganizationSelect({
     isError,
   } = OrganizationQueries.useGetOrganization();
 
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -29,31 +26,52 @@ export function OrganizationSelect({
     return <div>Error fetching user data.</div>;
   }
 
-  const options = organizationOptions.data.map((organization) => ({
-    value: organization.id,
-    label: organization.name,
-  }));
+  const transformData = (organizations) => {
+    const groupedOptions = [];
 
+    organizations.forEach((category) => {
+      const categoryOptions = {
+        label: category.name,
+        options: [],
+      };
 
-  const handleSelectChange = (
-    selectedOption: ValueType<{ value: number; label: string }>
-  ) => {
-    const selectedId: number | null = selectedOption
-      ? (selectedOption as { value: number }).value
-      : null;
+      if (category.children && category.children.length > 0) {
+        category.children.forEach((subcategory) => {
+          categoryOptions.options.push({
+            value: subcategory.id,
+            label: subcategory.name,
+          });
+        });
+      } else {
+        // Если у категории нет подкатегорий, добавляем её в список опций
+        categoryOptions.options.push({
+          value: category.id,
+          label: category.name,
+        });
+      }
+
+      groupedOptions.push(categoryOptions);
+    });
+
+    return groupedOptions;
+  };
+
+  const options = transformData(organizationOptions.data);
+
+  const handleSelectChange = (selectedOption: ValueType<{ value: number; label: string }>) => {
+    const selectedId: number | null = selectedOption ? (selectedOption as { value: number }).value : null;
     handleChange(selectedId);
   };
 
+  
   return (
     <Select
-      className="my-2 w-[450px]"
+      className="my-2 w-full"
       isClearable
       isSearchable
       placeholder="Организации"
-      components={animatedComponents}
       options={options}
       onChange={handleSelectChange}
-      value={options.find((option) => option.value === selectOrg)}
     />
   );
 }

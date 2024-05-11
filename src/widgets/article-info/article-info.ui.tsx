@@ -10,7 +10,7 @@ type ArticleInfoProps = { article: articleTypes.Article };
 
 export function ArticleInfo(props: ArticleInfoProps) {
   return (
-    <div className="flex flex-col-reverse md:flex-col-reverse gap-3 py-4">
+    <div className="flex flex-col-reverse gap-3 py-4">
       <div>
         <div className="flex items-center gap-1 md:gap-3">
           <div className="flex items-center gap-1 hover:cursor-pointer">
@@ -55,7 +55,7 @@ export function ArticleInfo(props: ArticleInfoProps) {
         {props.article.title}
       </h1>
       <img
-        className="min-h-[300px] max-h-[320px] min-w-[45%] max-w[45%] object-cover rounded"
+        className="min-h-[300px] max-h-[320px] min-w-[55%] max-w[55%] object-cover rounded"
         src={props.article.photo}
         alt=""
       />

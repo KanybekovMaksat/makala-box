@@ -30,7 +30,7 @@ body {
   padding: 0;
 }
 .bn-container[data-changing-font-demo] .bn-default-styles {
-  font-size: 18px;
+  font-size: 19px;
 }
 .bn-container[data-changing-font-demo]
   .bn-editor
@@ -41,9 +41,25 @@ body {
   .bn-editor
   .bn-block-outer:not([data-prev-type])
   > .bn-block
-  > .bn-block-content[data-content-type='heading'] {
+  > .bn-block-content[data-content-type='heading'][data-level='3'] {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.bn-container[data-changing-font-demo]
+  .bn-editor
+  .bn-block-outer:not([data-prev-type])
+  > .bn-block
+  > .bn-block-content[data-content-type='heading'][data-level='2'] {
   font-size: 1.8em;
-  font-weight: 500;
+  font-weight: 600;
+}
+.bn-container[data-changing-font-demo]
+  .bn-editor
+  .bn-block-outer:not([data-prev-type])
+  > .bn-block
+  > .bn-block-content[data-content-type='heading'][data-level='1'] {
+  font-size: 2.1em;
+  font-weight: 700;
 }
 /* Blocknote viewer */
 .cm-editor {
@@ -178,7 +194,6 @@ body {
     rgb(6, 6, 6) 100%
   ) !important;
 }
-
 
 .slider-card h3 {
   position: relative;

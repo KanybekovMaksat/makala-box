@@ -144,17 +144,17 @@ function ArticleCard(props: ArticleCardProps) {
               </p>
             </Tooltip>
           </div>
-          <CardActionArea onClick={() => handleNavigate(props.article.id)}>
+          <div className='hover:cursor-pointer' onClick={() => handleNavigate(props.article.id)}>
             <h4 className="font-bold text-xl title duration-300">
               {props.article.title}
             </h4>
-            <p className="text-md text-pc-500 ">{props.article.subtitle}...</p>
-          </CardActionArea>
+            <p className="text-md mt-2">{props.article.subtitle}...</p>
+          </div>
         </CardContent>
         <CardActionArea onClick={() => handleNavigate(props.article.id)}>
           <CardMedia
             component="img"
-            className="w-full min-h-[200px] max-h-[270px] md:max-h-[400px] cursor-pointer"
+            className="w-full  h-auto md:max-h-[420px] cursor-pointer"
             image={props.article.photo}
             alt={props.article.title}
             title={props.article.title}

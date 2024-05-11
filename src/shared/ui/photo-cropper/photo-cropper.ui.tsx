@@ -38,7 +38,6 @@ export function PhotoCropper({ src, modalOpen, setModalOpen, setPreview }: Photo
           scale={slideValue / 10}
           rotate={0}
         />
-
         <Slider
           min={10}
           max={50}

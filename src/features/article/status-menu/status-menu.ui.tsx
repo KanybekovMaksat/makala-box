@@ -38,45 +38,14 @@ interface StatusMenuProps {
 
 export function StatusMenu({ initialStatus }: StatusMenuProps) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string>(initialStatus);
-
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(value);
-  };
-
   return (
     <div>
-      <FormControl variant="standard" className="p-0 border-none outline-none">
-        <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          value={personName}
-          onChange={handleChange}
-          renderValue={(selected) => (
             <Chip
               size="small"
               className="rounded text-[white]"
-              label={statusData[selected].title}
-              style={getStyles(statusData[selected].color, theme)}
+              label={statusData[initialStatus].title}
+              style={getStyles(statusData[initialStatus].color, theme)}
             />
-          )}
-          className="p-none border-none outline-none "
-          MenuProps={MenuProps}
-        >
-          {names.map(
-            (status) =>
-              status.value !== 'rejected' &&
-              status.value !== 'approved' && (
-                <MenuItem key={status.value} value={status.value}>
-                  {status.title}
-                </MenuItem>
-              )
-          )}
-        </Select>
-      </FormControl>
     </div>
   );
 }

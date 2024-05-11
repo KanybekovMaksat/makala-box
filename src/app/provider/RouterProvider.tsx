@@ -12,8 +12,8 @@ import { loginPageRoute } from '~pages/login';
 import { sandboxPageRoute } from '~pages/sandbox';
 import { profilePageRoute } from '~pages/profile';
 import { verifyPageRoute } from '~pages/verify';
-import { GenericLayout, IntroLayout } from '~pages/layout';
 import { editPageRoute } from '~pages/edit';
+import { GenericLayout, IntroLayout } from '~pages/Layout';
 
 function BubbleError() {
   const error = useRouteError();

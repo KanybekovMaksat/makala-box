@@ -51,7 +51,7 @@ export function FavoriteButton(props: FavoriteButtonProps) {
         {isFavoritedPosts ? (
           <BookmarkAddedIcon className="text-second-100" />
         ) : (
-          <BookmarkAddIcon />
+          <BookmarkAddIcon className='hover:text-second-100'/>
         )}
       </IconButton>
     </Tooltip>

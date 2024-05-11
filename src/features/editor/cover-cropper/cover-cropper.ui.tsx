@@ -179,12 +179,6 @@ export function CoverCropper({ update, setUpdate, data }: CoverCropperProps) {
               className="min-w-[700px] max-w-[700px] min-h-[400px] max-h-[400px] object-cover rounded "
             />
             <p>Примерное отображения обложки на больших экранах</p>
-            <img
-              src={imageRef}
-              alt=""
-              className="min-w-[350px] max-w-[350px] min-h-[270px] max-h-[270px] object-cover rounded mt-3"
-            />
-            <p>Примерное отображения обложки на маленьких экранах</p>
           </div>
           <Button
             variant="outlined"

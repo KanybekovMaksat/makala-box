@@ -28,10 +28,6 @@ import { codeStyleSpec } from './../../features/blocknote/code-toolbar/code-tool
 import { CustomToolbar } from '~features/blocknote/custom-toolbar';
 import { useEffect, useMemo, useState } from 'react';
 
-interface CreateArticleProps {
-  update: boolean;
-  data?: PartialBlock[];
-}
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
@@ -50,19 +46,8 @@ async function saveToStorage(jsonBlocks: Block[]) {
   localStorage.setItem('sandboxContent', JSON.stringify(jsonBlocks));
 }
 
-async function saveToStorageUpdate(jsonBlocks: Block[]) {
-  localStorage.setItem('editorContent', JSON.stringify(jsonBlocks));
-}
-
 async function loadFromStorage() {
   const storageString = localStorage.getItem('sandboxContent');
-  return storageString
-    ? (JSON.parse(storageString) as PartialBlock[])
-    : undefined;
-}
-
-async function loadFromStorageUpdate() {
-  const storageString = localStorage.getItem('editorContent');
   return storageString
     ? (JSON.parse(storageString) as PartialBlock[])
     : undefined;
@@ -93,31 +78,15 @@ async function uploadFile(file: File) {
   }
 }
 
-export function CreateArticle({ update, data }: CreateArticleProps) {
+export function CreateArticle() {
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | 'loading'
   >('loading');
 
-   function isBlocksUpdate() {
-    let blocks;
-    loadFromStorageUpdate().then((content) => {
-      blocks = content;
-    });
-    return blocks
-  }
-
   useEffect(() => {
-    if (true) {
-      loadFromStorageUpdate().then((content) => {
-        setInitialContent(content);
-      });
-    } else if (update) {
-      setInitialContent(data);
-    } else {
-      loadFromStorage().then((content) => {
-        setInitialContent(content);
-      });
-    }
+    loadFromStorage().then((content) => {
+      setInitialContent(content);
+    });
   }, []);
 
   const editor = useMemo(() => {
@@ -138,7 +107,7 @@ export function CreateArticle({ update, data }: CreateArticleProps) {
       editor={editor}
       theme={'light'}
       formattingToolbar={false}
-      onChange={() => {update ? saveToStorageUpdate(editor.document) : saveToStorage(editor.document)}}
+      onChange={() => saveToStorage(editor.document)}
     >
       <CustomToolbar />
       <CommentToolbarController />
