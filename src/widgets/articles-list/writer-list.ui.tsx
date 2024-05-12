@@ -1,4 +1,3 @@
-// import components
 import {
   Card,
   CardContent,
@@ -16,15 +15,14 @@ import { LikeButton } from '~features/article/like-button';
 import { FavoriteButton } from '~features/article/favorite-button';
 import { StatusMenu } from '~features/article/status-menu';
 
-// import icons
+
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import { DeleteButton } from '~features/article/delete-button';
-
+import { ArchiveButton } from '~features/article/archive-button';
 
 dayjs.locale('ru');
 
-export function WriterArticles() {
+export function WriterArticlesList() {
   const {
     data: articleData,
     isLoading,
@@ -47,7 +45,6 @@ export function WriterArticles() {
 
   const articles = articleData?.data?.results;
 
-
   return (
     <div className="flex flex-col mx-auto gap-5 w-full">
       {isSuccess &&
@@ -58,9 +55,8 @@ export function WriterArticles() {
   );
 }
 
-// Article Card Component
-type ArticleCardProps = { article: articleTypes.Article };
 
+type ArticleCardProps = { article: articleTypes.Article };
 
 function ArticleCard(props: ArticleCardProps) {
   return (
@@ -70,7 +66,7 @@ function ArticleCard(props: ArticleCardProps) {
           <div className="flex justify-between items-center pb-3">
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <div className="flex items-center gap-4 cursor-pointer">
-                <StatusMenu initialStatus={props.article.status}/>
+                <StatusMenu initialStatus={props.article.status} />
                 <Tooltip title="Время чтения">
                   <p className="text-md text-pc-400 flex items-center md:hidden gap-1 text-sm">
                     <AccessTimeFilledIcon className="w-4" />
@@ -98,14 +94,14 @@ function ArticleCard(props: ArticleCardProps) {
             </div>
           </div>
           <div>
-            <Link
+            {/* <Link
               className="card-info"
               to={pathKeys.article.byId({ id: props.article.id })}
-            >
+            > */}
               <h4 className="font-bold text-xl title duration-300">
                 {props.article.title}
               </h4>
-            </Link>
+            {/* </Link> */}
             <div className="pt-2 flex items-center gap-1">
               <LikeButton
                 like={{
@@ -116,7 +112,7 @@ function ArticleCard(props: ArticleCardProps) {
               />
               <FavoriteButton id={props.article.id} />
               <ShareButton id={props.article.id} />
-              <DeleteButton id={props.article.id}/>
+              <ArchiveButton id={props.article.id} />
             </div>
           </div>
         </CardContent>

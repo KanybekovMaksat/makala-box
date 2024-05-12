@@ -1,4 +1,9 @@
-import { emailActivationMutation, getTokenMutation, loginUserQuery, registerUserMutation } from './user.api';
+import {
+  emailActivationMutation,
+  getTokenMutation,
+  loginUserQuery,
+  registerUserMutation,
+} from './user.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { pathKeys } from '~shared/lib/react-router';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +15,20 @@ const keys = {
   getToken: () => [...keys.root(), 'getToken'] as const,
   loginUser: () => [...keys.root(), 'loginUser'] as const,
   registerUser: () => [keys.root(), 'registerUser'] as const,
+};
+
+type AxiosErrorType = {
+  code: string;
+  config: any;
+  message: string;
+  name: string;
+  request: any;
+  response?: {
+    data: any;
+    status: number;
+    headers: any;
+    config: any;
+  };
 };
 
 export function useLoginUserQuery() {
@@ -30,7 +49,7 @@ export function useGetTokenMutation() {
       toast.success('Вы успешно авторизовались!', { autoClose: 500 });
       navigate(pathKeys.profile.root());
     },
-    onError: (error) => {
+    onError: (error: AxiosErrorType) => {
       const errorMessage = error.response
         ? error.response.data.detail
         : 'Ошибка при выполнении запроса';
@@ -43,20 +62,21 @@ export function useRegisterMutation() {
   return useMutation({
     mutationKey: keys.registerUser(),
     mutationFn: registerUserMutation,
-    onSuccess: async (response) =>{
-      toast.success("На вашу почту отправлено письмо для подтверждения вашей почты.")
-
+    onSuccess: async () => {
+      await toast.success(
+        'На вашу почту отправлено письмо для подтверждения вашей почты.'
+      );
     },
-    onError: (error) => {
+    onError: (error: AxiosErrorType) => {
       if (error.response && error.response.data) {
         const errors = error.response.data;
-        Object.keys(errors).forEach(field => {
+        Object.keys(errors).forEach((field) => {
           toast.error(`${field}: ${errors[field][0]}`);
         });
       } else {
         toast.error('Ошибка при выполнении запроса');
       }
-    }
+    },
   });
 }
 
@@ -64,18 +84,18 @@ export function useActivationMutation() {
   return useMutation({
     mutationKey: keys.registerUser(),
     mutationFn: emailActivationMutation,
-    onSuccess: async (response) =>{
-      toast.success("Success")
+    onSuccess: async () => {
+      await toast.success('Success');
     },
-    onError: (error) => {
+    onError: (error: AxiosErrorType) => {
       if (error.response && error.response.data) {
         const errors = error.response.data;
-        Object.keys(errors).forEach(field => {
+        Object.keys(errors).forEach((field) => {
           toast.error(`${field}: ${errors[field][0]}`);
         });
       } else {
         toast.error('Ошибка при выполнении запроса');
       }
-    }
+    },
   });
 }

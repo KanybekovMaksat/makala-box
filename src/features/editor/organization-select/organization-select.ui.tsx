@@ -8,9 +8,7 @@ type OrganizationSelectProps = {
 
 type ValueType<T> = T | T[] | null | undefined;
 
-export function OrganizationSelect({
-  handleChange,
-}: OrganizationSelectProps) {
+export function OrganizationSelect({ handleChange}: OrganizationSelectProps) {
   
   const {
     data: organizationOptions,
@@ -43,7 +41,6 @@ export function OrganizationSelect({
           });
         });
       } else {
-        // Если у категории нет подкатегорий, добавляем её в список опций
         categoryOptions.options.push({
           value: category.id,
           label: category.name,

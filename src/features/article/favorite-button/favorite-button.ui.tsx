@@ -3,7 +3,6 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import { getCookie } from 'typescript-cookie';
 import { articleQueries } from '~entities/article';
-import { userQueries } from '~entities/user';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
@@ -19,11 +18,15 @@ export function FavoriteButton(props: FavoriteButtonProps) {
   };
 
   const { mutate: saveFavorite } = articleQueries.useFavoriteArticle(props.id);
+  const { data: favData } = articleQueries.useGetFavoriteArticles();
 
-  const { data: userData } = userQueries.useLoginUserQuery();
-  const favoritePosts = userData?.data?.favoritePosts;
+  const favoriteArticles = favData?.data?.favoriteArticles;
 
-  if (!userData || !favoritePosts || !isAuth) {
+  const handleSaveFavorite = useCallback(async () => {
+    await saveFavorite();
+  }, [saveFavorite]);
+
+  if (!favData || !favData.data || !isAuth) {
     return (
       <Tooltip title={'Нужна авторизация'}>
         <span>
@@ -35,11 +38,9 @@ export function FavoriteButton(props: FavoriteButtonProps) {
     );
   }
 
-  const isFavoritedPosts = favoritePosts.some((post) => post.id === props.id);
-
-  const handleSaveFavorite = useCallback(async () => {
-    await saveFavorite();
-  }, [saveFavorite]);
+  const isFavoritedPosts = favoriteArticles?.some(
+    (post) => post.id === props.id
+  );
 
   return (
     <Tooltip
@@ -51,7 +52,7 @@ export function FavoriteButton(props: FavoriteButtonProps) {
         {isFavoritedPosts ? (
           <BookmarkAddedIcon className="text-second-100" />
         ) : (
-          <BookmarkAddIcon className='hover:text-second-100'/>
+          <BookmarkAddIcon className="hover:text-second-100" />
         )}
       </IconButton>
     </Tooltip>

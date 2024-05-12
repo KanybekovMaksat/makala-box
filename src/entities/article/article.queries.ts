@@ -1,26 +1,54 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+  archivedArticle,
   createArticleMutation,
-  deleteArticle,
+  editArticle,
   favoriteArticleQuery,
   getArticleDetailsQuery,
   getArticleQuery,
+  getFavoriteArticles,
   getWriterArticles,
   likeArticleQuery,
-  updateArticle,
   updateViewQuery,
 } from './article.api';
 import { toast } from 'react-toastify';
+import { queryClient } from './../../shared/lib/react-query/react-query.lib';
+import { Article } from './article.types';
 
 const keys = {
   root: () => ['article'],
+  getFavArticle: () => [...keys.root(), 'fav'] as const,
   createArticle: () => [...keys.root(), 'create'] as const,
   updateArticle: () => [...keys.root(), 'update'] as const,
   article: (id: number) => [...keys.root(), 'byId', id] as const,
   deleteArticle: (id: number) => [...keys.root(), 'delete', id] as const,
   viewArticle: (id: number) => [...keys.root(), 'view', id] as const,
-  favArticle: (id: number) => [...keys.root(), 'favorite', id] as const,
+  favArticle: (id: number) => [...keys.root(), 'favorite',  id] as const,
   likeArticle: (id: number) => [...keys.root(), 'like', id] as const,
+};
+
+type AxiosErrorType = {
+  code: string;
+  config: any;
+  message: string;
+  name: string;
+  request: any;
+  response?: {
+    data: any;
+    status: number;
+    headers: any;
+    config: any;
+  };
+};
+
+export const articleService = {
+  queryKey: (id: number) => keys.article(id),
+
+  getCache: (id: number) =>
+    queryClient.getQueryData(articleService.queryKey(id)),
+
+  setCache: (article: Article) =>
+    queryClient.setQueryData(articleService.queryKey(article.id), article),
 };
 
 export function useGetArticles() {
@@ -28,6 +56,13 @@ export function useGetArticles() {
     queryKey: keys.root(),
     queryFn: getArticleQuery,
   });
+}
+
+export function useGetFavoriteArticles(){
+  return useQuery({
+    queryKey:keys.getFavArticle(),
+    queryFn: getFavoriteArticles
+  })
 }
 
 export function useGetArticleDetail(id: number) {
@@ -53,11 +88,18 @@ export function useUpdateArticleView(id: number) {
 
 export function useLikeArticle(id: number) {
   const queryClient = useQueryClient();
+  const key = keys.article(id);
+
   return useMutation({
     mutationKey: keys.likeArticle(id),
     mutationFn: () => likeArticleQuery(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(keys.likeArticle(id));
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: key });
+      await queryClient.cancelQueries({ queryKey: keys.root() });
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: key });
+      await queryClient.invalidateQueries({ queryKey: keys.root() });
     },
   });
 }
@@ -67,20 +109,28 @@ export function useFavoriteArticle(id: number) {
   return useMutation({
     mutationKey: keys.favArticle(id),
     mutationFn: () => favoriteArticleQuery(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(keys.favArticle(id));
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: keys.favArticle(id) });
+      await queryClient.invalidateQueries({ queryKey: keys.root() });
     },
   });
 }
 
-export function useDeleteArticleQuery(id: number) {
+export function useArchivedArticleQuery(id: number) {
   const queryClient = useQueryClient();
+  const key = keys.article(id);
   return useMutation({
     mutationKey: keys.deleteArticle(id),
-    mutationFn: () => deleteArticle(id),
+    mutationFn: () => archivedArticle(id),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: key });
+      await queryClient.cancelQueries({ queryKey: keys.root() });
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries(keys.deleteArticle(id));
-      toast.info('Статья успешно удалена!');
+      toast.info('Статья успешно архивировано!');
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: keys.root() });
     },
   });
 }
@@ -89,11 +139,13 @@ export function useCreateArticleMutation() {
   return useMutation({
     mutationKey: keys.root(),
     mutationFn: createArticleMutation,
-    onSuccess: async () => {
+    onSuccess: (response) => {
+      const article = response.data;
       toast.success('Статья успешна отправлена на модерацию');
       localStorage.removeItem('savedImage');
+      articleService.setCache(article);
     },
-    onError: (error) => {
+    onError: (error: AxiosErrorType) => {
       if (error.response && error.response.data) {
         const errors = error.response.data;
         Object.keys(errors).forEach((field) => {
@@ -109,12 +161,12 @@ export function useCreateArticleMutation() {
 export function useUpdateArticle() {
   return useMutation({
     mutationKey: keys.updateArticle(),
-    mutationFn:updateArticle,
+    mutationFn: editArticle,
     onSuccess: async () => {
       toast.success('Статья успешна отправлена на модерацию');
       localStorage.setItem('savedImage', null);
     },
-    onError: (error) => {
+    onError: (error:AxiosErrorType) => {
       if (error.response && error.response.data) {
         const errors = error.response.data;
         Object.keys(errors).forEach((field) => {
@@ -126,5 +178,3 @@ export function useUpdateArticle() {
     },
   });
 }
-
-

@@ -1,16 +1,12 @@
 import {
   Button,
-  Chip,
   CircularProgress,
   Container,
   Step,
   StepLabel,
   Stepper,
-  TextField,
 } from '@mui/material';
-import {  useEffect, useState } from 'react';
-import { CategorySelect } from '~features/editor/category-select';
-import { OrganizationSelect } from '~features/editor/organization-select';
+import { useEffect, useState } from 'react';
 import { CreateArticle } from '~widgets/create-article';
 import { CoverCropper } from './../../features/editor/cover-cropper/cover-cropper.ui';
 import { StatusSelect } from '~features/editor/status-select';
@@ -27,18 +23,18 @@ export function EditPage() {
     isError,
   } = articleQueries.useGetArticleDetail(Number(id));
 
+  const articleId: number = parseInt(id);
+
   const [activeStep, setActiveStep] = useState(0);
   const [update, setUpdate] = useState(true);
   const [title, setTitle] = useState('');
-  const [selectedValues, setSelectedValues] = useState([2, 3, 4]);
-  const [selectedOrg, setSelectedOrg] = useState(2);
   const [status, setStatus] = useState('pending');
 
   useEffect(() => {
-    if(isSuccess && articleData){
-        setTitle(articleData.data.title)
+    if (isSuccess && articleData) {
+      setTitle(articleData.data.title);
     }
-  },[])
+  }, [isSuccess]);
 
   const handleChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -46,16 +42,6 @@ export function EditPage() {
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
-  };
-
-  const handleChange = (selectedOptions) => {
-    if (selectedOptions.length <= 3) {
-      setSelectedValues(selectedOptions);
-    }
-  };
-
-  const handleChangeOrg = (selectedOptions) => {
-    setSelectedOrg(selectedOptions);
   };
 
   const handleNext = () => {
@@ -88,22 +74,17 @@ export function EditPage() {
       }
 
       const trimmedSubtitle = firstParagraphText.substring(0, 250).toString();
-      console.log(trimmedSubtitle);
-
-      const imageBlob = localStorage.getItem('savedImage');
-      const file = await URLtoFile(imageBlob, imageBlob);
-      console.log(file);
-
       const formData = new FormData();
       formData.append('title', title);
       formData.append('subtitle', trimmedSubtitle);
       formData.append('body', JSON.stringify(blocks));
       formData.append('status', status);
-      formData.append('organization', selectedOrg);
-      formData.append('readTime', calculateReadingTime(blocks));
-      selectedValues.forEach((value) => formData.append('categories', value));
-      const articleId: string = '9';
-      await updateArticle(formData, articleId);
+      formData.append('readTime', calculateReadingTime(blocks).toString());
+      const options = {
+        data: formData,
+      };
+  
+      await updateArticle(articleId, options);
     } catch (error) {
       console.log(error);
     }
@@ -111,20 +92,18 @@ export function EditPage() {
 
   const handleSubmitPhoto = async () => {
     try {
-        const imageBlob = localStorage.getItem('savedImage');
-        const file = await URLtoFile(imageBlob, imageBlob);
-        console.log(file);
-    
-        const formData = new FormData();
-        formData.append('status', status);
-        formData.append('photo', file);
-        const articleId: string = '25';
-        console.log(id);
-        
-        await updateArticle(formData, id);
-        
+      const imageBlob = localStorage.getItem('savedImage');
+      const file = await URLtoFile(imageBlob, imageBlob);
+      const formData = new FormData();
+      formData.append('status', status);
+      formData.append('photo', file);
+      const options = {
+        data: formData,
+      };
+  
+      await updateArticle(articleId, options);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -156,36 +135,17 @@ export function EditPage() {
                 <h2 className="text-center font-bold">
                   Редактирование метаданных
                 </h2>
-                <TextField
-                  className="w-full font-bold my-3"
-                  placeholder="ЗАГОЛОВОК"
-                  value={title}
-                  variant="filled"
-                  onChange={handleChangeTitle}
-                />
-
-                {articleData?.data?.categories.map((category, index) => (
-                  <Chip
-                    key={index}
-                    label={category}
-                    size="small"
-                    variant="outlined"
-                    className="text-second-100 border-second-100 font-medium  rounded"
-                  />
-                ))}
-                <CategorySelect
-                  selectCategory={selectedValues}
-                  handleChange={handleChange}
-                />
-                <OrganizationSelect
-                  selectOrg={selectedOrg}
-                  handleChange={handleChangeOrg}
-                />
-
                 <StatusSelect
                   status={status}
                   handleStatusChange={handleStatusChange}
                 />
+                <textarea
+                  className="w-full font-bold mb-3 text-[32px] text-pc-500 resize-none leading-8  outline-none max-h-[300px]"
+                  placeholder="ЗАГОЛОВОК"
+                  value={title}
+                  onChange={handleChangeTitle}
+                />
+                <CreateArticle />
                 <div className="flex justify-end gap-5">
                   {isPending ? (
                     <Button
@@ -206,40 +166,6 @@ export function EditPage() {
                     onClick={handleNext}
                   >
                     Далее
-                  </Button>
-                </div>
-              </>
-            )}
-            {activeStep === 1 && (
-              <>
-                <CreateArticle update data={articleData?.data?.body} />
-                <div className="flex justify-end gap-5">
-                  {isPending ? (
-                    <Button
-                      variant="outlined"
-                      className="cursor-wait flex gap-2"
-                    >
-                      <CircularProgress size={20} />
-                      Отправка данных...
-                    </Button>
-                  ) : (
-                    <Button variant="contained" onClick={handleSubmit}>
-                      Отправить
-                    </Button>
-                  )}
-                  <Button
-                    className="self-end mt-5"
-                    variant="outlined"
-                    onClick={handleBack}
-                  >
-                    Назад
-                  </Button>
-                  <Button
-                    className="self-end mt-5"
-                    variant="outlined"
-                    onClick={handleNext}
-                  >
-                    Вперед
                   </Button>
                 </div>
               </>
@@ -286,11 +212,7 @@ interface StepperViewProps {
   activeStep: number;
 }
 
-const steps = [
-  'Редактирование метаданных',
-  'Редактирование содержания',
-  'Редактирование обложки',
-];
+const steps = ['Редактирование содержания', 'Редактирование обложки'];
 
 const StepperView: React.FC<StepperViewProps> = ({ activeStep }) => {
   return (

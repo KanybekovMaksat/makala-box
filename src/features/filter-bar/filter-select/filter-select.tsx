@@ -22,7 +22,7 @@ export function FilterSelect() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 

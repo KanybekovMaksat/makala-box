@@ -1,4 +1,3 @@
-// import components
 import {
   Avatar,
   Card,
@@ -16,24 +15,20 @@ import { articleQueries, articleTypes } from '~entities/article';
 import { ShareButton } from '~features/article/share-button';
 import { LikeButton } from '~features/article/like-button';
 import { FavoriteButton } from '~features/article/favorite-button';
-import { userQueries } from '~entities/user';
 
-// import icons
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 dayjs.locale('ru');
 
-export function ArticlesList({ fetchType = false }) {
+export function ArticlesList() {
   const {
     data: articleData,
     isLoading,
     isSuccess,
     isError,
-  } = fetchType
-    ? userQueries.useLoginUserQuery()
-    : articleQueries.useGetArticles();
+  } = articleQueries.useGetArticles();
 
   if (isLoading) {
     return (
@@ -48,13 +43,11 @@ export function ArticlesList({ fetchType = false }) {
     return <div className="my-20">Error fetching user data.</div>;
   }
 
-  const articles = fetchType
-    ? articleData?.data?.favoritePosts
-    : articleData?.data?.results;
+  const articles = articleData?.data?.results;
 
-  const publishedArticles = articles.filter(
-    (article) => article.status === 'approved'
-  );
+  const publishedArticles = !articles
+    ? []
+    : articles.filter((article) => article.status === 'approved');
 
   if (publishedArticles.length == 0) {
     return (
@@ -87,7 +80,7 @@ type ArticleCardProps = { article: articleTypes.Article };
 function ArticleCard(props: ArticleCardProps) {
   const navigate = useNavigate();
   const handleNavigate = (id: number) => {
-    navigate(pathKeys.article.byId({id}));
+    navigate(pathKeys.article.byId({ id }));
   };
   return (
     <Card className="min-w-full max-w-full shadow-none border border-sc-100  card">
@@ -144,7 +137,10 @@ function ArticleCard(props: ArticleCardProps) {
               </p>
             </Tooltip>
           </div>
-          <div className='hover:cursor-pointer' onClick={() => handleNavigate(props.article.id)}>
+          <div
+            className="hover:cursor-pointer"
+            onClick={() => handleNavigate(props.article.id)}
+          >
             <h4 className="font-bold text-xl title duration-300">
               {props.article.title}
             </h4>

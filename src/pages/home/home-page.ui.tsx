@@ -1,7 +1,4 @@
 import { ArticlesList } from '~widgets/articles-list';
-import { Link } from 'react-router-dom';
-import { pathKeys } from '~shared/lib/react-router';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { IntroBlock } from '~widgets/intro-block';
 import { Container } from '@mui/material';
 
@@ -25,9 +22,10 @@ export function HomePage() {
         </div>
       </div>
       <IntroBlock />
-      <h2 className="mt-14 mb-5 text-center text-2xl font-bold">Новые статьи</h2>
+      <h2 className="mt-14 mb-5 text-center text-2xl font-bold">
+        Новые статьи
+      </h2>
       <ArticlesList />
-
     </Container>
   );
 }

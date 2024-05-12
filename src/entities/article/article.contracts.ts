@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 export const ArticleSchema = z.object({
   id: z.number(),
-  categories: z.array(z.string()),  
+  categories: z.array(z.string()), 
+  categoriesId: z.array(z.number()), 
   totalLikes: z.number(),
   photo: z.string().url(),
   title: z.string(),
@@ -11,14 +12,15 @@ export const ArticleSchema = z.object({
   likeCount: z.number(),
   viewCount: z.number(),
   readTime: z.number(),
-  status: z.enum(['draft', 'pending', 'approved', 'rejected']),
+  status: z.enum(['draft', 'pending', 'approved', 'rejected', 'archived']),
   moderatorComment:z.string(),
   updated: z.string(),
   created: z.string(),
   author: z.string(),
   authorId: z.number(),
   authorPhoto: z.string().url(),
-  organization: z.number(),
+  organization: z.string(),
+  organizationId: z.number(),
   likes: z.array(z.number()),
 });
 

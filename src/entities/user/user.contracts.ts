@@ -32,5 +32,5 @@ export const UserDtoSchema = z.object({
   lastName: z.string(),
   role: z.string(),
   photo: z.string(),
-  favoritePosts: z.array(ArticleSchema),
+  favoriteArticles: z.array(ArticleSchema),
 });

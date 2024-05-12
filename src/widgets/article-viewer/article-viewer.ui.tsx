@@ -43,6 +43,7 @@ export function ArticleViewer(props: ArticleViewerProps) {
       slashMenu={false}
       editor={editor}
       theme={'light'}
+      formattingToolbar={false}
       editable={false}
     >
       <CommentToolbarController />

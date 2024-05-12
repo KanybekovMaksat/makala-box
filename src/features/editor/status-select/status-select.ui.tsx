@@ -6,7 +6,7 @@ enum ArticleStatus {
 }
 
 type ArticleStatusProps = {
-  status: ArticleStatus;
+  status: string;
   handleStatusChange: (newStatus: ArticleStatus) => void;
 };
 

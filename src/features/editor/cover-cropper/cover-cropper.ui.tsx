@@ -31,7 +31,7 @@ const CropperModal: React.FC<CropperModalProps> = ({
   setModalOpen,
 }) => {
   const [slideValue, setSlideValue] = useState<number>(10);
-  const cropRef = useRef<HTMLImageElement | null>(null);
+  const cropRef = useRef<AvatarEditor | null>(null);
 
   const handleSave = async () => {
     if (cropRef.current) {
@@ -66,7 +66,7 @@ const CropperModal: React.FC<CropperModalProps> = ({
           size="medium"
           defaultValue={slideValue}
           value={slideValue}
-          onChange={(e, value) => setSlideValue(value as number)}
+          onChange={(_, value) => setSlideValue(value as number)}
         />
         <Box>
           <Button
@@ -121,7 +121,7 @@ export function CoverCropper({ update, setUpdate, data }: CoverCropperProps) {
             alt=""
             className="min-w-[94%] max-w-[100%] min-h-[400px] max-h-[400px] object-cover rounded "
           />
-          <p>Примерное отображения обложки на больших экранах</p>
+          <p>Примерное отображения обложки </p>
           <img
             src={data}
             alt=""
