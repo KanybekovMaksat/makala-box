@@ -30,7 +30,7 @@ export function ShareButton(props: ShareButtonProps) {
     setAnchorEl(null);
   };
 
-  const articlePath = `http://localhost:5173/article/${props.id}`;
+  const articlePath = `https://makalabox.com/article/${props.id}`;
 
   const handleCopyLink = () => {
     navigator.clipboard
