@@ -1,17 +1,31 @@
 import { CircularProgress, Container, Divider } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { articleQueries } from '~entities/article';
+import $api from '~shared/api';
 import { ArticleInfo } from '~widgets/article-info';
 import { ArticleViewer } from '~widgets/article-viewer';
 
 export function ArticlePage() {
   const { id } = useParams();
-  const {
-    data: articleData,
-    isSuccess,
-    isLoading,
-    isError,
-  } = articleQueries.useGetArticleDetail(Number(id));
+  const [articleData, setArticleData] = useState(null); 
+  const [isLoading, setIsLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        const response = await $api.get(`articles/${id}/`); 
+        setArticleData(response);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+    fetchArticle(); 
+  }, []);
+
 
   articleQueries.useUpdateArticleView(Number(id));
 
@@ -24,16 +38,18 @@ export function ArticlePage() {
     );
   }
 
-  if (isError || !isSuccess || !articleData) {
+  if (error || !articleData) {
     return (
       <div className="my-20 text-center">Error fetching article data.</div>
     );
   }
 
+
+  
   return (
-    <Container  maxWidth="md" className="mx-auto my-[65px]">
-      {isSuccess && articleData && (
-        <div className='max-w-[95%] bg-[white] px-5'>
+    <Container maxWidth="md" className="mx-auto my-[65px]">
+      {articleData && (
+        <div className="max-w-[95%] bg-[white] px-5">
           <ArticleInfo article={articleData.data} />
           <Divider />
           <ArticleViewer body={articleData.data.body} />

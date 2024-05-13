@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  queryOptions as tsqQueryOptions,
+} from '@tanstack/react-query';
 import {
   archivedArticle,
   createArticleMutation,
@@ -17,13 +22,14 @@ import { Article } from './article.types';
 
 const keys = {
   root: () => ['article'],
+  uniq: (id: number) => [...keys.root(), 'uniq', id] as const,
   getFavArticle: () => [...keys.root(), 'fav'] as const,
   createArticle: () => [...keys.root(), 'create'] as const,
   updateArticle: () => [...keys.root(), 'update'] as const,
   article: (id: number) => [...keys.root(), 'byId', id] as const,
   deleteArticle: (id: number) => [...keys.root(), 'delete', id] as const,
   viewArticle: (id: number) => [...keys.root(), 'view', id] as const,
-  favArticle: (id: number) => [...keys.root(), 'favorite',  id] as const,
+  favArticle: (id: number) => [...keys.root(), 'favorite', id] as const,
   likeArticle: (id: number) => [...keys.root(), 'like', id] as const,
 };
 
@@ -49,6 +55,23 @@ export const articleService = {
 
   setCache: (article: Article) =>
     queryClient.setQueryData(articleService.queryKey(article.id), article),
+
+  queryOptions: (id: number) => {
+    const articleKey = articleService.queryKey(id);
+    return tsqQueryOptions({
+      queryKey: articleKey,
+      queryFn: async () => {
+        const article = await getArticleDetailsQuery(id);
+        return article;
+      },
+      initialData: () => articleService.getCache(id)!,
+      initialDataUpdatedAt: () =>
+        queryClient.getQueryState(articleKey)?.dataUpdatedAt,
+    });
+  },
+
+  prefetchQuery: async (id: number) =>
+    queryClient.prefetchQuery(articleService.queryOptions(id)),
 };
 
 export function useGetArticles() {
@@ -58,16 +81,16 @@ export function useGetArticles() {
   });
 }
 
-export function useGetFavoriteArticles(){
+export function useGetFavoriteArticles() {
   return useQuery({
-    queryKey:keys.getFavArticle(),
-    queryFn: getFavoriteArticles
-  })
+    queryKey: keys.getFavArticle(),
+    queryFn: getFavoriteArticles,
+  });
 }
 
 export function useGetArticleDetail(id: number) {
   return useQuery({
-    queryKey: keys.article(id),
+    queryKey: keys.uniq(id),
     queryFn: () => getArticleDetailsQuery(id),
   });
 }
@@ -166,7 +189,7 @@ export function useUpdateArticle() {
       toast.success('Статья успешна отправлена на модерацию');
       localStorage.setItem('savedImage', null);
     },
-    onError: (error:AxiosErrorType) => {
+    onError: (error: AxiosErrorType) => {
       if (error.response && error.response.data) {
         const errors = error.response.data;
         Object.keys(errors).forEach((field) => {

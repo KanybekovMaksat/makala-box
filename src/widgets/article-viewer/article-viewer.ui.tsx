@@ -37,6 +37,7 @@ export function ArticleViewer(props: ArticleViewerProps) {
     initialContent: props.body,
   });
 
+
   return (
     <BlockNoteView
       data-changing-font-demo

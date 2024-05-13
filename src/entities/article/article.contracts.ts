@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const ArticleSchema = z.object({
   id: z.number(),
   categories: z.array(z.string()), 
-  categoriesId: z.array(z.number()), 
+  categoriesId: z.string(), 
   totalLikes: z.number(),
   photo: z.string().url(),
   title: z.string(),

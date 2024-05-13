@@ -8,6 +8,7 @@ export function getArticleQuery() {
 export function getFavoriteArticles() {
   return $api.get('users/favorite/');
 }
+
 export function getArticleDetailsQuery(id: number) {
   return $api.get<Article>(`articles/${id}/`);
 }
