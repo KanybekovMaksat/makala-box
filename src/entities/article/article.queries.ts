@@ -37,7 +37,6 @@ type AxiosErrorType = {
 
 const keys = {
   root: () => ['article'],
-  uniq: (id: number) => [...keys.root(), 'uniq', id] as const,
   getFavArticle: () => [...keys.root(), 'fav'] as const,
   createArticle: () => [...keys.root(), 'create'] as const,
   updateArticle: () => [...keys.root(), 'update'] as const,

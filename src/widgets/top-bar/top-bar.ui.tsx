@@ -145,7 +145,6 @@ export function TopBar() {
                 </Button>
               ) : null}
             </div>
-
             <div>
               <Tooltip title="Открыть профиль">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

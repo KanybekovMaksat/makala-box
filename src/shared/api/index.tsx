@@ -34,7 +34,7 @@ $api.interceptors.response.use(
       try {
         const refreshToken = getCookie('refresh');
         const response = await axios.post(
-          `${API_URL}jwt/refresh`,
+          `${API_URL}jwt/refresh/`,
           {
             refresh: refreshToken,
           },

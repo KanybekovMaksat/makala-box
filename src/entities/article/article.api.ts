@@ -1,24 +1,25 @@
 import $api from '~shared/api';
 import { ArticlesList, Article, CreateArticleDto } from './article.types';
+import axios from 'axios';
 
 export function getArticleQuery() {
-  return $api.get<ArticlesList>('articles/');
+  return axios.get<ArticlesList>('https://api.makalabox.com/api/articles/');
+}
+
+export function getArticleDetailsQuery(id: number) {
+  return axios.get<Article>(`https://api.makalabox.com/api/articles/${id}/`);
+}
+
+export function updateViewQuery(id: number) {
+  return axios.get(`https://api.makalabox.com/api/articles/update-view/${id}`);
 }
 
 export function getFavoriteArticles() {
   return $api.get('users/favorite/');
 }
 
-export function getArticleDetailsQuery(id: number) {
-  return $api.get<Article>(`articles/${id}/`);
-}
-
 export function getWriterArticles() {
   return $api.get<Article>('articles/me/');
-}
-
-export function updateViewQuery(id: number) {
-  return $api.get(`articles/update-view/${id}`);
 }
 
 export function likeArticleQuery(id: number) {
@@ -29,8 +30,8 @@ export function createArticleMutation(props: CreateArticleDto = {}) {
   return $api.post(`articles/me/`, props);
 }
 
-export function editArticle(id:number, props:any = {}) {
-  return $api.patch(`articles/${id}`, props); 
+export function editArticle(id: number, props: any = {}) {
+  return $api.patch(`articles/${id}`, props);
 }
 
 export function favoriteArticleQuery(id: number) {
@@ -44,4 +45,3 @@ export function archivedArticle(id: number) {
 // export function createArticleMutation(params: { article: CreateArticleDto }) {
 //   return $api.post(`articles/`, params.article);
 // }
-
