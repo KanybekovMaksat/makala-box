@@ -8,6 +8,7 @@ import { ArticleInfo } from '~widgets/article-info';
 import { ArticleViewer } from '~widgets/article-viewer';
 import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
+import { CommentList } from '~widgets/comment-list';
 function Page() {
   const { id } = useParams();
   const [preLoad, setPreLoad] = useState(true);
@@ -64,7 +65,7 @@ function Page() {
   return (
     <Container maxWidth="md" className="mx-auto my-[65px]">
       {articleData && (
-        <div className="max-w-[95%] bg-[white] px-5">
+        <div className="max-w-[95%] bg-[white] px-5 mb-5">
           <ArticleInfo article={articleData.data} />
           <Divider />
           {preLoad ? (
@@ -77,6 +78,7 @@ function Page() {
           )}
         </div>
       )}
+      <CommentList/>
     </Container>
   );
 }
