@@ -15,7 +15,7 @@ function Page() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setPreLoad(false);
-    }, 100);
+    }, 0);
 
     return () => clearTimeout(timer);
   }, []);
