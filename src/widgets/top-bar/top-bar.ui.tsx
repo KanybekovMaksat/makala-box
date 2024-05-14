@@ -61,7 +61,6 @@ export function TopBar() {
     removeCookie('access');
     removeCookie('refresh');
     navigate(`${pathKeys.home()}`);
-    window.location.reload();
   };
 
   return (
