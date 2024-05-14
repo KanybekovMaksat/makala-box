@@ -27,7 +27,7 @@ import {
 import { codeStyleSpec } from './../../features/blocknote/code-toolbar/code-toolbar.stylespec';
 import { CustomToolbar } from '~features/blocknote/custom-toolbar';
 import { useEffect, useMemo, useState } from 'react';
-
+import { CircularProgress } from '@mui/material';
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
@@ -83,6 +83,16 @@ export function CreateArticle() {
     PartialBlock[] | undefined | 'loading'
   >('loading');
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     loadFromStorage().then((content) => {
       setInitialContent(content);
@@ -100,7 +110,12 @@ export function CreateArticle() {
     return 'Loading content...';
   }
 
-  return (
+  return isLoading ? (
+    <div className='flex flex-col items-center gap-3 my-20'>
+      <CircularProgress  />
+      Загрузка...
+    </div>
+  ) : (
     <BlockNoteView
       data-changing-font-demo
       slashMenu={false}
@@ -114,7 +129,7 @@ export function CreateArticle() {
       <SuggestionMenuController
         triggerCharacter={'/'}
         suggestionMenuComponent={CustomSlashMenu}
-        getItems={async (query) =>
+        getItems={async (query: string) =>
           filterSuggestionItems(
             [
               ...getDefaultReactSlashMenuItems(editor),

@@ -173,6 +173,7 @@ export function useCreateArticleMutation() {
       const article = response.data;
       toast.success('Статья успешна отправлена на модерацию');
       localStorage.removeItem('savedImage');
+      localStorage.removeItem('sandboxContent')
       articleService.setCache(article);
     },
     onError: (error: AxiosErrorType) => {

@@ -115,7 +115,7 @@ function Page() {
         {activeStep === 0 && (
           <div className="w-full my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
             <div className="w-full px-[20px] mb-5">
-              <textarea
+              <input
                 className="w-full font-bold mb-3 text-[32px] text-pc-500 resize-none leading-8  outline-none max-h-[300px]"
                 placeholder="ЗАГОЛОВОК"
                 value={title}
