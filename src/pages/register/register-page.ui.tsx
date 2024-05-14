@@ -12,7 +12,7 @@ import { pathKeys } from '~shared/lib/react-router';
 import { userQueries, userTypes } from '~entities/user';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
 
@@ -36,6 +36,11 @@ function Page() {
     isSuccess,
   } = userQueries.useRegisterMutation();
 
+  function saveCredentialsToLocalStorage(email, password) {
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+  }
+  
   if (isSuccess) {
     return (
       <div className="my-20 w-[380px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
@@ -54,7 +59,10 @@ function Page() {
       <Formik
         initialValues={initialUser}
         validate={validateForm}
-        onSubmit={(user) => registerUser({ user })}
+        onSubmit={(user) => {
+          registerUser({ user });
+          saveCredentialsToLocalStorage(user.email, user.password);
+        }}
       >
         <Form>
           <fieldset disabled={isPending}>
@@ -163,7 +171,11 @@ function Page() {
               />
             </fieldset>
           </fieldset>
-          {isPending ? <p className='text-center'>Регистрация...</p> : <SubmitButton />}
+          {isPending ? (
+            <p className="text-center">Регистрация...</p>
+          ) : (
+            <SubmitButton />
+          )}
         </Form>
       </Formik>
       {isError && (
