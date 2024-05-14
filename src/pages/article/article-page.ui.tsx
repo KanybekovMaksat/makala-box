@@ -10,23 +10,39 @@ import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
 function Page() {
   const { id } = useParams();
-  const [articleData, setArticleData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [preLoad, setPreLoad] = useState(true);
 
   useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        const response = await $api.get(`articles/${id}/`);
-        setArticleData(response);
-        setIsLoading(false);
-      } catch (error) {
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-    fetchArticle();
+    const timer = setTimeout(() => {
+      setPreLoad(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  const {
+    data: articleData,
+    isLoading,
+    isError,
+  } = articleQueries.useGetArticleDetail(parseInt(id));
+
+  // const [articleData, setArticleData] = useState(null);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchArticle = async () => {
+  //     try {
+  //       const response = await $api.get(`articles/${id}/`);
+  //       setArticleData(response);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       setError(error);
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchArticle();
+  // }, []);
 
   articleQueries.useUpdateArticleView(Number(id));
 
@@ -39,7 +55,7 @@ function Page() {
     );
   }
 
-  if (error || !articleData) {
+  if (isError || !articleData) {
     return (
       <div className="my-20 text-center">Error fetching article data.</div>
     );
@@ -51,7 +67,14 @@ function Page() {
         <div className="max-w-[95%] bg-[white] px-5">
           <ArticleInfo article={articleData.data} />
           <Divider />
-          <ArticleViewer body={articleData.data.body} />
+          {preLoad ? (
+            <div className="flex flex-col items-center gap-3 my-20">
+              <CircularProgress />
+              Загрузка...
+            </div>
+          ) : (
+            <ArticleViewer body={articleData.data.body} />
+          )}
         </div>
       )}
     </Container>
