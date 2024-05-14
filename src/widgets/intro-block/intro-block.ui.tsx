@@ -53,7 +53,7 @@ function CardItem({ image, title, description }) {
 
 export function IntroBlock() {
   return (
-    <div className="my-10 w-[90%] mx-auto">
+    <div className="my-10 w-[95%] md:w-[90%] mx-auto">
       <div className="flex slider-banner">
         <Swiper
           modules={[Pagination, Autoplay]}

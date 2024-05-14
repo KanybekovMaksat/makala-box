@@ -5,7 +5,7 @@ import { Container } from '@mui/material';
 export function HomePage() {
   return (
     <Container maxWidth="md" className="md:mx-auto my-20">
-      <div className="w-[90%] mx-auto bg-[white] my-5  p-5 rounded-md flex flex-col-reverse md:flex-row items-center md:justify-center gap-5 translate-y-5 md:translate-y-px border-2 border-[#eae8e885]">
+      <div className="w-[95%] md:w-[90%] mx-auto bg-[white] my-5  p-5 rounded-md flex flex-col-reverse md:flex-row items-center md:justify-center gap-5 translate-y-5 md:translate-y-px border-2 border-[#eae8e885]">
         <img
           src="/public/typing.svg"
           alt=""

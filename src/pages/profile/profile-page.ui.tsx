@@ -21,7 +21,7 @@ export function ProfilePage() {
 
   return (
     <Container maxWidth="md" className="my-20">
-      <div className="w-[50%] mx-auto bg-[white] border-2 border-sc-100 rounded flex flex-col items-center  p-10">
+      <div className="w-auto mx-auto bg-[white] border-2 border-sc-100 rounded flex flex-col items-center  p-10">
         <Avatar
           className="h-[100px] w-[100px] rounded"
           src={photo}

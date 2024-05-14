@@ -23,7 +23,7 @@ function Page() {
   } = userQueries.useGetTokenMutation();
 
   return (
-    <div className="my-[200px] bg-[white] w-[400px]  border border-sc-100 mx-auto rounded-md px-5 py-7 ">
+    <div className="my-[200px] bg-[white] w-[380px]  border border-sc-100 mx-auto rounded-md px-5 py-7 ">
       <h1 className="font-bold text-center text-2xl text-pc-500">
         Авторизация
       </h1>

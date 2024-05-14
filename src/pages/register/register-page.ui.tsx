@@ -38,7 +38,7 @@ function Page() {
 
   if (isSuccess) {
     return (
-      <div className="my-20 w-[400px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
+      <div className="my-20 w-[380px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
         <h1 className="font-bold text-center text-2xl text-pc-500">
           На вашу почту отправлено письмо для подтверждения вашей почты.
         </h1>
@@ -47,7 +47,7 @@ function Page() {
   }
 
   return (
-    <div className="my-20 w-[400px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
+    <div className="my-20 w-[380px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
       <h1 className="font-bold text-center text-2xl text-pc-500">
         Регистрация
       </h1>

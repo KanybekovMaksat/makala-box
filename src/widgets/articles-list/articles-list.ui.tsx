@@ -58,18 +58,18 @@ export function ArticlesList() {
   }
 
   return (
-    <div className="flex flex-col mx-auto gap-5 max-w-[90%]">
+    <div className="flex flex-col mx-auto gap-5 max-w-[95%] md:max-w-[90%] ">
       {isSuccess &&
         publishedArticles.map((article) => (
           <ArticleCard article={article} key={article.id} />
         ))}
-      <Link
+      {/* <Link
         className="flex justify-end underline text-pc-500 my-3"
         to={pathKeys.feed()}
       >
         Смотреть больше
         <NavigateNextIcon />
-      </Link>
+      </Link> */}
     </div>
   );
 }
@@ -85,7 +85,7 @@ function ArticleCard(props: ArticleCardProps) {
   return (
     <Card className="min-w-full max-w-full shadow-none border border-sc-100  card">
       <div className="flex flex-col">
-        <CardContent className="md:p-5 p-2">
+        <CardContent className="md:p-5 p-3">
           <div className="flex justify-between items-center pb-3">
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <div className="flex items-center gap-4 cursor-pointer">
