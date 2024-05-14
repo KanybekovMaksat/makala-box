@@ -3,19 +3,21 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { articleQueries } from '~entities/article';
 import $api from '~shared/api';
+import { withSuspense } from '~shared/lib/react';
 import { ArticleInfo } from '~widgets/article-info';
 import { ArticleViewer } from '~widgets/article-viewer';
-
-export function ArticlePage() {
+import { withErrorBoundary } from 'react-error-boundary';
+import { ErrorHandler } from '~shared/ui/error';
+function Page() {
   const { id } = useParams();
-  const [articleData, setArticleData] = useState(null); 
-  const [isLoading, setIsLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const [articleData, setArticleData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const response = await $api.get(`articles/${id}/`); 
+        const response = await $api.get(`articles/${id}/`);
         setArticleData(response);
         setIsLoading(false);
       } catch (error) {
@@ -23,9 +25,8 @@ export function ArticlePage() {
         setIsLoading(false);
       }
     };
-    fetchArticle(); 
+    fetchArticle();
   }, []);
-
 
   articleQueries.useUpdateArticleView(Number(id));
 
@@ -44,8 +45,6 @@ export function ArticlePage() {
     );
   }
 
-
-  
   return (
     <Container maxWidth="md" className="mx-auto my-[65px]">
       {articleData && (
@@ -58,3 +57,14 @@ export function ArticlePage() {
     </Container>
   );
 }
+
+function Loader() {
+  return <div className="my-20">loading...</div>;
+}
+const SuspensedPage = withSuspense(Page, {
+  fallback: <Loader />,
+});
+
+export const ArticlePage = withErrorBoundary(SuspensedPage, {
+  fallbackRender: ({ error }) => <ErrorHandler error={error} />,
+});

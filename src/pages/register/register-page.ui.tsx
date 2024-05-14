@@ -13,6 +13,8 @@ import { userQueries, userTypes } from '~entities/user';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
+import { withErrorBoundary } from 'react-error-boundary';
+import { ErrorHandler } from '~shared/ui/error';
 
 const initialUser: userTypes.CreateUserSchema = {
   email: '',
@@ -22,7 +24,7 @@ const initialUser: userTypes.CreateUserSchema = {
   password: '',
 };
 
-export function RegisterPage() {
+function Page() {
   const [visibility, setVisibility] = useState(false);
   const handleClickShowPassword = () =>
     setVisibility((visibility) => !visibility);
@@ -161,7 +163,7 @@ export function RegisterPage() {
               />
             </fieldset>
           </fieldset>
-          <SubmitButton />
+          {isPending ? <p className='text-center'>Регистрация...</p> : <SubmitButton />}
         </Form>
       </Formik>
       {isError && (
@@ -169,9 +171,6 @@ export function RegisterPage() {
           Ошибка при выполнении запроса
         </p>
       )}
-      {/* <Button variant="contained" className="w-full mb-1 bg-[red]">
-        Войти с Google
-      </Button> */}
       <p className="flex justify-center gap-1">
         Уже есть аккаунт?
         <Link className="underline text-second-100" to={pathKeys.login()}>
@@ -233,3 +232,7 @@ const validateForm = (values) => {
 
   return errors;
 };
+
+export const RegisterPage = withErrorBoundary(Page, {
+  fallbackRender: ({ error }) => <ErrorHandler error={error} />,
+});

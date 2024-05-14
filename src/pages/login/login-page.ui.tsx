@@ -1,14 +1,16 @@
 import { ErrorMessage, Field, Form, Formik, useFormikContext } from 'formik';
 import { userContracts, userQueries, userTypes } from '~entities/user';
 import { Button, IconButton, TextField } from '@mui/material';
-import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
 import { formikContract } from '~shared/lib/zod';
+import { withErrorBoundary } from 'react-error-boundary';
+import { ErrorHandler } from '~shared/ui/error';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export function LoginPage() {
+function Page() {
   const [visibility, setVisibility] = useState(false);
 
   const handleClickShowPassword = () =>
@@ -32,7 +34,7 @@ export function LoginPage() {
       >
         <Form>
           <fieldset disabled={isPending} className="text-xs text-[red]">
-            <fieldset  className="my-5">
+            <fieldset className="my-5">
               <Field
                 as={TextField}
                 fullWidth
@@ -106,3 +108,7 @@ function SubmitButton() {
 }
 
 const validateForm = formikContract(userContracts.LoginUserDtoSchema);
+
+export const LoginPage = withErrorBoundary(Page, {
+  fallbackRender: ({ error }) => <ErrorHandler error={error} />,
+});

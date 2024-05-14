@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { getCookie, setCookie } from 'typescript-cookie';
 
-export const API_URL = 'http://makalabox.api.ustaz.online/api/';
+export const API_URL = 'https://api.makalabox.com/api/';
 
 const $api = axios.create({
   withCredentials: true,

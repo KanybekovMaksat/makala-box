@@ -17,6 +17,8 @@ import { OrganizationSelect } from '~features/editor/organization-select';
 import { StatusSelect } from '~features/editor/status-select';
 import { CoverCropper } from '~features/editor/cover-cropper';
 import { URLtoFile, calculateReadingTime } from '~shared/utils/editor';
+import { withErrorBoundary } from 'react-error-boundary';
+import { ErrorHandler } from '~shared/ui/error';
 
 interface StepperViewProps {
   activeStep: number;
@@ -24,7 +26,7 @@ interface StepperViewProps {
 
 const steps = ['Составление статьи', 'Публикация статьи'];
 
-export function SandboxPage() {
+function Page() {
   const { data: userData } = userQueries.useLoginUserQuery();
   const role = userData?.data?.role || '';
   const navigate = useNavigate();
@@ -80,7 +82,7 @@ export function SandboxPage() {
       formData.append('body', JSON.stringify(blocks));
       formData.append('status', status);
       formData.append('organization', selectedOrg);
-      formData.append('readTime', calculateReadingTime(blocks));
+      formData.append('readTime', calculateReadingTime(blocks).toString());
       selectedValues.forEach((value) => formData.append('categories', value));
       await createArticle(formData);
     } catch (error) {
@@ -200,3 +202,7 @@ const StepperView: React.FC<StepperViewProps> = ({ activeStep }) => {
     </Stepper>
   );
 };
+
+export const SandboxPage = withErrorBoundary(Page, {
+  fallbackRender: ({ error }) => <ErrorHandler error={error} />,
+});
