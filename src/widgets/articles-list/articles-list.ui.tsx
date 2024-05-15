@@ -18,7 +18,7 @@ import { FavoriteButton } from '~features/article/favorite-button';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+// import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 dayjs.locale('ru');
 
@@ -60,7 +60,7 @@ export function ArticlesList() {
   return (
     <div className="flex flex-col mx-auto gap-5 max-w-[95%] md:max-w-[90%] ">
       {isSuccess &&
-        publishedArticles.map((article) => (
+        articles.map((article) => (
           <ArticleCard article={article} key={article.id} />
         ))}
       {/* <Link

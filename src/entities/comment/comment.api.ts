@@ -5,8 +5,8 @@ export function getComments(id: number) {
   return $api.get(`articles/${id}/comment/`);
 }
 
-export function createComment(id: number, comment: CreateComment = {}) {
-  return $api.post(`articles/${id}/comment/`, { comment });
+export function createComment(params: { comment: CreateComment }) {
+  return $api.post(`articles/${params.comment.article}/comment/`, params.comment);
 }
 
 export function updateComment(

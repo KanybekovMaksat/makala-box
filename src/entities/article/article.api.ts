@@ -2,16 +2,18 @@ import $api from '~shared/api';
 import { ArticlesList, Article, CreateArticleDto } from './article.types';
 import axios from 'axios';
 
+const API_URL = 'https://api.makalabox.com/api/';
+
 export function getArticleQuery() {
-  return axios.get<ArticlesList>('https://api.makalabox.com/api/articles/');
+  return axios.get<ArticlesList>(`${API_URL}articles/`);
 }
 
 export function getArticleDetailsQuery(id: number) {
-  return axios.get<Article>(`https://api.makalabox.com/api/articles/${id}/`);
+  return axios.get<Article>(`${API_URL}articles/${id}/`);
 }
 
 export function updateViewQuery(id: number) {
-  return axios.get(`https://api.makalabox.com/api/articles/update-view/${id}`);
+  return axios.get(`${API_URL}articles/update-view/${id}`);
 }
 
 export function getFavoriteArticles() {

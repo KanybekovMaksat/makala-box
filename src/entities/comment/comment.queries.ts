@@ -23,7 +23,9 @@ export function useCreateCommentMutation(id: number) {
     mutationKey: keys.createComment(id),
     mutationFn: createComment,
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: keys.createComment(id) });
+      await queryClient.cancelQueries({
+        queryKey: keys.createComment(id),
+      });
       await queryClient.cancelQueries({ queryKey: keys.root() });
     },
     onSuccess: async () => {
@@ -33,7 +35,9 @@ export function useCreateCommentMutation(id: number) {
       toast.error('При отправке произошла ошибка!');
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: keys.root() });
+      await queryClient.invalidateQueries({
+        queryKey: keys.getComments(id),
+      });
     },
   });
 }

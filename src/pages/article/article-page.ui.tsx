@@ -9,6 +9,7 @@ import { ArticleViewer } from '~widgets/article-viewer';
 import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
 import { CommentList } from '~widgets/comment-list';
+import { CommentForm } from '~widgets/comment-form';
 function Page() {
   const { id } = useParams();
   const [preLoad, setPreLoad] = useState(true);
@@ -78,7 +79,11 @@ function Page() {
           )}
         </div>
       )}
-      <CommentList/>
+      <div className="w-[95%] bg-[white] p-5">
+        <h3 className="font-bold text-2xl">Комментарии</h3>
+        <CommentForm id={parseInt(id)}/>
+        <CommentList id={parseInt(id)} />
+      </div>
     </Container>
   );
 }

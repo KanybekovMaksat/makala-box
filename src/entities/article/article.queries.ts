@@ -38,6 +38,7 @@ type AxiosErrorType = {
 const keys = {
   root: () => ['article'],
   getFavArticle: () => [...keys.root(), 'fav'] as const,
+  getWriterArticle: () => [...keys.root(), 'writer'] as const,
   createArticle: () => [...keys.root(), 'create'] as const,
   updateArticle: () => [...keys.root(), 'update'] as const,
   article: (id: number) => [...keys.root(), 'byId', id] as const,
@@ -103,7 +104,7 @@ export function useGetArticleDetail(id: number) {
 
 export function useGetWriterArticle() {
   return useQuery({
-    queryKey: keys.root(),
+    queryKey: keys.getWriterArticle(),
     queryFn: getWriterArticles,
   });
 }

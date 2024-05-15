@@ -1,8 +1,12 @@
-import { number, z } from 'zod';
+import { z } from 'zod';
 
 export const CommentSchema = z.object({
   id: z.number(),
-  author: z.string(),
+  author: z.object({
+    fullName: z.string(),
+    id: z.number(),
+    photo: z.string().url(),
+  }),
   content: z.string(),
   created: z.string().datetime(),
   article: z.number(),
