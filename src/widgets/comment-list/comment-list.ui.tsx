@@ -1,7 +1,9 @@
 import { Avatar, CircularProgress } from '@mui/material';
 import dayjs from 'dayjs';
 import { commentQueries, commentTypes } from '~entities/comment';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
+dayjs.extend(relativeTime);
 type CommentListProps = {
   id: number;
 };
@@ -49,7 +51,6 @@ export function CommentList({ id }: CommentListProps) {
 type CommentItemProps = { comment: commentTypes.Comment };
 
 function CommentItem({ comment }: CommentItemProps) {
-  console.log(comment);
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -62,7 +63,7 @@ function CommentItem({ comment }: CommentItemProps) {
         <h5 className="font-medium">{comment.author.fullName}</h5>
         <div className="w-[1px] h-[15px] bg-pc-400"></div>
         <p className="text-[14px] text-pc-400">
-          {dayjs(comment.created).format('MM.YYYY')}
+          {dayjs().to(dayjs(comment.created))}
         </p>
       </div>
       <p className="mt-2">{comment.content}</p>
