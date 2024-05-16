@@ -60,7 +60,9 @@ function CommentItem({ comment }: CommentItemProps) {
           src={comment.author.photo}
           className="w-[24px] h-[24px]"
         />
-        <h5 className="font-medium">{comment.author.fullName}</h5>
+        <h5 className="font-medium text-sm md:text-base">
+          {comment.author.fullName}
+        </h5>
         <div className="w-[1px] h-[15px] bg-pc-400"></div>
         <p className="text-[14px] text-pc-400">
           {dayjs().to(dayjs(comment.created))}

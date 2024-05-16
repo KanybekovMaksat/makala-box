@@ -7,7 +7,7 @@ import {
 import { ErrorMessage, Formik, Form, useFormikContext, useField } from 'formik';
 import { formikContract } from '~shared/lib/zod';
 import { getCookie } from 'typescript-cookie';
-import { redirect, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 
 type CommentFormProps = {
   id: number;
@@ -48,45 +48,44 @@ export function CommentForm({ id }: CommentFormProps) {
 
   const isAuth = getCookie('access');
 
-  const redirect = useNavigate();
-  const handleNavigate = () => {
-    redirect('/login');
-  };
-
   return (
-    <div className="relative border max-w-[380px] min-h-[100px] border-pc-300 rounded p-2 flex flex-col mb-5">
-      {isAuth ? null : (
-        <div className="w-[380px] h-[100%] absolute bg-pc-400/90 left-0 top-0 z-10 flex flex-col items-center justify-center font-bold">
-          <Button onClick={handleNavigate} variant="contained" size="small">
-            Авторизоваться
-          </Button>
+    <>
+      {!isAuth ? (
+        <div className="max-w-[380px] h-[100%] border-l-4 border-pc-500 px-2 my-5">
+          <Link className="underline text-second-100" to="/login">
+            Зарегистрируйтесь на Makalabox
+          </Link>
+          , чтобы оставить комментарий
+        </div>
+      ) : (
+        <div className=" border max-w-[380px] min-h-[100px] border-pc-300 rounded p-2 flex flex-col mb-5">
+          <Formik
+            initialValues={initialData}
+            validate={validateForm}
+            onSubmit={(comment) => createComment({ comment })}
+          >
+            {() => (
+              <Form className="flex flex-col">
+                <fieldset disabled={isPending}>
+                  <MyTextField name="content" type="text" />
+                  <ErrorMessage
+                    name="content"
+                    component="div"
+                    className="text-xs text-[red]"
+                  />
+                </fieldset>
+                <SubmitButton isPending={isPending} />
+              </Form>
+            )}
+          </Formik>
+          {isError && (
+            <p className="text-center text-xs text-[red]">
+              Ошибка при выполнении запроса
+            </p>
+          )}
         </div>
       )}
-      <Formik
-        initialValues={initialData}
-        validate={validateForm}
-        onSubmit={(comment) => createComment({ comment })}
-      >
-        {() => (
-          <Form className="flex flex-col">
-            <fieldset disabled={isPending}>
-              <MyTextField name="content" type="text" />
-              <ErrorMessage
-                name="content"
-                component="div"
-                className="text-xs text-[red]"
-              />
-            </fieldset>
-            <SubmitButton isPending={isPending} />
-          </Form>
-        )}
-      </Formik>
-      {isError && (
-        <p className="text-center text-xs text-[red]">
-          Ошибка при выполнении запроса
-        </p>
-      )}
-    </div>
+    </>
   );
 }
 
