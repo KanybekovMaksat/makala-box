@@ -14,12 +14,12 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SearchIcon from '@mui/icons-material/Search';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 import MenuIcon from '@mui/icons-material/Menu';
 import EditIcon from '@mui/icons-material/Edit';
 import { removeCookie } from 'typescript-cookie';
 import { pathKeys } from '~shared/lib/react-router';
 import { userQueries } from '~entities/user';
+import WidgetsIcon from '@mui/icons-material/Widgets';
 
 const pages = {
   feed: 'Лента',
@@ -75,7 +75,8 @@ export function TopBar() {
             to={pathKeys.home()}
             className="hidden md:flex font-bold text-xl hover:text-second-100 duration-300"
           >
-            <NewspaperIcon className="mr-1" />
+
+            <WidgetsIcon className="mr-1" />
             Makala Box
           </Link>
 
@@ -115,7 +116,7 @@ export function TopBar() {
           </div>
 
           <div className="flex md:hidden">
-            <NewspaperIcon />
+            <WidgetsIcon />
             <Link to={pathKeys.home()} className="font-bold text-xl">
               Makala Box
             </Link>

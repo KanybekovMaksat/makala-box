@@ -1,9 +1,8 @@
 import { AppBar, Box, Toolbar, IconButton, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
-
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 import SearchIcon from '@mui/icons-material/Search';
+import WidgetsIcon from '@mui/icons-material/Widgets';
 
 export function GuestBar() {
   return (
@@ -15,7 +14,7 @@ export function GuestBar() {
       <Container maxWidth="lg">
         <Toolbar disableGutters className="flex justify-between">
           <Box className="flex items-center">
-            <NewspaperIcon className="mr-1 text-pc-500" />
+            <WidgetsIcon className="mr-1 text-pc-500" />
             <Link
               to={pathKeys.home()}
               className="font-bold text-xl text-pc-500"
