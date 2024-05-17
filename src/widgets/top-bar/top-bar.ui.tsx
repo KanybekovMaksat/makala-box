@@ -51,10 +51,12 @@ export function TopBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+ 
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    navigate(`${pathKeys.profile.root()}`)
   };
 
   const handleLogout = () => {
@@ -163,7 +165,7 @@ export function TopBar() {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Link to={pathKeys.profile.root()}>Профиль</Link>
+                  Профиль
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Выйти</MenuItem>
               </Menu>
