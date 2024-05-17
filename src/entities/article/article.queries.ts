@@ -21,6 +21,7 @@ import { queryClient } from './../../shared/lib/react-query/react-query.lib';
 import { Article } from './article.types';
 import { AxiosResponse } from 'axios';
 
+
 type AxiosErrorType = {
   code: string;
   config: any;
@@ -124,12 +125,13 @@ export function useLikeArticle(id: number) {
     mutationKey: keys.likeArticle(id),
     mutationFn: () => likeArticleQuery(id),
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: key });
       await queryClient.cancelQueries({ queryKey: keys.root() });
+      await queryClient.cancelQueries({ queryKey: key });
     },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: key });
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: keys.root() });
+      await queryClient.invalidateQueries({ queryKey: ['user'] });
+      await queryClient.invalidateQueries({ queryKey: key });
     },
   });
 }
@@ -173,7 +175,7 @@ export function useCreateArticleMutation() {
       const article = response.data;
       toast.success('Статья успешна отправлена на модерацию');
       localStorage.removeItem('savedImage');
-      localStorage.removeItem('sandboxContent')
+      localStorage.removeItem('sandboxContent');
       articleService.setCache(article);
     },
     onError: (error: AxiosErrorType) => {

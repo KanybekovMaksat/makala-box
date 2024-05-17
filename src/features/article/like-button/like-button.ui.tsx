@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from '@mui/material';
+import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import { articleQueries, articleTypes } from '~entities/article';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
@@ -22,12 +22,21 @@ export function LikeButton(props: LikeButtonProps) {
 
   const isLikedByUser = userId && props.like.likes.includes(userId);
 
-  const { mutate: like } = articleQueries.useLikeArticle(props.like.id);
+  const { mutate: like, isPending } = articleQueries.useLikeArticle(
+    props.like.id
+  );
 
   const handleLike = async () => {
     await like();
   };
 
+  if (isPending) {
+    return (
+      <div className="p-1 mr-4">
+        <CircularProgress size={25} />
+      </div>
+    );
+  }
   return (
     <div className="flex items-center">
       <Tooltip
@@ -47,7 +56,7 @@ export function LikeButton(props: LikeButtonProps) {
             {isLikedByUser ? (
               <ThumbUpIcon className="text-second-100" />
             ) : (
-              <ThumbUpOutlinedIcon className='hover:text-second-100' />
+              <ThumbUpOutlinedIcon className="hover:text-second-100" />
             )}
           </IconButton>
         </span>

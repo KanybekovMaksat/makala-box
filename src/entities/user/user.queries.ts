@@ -9,12 +9,20 @@ import { pathKeys } from '~shared/lib/react-router';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from 'typescript-cookie';
 import { toast } from 'react-toastify';
+import { queryClient } from '~shared/lib/react-query/react-query.lib';
 
 const keys = {
   root: () => ['user'],
   getToken: () => [...keys.root(), 'getToken'] as const,
   loginUser: () => [...keys.root(), 'loginUser'] as const,
   registerUser: () => [keys.root(), 'registerUser'] as const,
+};
+
+export const userService = {
+  queryKey: () => keys.root(),
+
+  removeCache: () =>
+    queryClient.removeQueries({ queryKey: keys.root() }),
 };
 
 type AxiosErrorType = {

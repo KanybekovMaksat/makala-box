@@ -15,11 +15,7 @@ function Page() {
   const [preLoad, setPreLoad] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPreLoad(false);
-    }, 0);
-
-    return () => clearTimeout(timer);
+    setPreLoad(false);
   }, []);
 
   const {
@@ -27,24 +23,6 @@ function Page() {
     isLoading,
     isError,
   } = articleQueries.useGetArticleDetail(parseInt(id));
-
-  // const [articleData, setArticleData] = useState(null);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchArticle = async () => {
-  //     try {
-  //       const response = await $api.get(`articles/${id}/`);
-  //       setArticleData(response);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       setError(error);
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   fetchArticle();
-  // }, []);
 
   articleQueries.useUpdateArticleView(Number(id));
 
@@ -81,7 +59,7 @@ function Page() {
       )}
       <div className="max-w-full md:max-w-[95%] bg-[white] px-2 py-5  md:p-5">
         <h3 className="font-bold text-2xl">Комментарии</h3>
-        <CommentForm id={parseInt(id)}/>
+        <CommentForm id={parseInt(id)} />
         <CommentList id={parseInt(id)} />
       </div>
     </Container>
@@ -98,3 +76,21 @@ const SuspensedPage = withSuspense(Page, {
 export const ArticlePage = withErrorBoundary(SuspensedPage, {
   fallbackRender: ({ error }) => <ErrorHandler error={error} />,
 });
+
+// const [articleData, setArticleData] = useState(null);
+// const [isLoading, setIsLoading] = useState(true);
+// const [error, setError] = useState(null);
+
+// useEffect(() => {
+//   const fetchArticle = async () => {
+//     try {
+//       const response = await $api.get(`articles/${id}/`);
+//       setArticleData(response);
+//       setIsLoading(false);
+//     } catch (error) {
+//       setError(error);
+//       setIsLoading(false);
+//     }
+//   };
+//   fetchArticle();
+// }, []);

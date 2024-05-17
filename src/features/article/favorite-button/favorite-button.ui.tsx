@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from '@mui/material';
+import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import { getCookie } from 'typescript-cookie';
@@ -17,7 +17,7 @@ export function FavoriteButton(props: FavoriteButtonProps) {
     navigate(pathKeys.register());
   };
 
-  const { mutate: saveFavorite } = articleQueries.useFavoriteArticle(props.id);
+  const { mutate: saveFavorite, isPending } = articleQueries.useFavoriteArticle(props.id);
   const { data: favData } = articleQueries.useGetFavoriteArticles();
 
   const favoriteArticles = favData?.data?.favoriteArticles;
@@ -41,6 +41,11 @@ export function FavoriteButton(props: FavoriteButtonProps) {
   const isFavoritedPosts = favoriteArticles?.some(
     (post) => post.id === props.id
   );
+  if(isPending){
+    return <div className='p-1'>
+      <CircularProgress size={25}/>
+    </div>
+  }
 
   return (
     <Tooltip
@@ -48,6 +53,7 @@ export function FavoriteButton(props: FavoriteButtonProps) {
         isFavoritedPosts ? 'Удалить из избранных' : 'Сохранить в избранные'
       }
     >
+      
       <IconButton onClick={handleSaveFavorite} aria-label="В Избранное">
         {isFavoritedPosts ? (
           <BookmarkAddedIcon className="text-second-100" />

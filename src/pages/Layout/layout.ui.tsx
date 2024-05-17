@@ -1,17 +1,17 @@
-import { Outlet } from 'react-router-dom';
-import { userQueries } from '~entities/user';
 import ScrollTop from '~shared/lib/react-router/scroll-top';
+import { Outlet } from 'react-router-dom';
+import { getCookie } from 'typescript-cookie';
 import { Footer } from '~widgets/footer';
 import { GuestBar } from '~widgets/guest-bar';
 import { TopBar } from '~widgets/top-bar';
 
 export function GenericLayout() {
-  const { data: userData } = userQueries.useLoginUserQuery();
+  const isAuth = getCookie("access")
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <ScrollTop />
-        {userData ? <TopBar /> : <GuestBar />}
+        {isAuth ? <TopBar /> : <GuestBar />}
         <Outlet />
       </div>
       <Footer />

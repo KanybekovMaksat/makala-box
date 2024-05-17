@@ -61,6 +61,7 @@ export function TopBar() {
     removeCookie('access');
     removeCookie('refresh');
     navigate(`${pathKeys.home()}`);
+    userQueries.userService.removeCache();
   };
 
   return (
@@ -75,7 +76,6 @@ export function TopBar() {
             to={pathKeys.home()}
             className="hidden md:flex font-bold text-xl hover:text-second-100 duration-300"
           >
-
             <WidgetsIcon className="mr-1" />
             Makala Box
           </Link>
