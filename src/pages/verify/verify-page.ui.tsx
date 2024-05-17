@@ -10,7 +10,7 @@ export function VerifyPage() {
   console.log(uid, token);
 
   const {
-    mutate: emailActivation,
+    mutate:emailActivation,
     isPending: isActivationPending,
     isError: isActivationError,
     isSuccess: isActivationSuccess,
