@@ -38,9 +38,9 @@ function Page() {
               <Field
                 as={TextField}
                 fullWidth
-                id="email"
-                name="email"
-                label="Email"
+                id="useraname"
+                name="username"
+                label="Ваш псевдоним"
                 size="small"
               />
               <ErrorMessage name="email" />
@@ -89,7 +89,7 @@ function Page() {
 }
 
 const initialUser: userTypes.LoginUserDto = {
-  email: '',
+  username: '',
   password: '',
 };
 

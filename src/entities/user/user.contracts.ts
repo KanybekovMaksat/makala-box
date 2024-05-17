@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { ArticleSchema } from '~entities/article/article.contracts';
 
 export const LoginUserDtoSchema = z.object({
-  email: z.string().email(),
+  username: z.string(),
   password: z.string().min(6),
 });
 

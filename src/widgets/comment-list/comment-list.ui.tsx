@@ -56,12 +56,12 @@ function CommentItem({ comment }: CommentItemProps) {
       <div className="flex items-center gap-2">
         <Avatar
           variant="rounded"
-          alt={comment.author.fullName}
+          alt={comment.author.username}
           src={comment.author.photo}
           className="w-[24px] h-[24px]"
         />
         <h5 className="font-medium text-sm md:text-base">
-          {comment.author.fullName}
+          {comment.author.username}
         </h5>
         <div className="w-[1px] h-[15px] bg-pc-400"></div>
         <p className="text-[14px] text-pc-400">

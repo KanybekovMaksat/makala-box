@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const CommentSchema = z.object({
   id: z.number(),
   author: z.object({
-    fullName: z.string(),
+    username: z.string(),
     id: z.number(),
     photo: z.string().url(),
   }),

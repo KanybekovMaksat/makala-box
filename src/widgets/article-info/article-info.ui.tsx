@@ -15,7 +15,7 @@ export function ArticleInfo(props: ArticleInfoProps) {
         <div className="flex items-center gap-1 md:gap-3">
           <div className="flex items-center gap-1 hover:cursor-pointer">
             <p className="text-sm  font-bold hover:text-second-100">
-              {props.article.author}
+              {props.article.author.fullName}
             </p>
           </div>
           <p className="text-pc-400 text-sm ">

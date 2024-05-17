@@ -84,11 +84,11 @@ function ArticleCard(props: ArticleCardProps) {
                 <div className="flex items-center">
                   <Avatar
                     className="duration-500 card-avatar border-2 border-[white]"
-                    alt={props.article.author}
-                    src={props.article.authorPhoto}
+                    alt={props.article.author.fullName}
+                    src={props.article.author.photo}
                   />
                   <h5 className="flex text-sm md:text-base  font-bold duration-300">
-                    {props.article.author}
+                    {props.article.author.fullName}
                   </h5>
                 </div>
                 <Tooltip title="Время чтения">

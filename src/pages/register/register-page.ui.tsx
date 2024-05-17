@@ -6,7 +6,14 @@ import {
   Field,
   FormikValues,
 } from 'formik';
-import { Button, IconButton, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
 import { userQueries, userTypes } from '~entities/user';
@@ -15,6 +22,19 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useEffect, useState } from 'react';
 import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  borderRadius:2,
+  boxShadow: 24,
+  p: 3,
+  textAlign:"center"
+};
 
 const initialUser: userTypes.CreateUserSchema = {
   email: '',
@@ -36,11 +56,11 @@ function Page() {
     isSuccess,
   } = userQueries.useRegisterMutation();
 
-  function saveCredentialsToLocalStorage(email, password) {
-    localStorage.setItem('email', email);
+  function saveCredentialsToLocalStorage(username:string, password:string) {
+    localStorage.setItem('username', username);
     localStorage.setItem('password', password);
   }
-  
+
   if (isSuccess) {
     return (
       <div className="my-20 w-[380px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
@@ -61,7 +81,7 @@ function Page() {
         validate={validateForm}
         onSubmit={(user) => {
           registerUser({ user });
-          saveCredentialsToLocalStorage(user.email, user.password);
+          saveCredentialsToLocalStorage(user.username, user.password);
         }}
       >
         <Form>
@@ -172,7 +192,18 @@ function Page() {
             </fieldset>
           </fieldset>
           {isPending ? (
-            <p className="text-center">Регистрация...</p>
+            <>
+              <Modal
+                open={!!isPending}
+                onClose={() => false}
+                aria-labelledby="child-modal-title"
+                aria-describedby="child-modal-description"
+              >
+                <Box sx={{ ...style, width: 200 }}>
+                  <h2 id="child-modal-title">Регистрация...</h2>
+                </Box>
+              </Modal>
+            </>
           ) : (
             <SubmitButton />
           )}
@@ -218,8 +249,6 @@ const validateForm = (values) => {
 
   if (!values.username) {
     errors.username = 'Обязательное поле';
-  } else if (values.lastName.length < 3) {
-    errors.username = 'Псевдоним должен содержать минимум 3 символа';
   }
 
   if (!values.firstName) {

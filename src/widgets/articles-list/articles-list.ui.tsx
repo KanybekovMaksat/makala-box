@@ -93,11 +93,11 @@ function ArticleCard(props: ArticleCardProps) {
                   <Avatar
                     sizes="large"
                     className="duration-500 card-avatar border-2 border-[white] h-10 w-10"
-                    alt={props.article.author}
-                    src={props.article.authorPhoto}
+                    alt={props.article.author.fullName}
+                    src={props.article.author.photo}
                   />
                   <h5 className="flex text-base md:text-base font-bold">
-                    {props.article.author}
+                    {props.article.author.fullName}
                   </h5>
                 </div>
                 <div className="md:flex items-center gap-3 hidden">
