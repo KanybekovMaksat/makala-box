@@ -4,12 +4,17 @@ import {
   loginUserQuery,
   registerUserMutation,
 } from './user.api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery,
+  queryOptions as tsqQueryOptions,
+} from '@tanstack/react-query';
 import { pathKeys } from '~shared/lib/react-router';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from 'typescript-cookie';
 import { toast } from 'react-toastify';
 import { queryClient } from '~shared/lib/react-query/react-query.lib';
+import { UserDtoSchema } from './user.types';
 
 const keys = {
   root: () => ['user'],
@@ -21,8 +26,28 @@ const keys = {
 export const userService = {
   queryKey: () => keys.root(),
 
-  removeCache: () =>
-    queryClient.removeQueries({ queryKey: keys.root() }),
+  removeCache: () => queryClient.removeQueries({ queryKey: keys.root() }),
+
+  getCache: () => queryClient.getQueryData<Comment[]>(userService.queryKey()),
+
+  setCache: (user: UserDtoSchema) =>
+    queryClient.setQueryData(userService.queryKey(), user),
+
+  queryOptions: () => {
+    const userKey = userService.queryKey();
+    return tsqQueryOptions({
+      queryKey: userKey,
+      queryFn: async () => loginUserQuery,
+      initialDataUpdatedAt: () =>
+        queryClient.getQueryState(userKey)?.dataUpdatedAt,
+    });
+  },
+
+  prefetchQuery: async () =>
+    queryClient.prefetchQuery(userService.queryOptions()),
+
+  ensureQueryData: async () =>
+    queryClient.ensureQueryData(userService.queryOptions()),
 };
 
 type AxiosErrorType = {

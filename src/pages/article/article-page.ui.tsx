@@ -2,7 +2,6 @@ import { CircularProgress, Container, Divider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { articleQueries } from '~entities/article';
-import $api from '~shared/api';
 import { withSuspense } from '~shared/lib/react';
 import { ArticleInfo } from '~widgets/article-info';
 import { ArticleViewer } from '~widgets/article-viewer';
@@ -10,6 +9,8 @@ import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
 import { CommentList } from '~widgets/comment-list';
 import { CommentForm } from '~widgets/comment-form';
+import { Helmet } from 'react-helmet';
+
 function Page() {
   const { id } = useParams();
   const [preLoad, setPreLoad] = useState(true);
@@ -42,27 +43,55 @@ function Page() {
   }
 
   return (
-    <Container maxWidth="md" className="mx-auto my-[65px] ">
-      {articleData && (
-        <div className="max-w-full md:max-w-[95%] bg-[white] px-2 md:px-5  mb-5">
-          <ArticleInfo article={articleData.data} />
-          <Divider />
-          {preLoad ? (
-            <div className="flex flex-col items-center gap-3 my-20">
-              <CircularProgress />
-              Загрузка...
-            </div>
-          ) : (
-            <ArticleViewer body={articleData.data.body} />
-          )}
+    <>
+      <Helmet>
+        <title>{articleData.data.title}</title>
+        <link
+          type="image/png"
+          sizes="32x32"
+          rel="shortcut icon"
+          href="/public/icon-makala.png"
+        />
+        <meta property="og:title" content={articleData.data.title} />
+        <meta property="og:description" content={articleData.data.subtitle} />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://www.makalabox.com/${articleData.data.id}`}
+        />
+        <link
+          rel="canonical"
+          href={`https://www.makalabox.com/${articleData.data.id}`}
+        />
+        <meta property="og:image" content={articleData.data.photo} />
+        <meta property="og:image:type" content="image/png" />
+        <meta name="robots" content="all" />
+        <meta name="googlebot" content="all" />
+        <meta name="yandex" content="all" />
+        <meta property="og:locale" content="ru_Ru" />
+      </Helmet>
+      <Container maxWidth="md" className="mx-auto my-[65px] ">
+        {articleData && (
+          <div className="max-w-full md:max-w-[95%] bg-[white] px-2 md:px-5  mb-5">
+            <ArticleInfo article={articleData.data} />
+            <Divider />
+            {preLoad ? (
+              <div className="flex flex-col items-center gap-3 my-20">
+                <CircularProgress />
+                Загрузка...
+              </div>
+            ) : (
+              <ArticleViewer body={articleData.data.body} />
+            )}
+          </div>
+        )}
+        <div className="max-w-full md:max-w-[95%] bg-[white] px-2 py-5  md:p-5">
+          <h3 className="font-bold text-2xl">Комментарии</h3>
+          <CommentForm id={parseInt(id)} />
+          <CommentList id={parseInt(id)} />
         </div>
-      )}
-      <div className="max-w-full md:max-w-[95%] bg-[white] px-2 py-5  md:p-5">
-        <h3 className="font-bold text-2xl">Комментарии</h3>
-        <CommentForm id={parseInt(id)} />
-        <CommentList id={parseInt(id)} />
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 }
 
