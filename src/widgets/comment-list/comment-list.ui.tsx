@@ -1,7 +1,10 @@
-import { Avatar, CircularProgress } from '@mui/material';
+import { Avatar, CircularProgress, IconButton } from '@mui/material';
 import dayjs from 'dayjs';
 import { commentQueries, commentTypes } from '~entities/comment';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { userQueries } from '~entities/user';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { getCookie } from 'typescript-cookie';
 
 dayjs.extend(relativeTime);
 type CommentListProps = {
@@ -41,16 +44,30 @@ export function CommentList({ id }: CommentListProps) {
     isSuccess && (
       <div className="flex flex-col gap-6">
         {commentData?.data.map((comment) => (
-          <CommentItem comment={comment} key={comment.id} />
+          <CommentItem articleId={id} comment={comment} key={comment.id} />
         ))}
       </div>
     )
   );
 }
 
-type CommentItemProps = { comment: commentTypes.Comment };
+function CommentItem({
+  comment,
+  articleId,
+}: {
+  comment: commentTypes.Comment;
+  articleId: number;
+}) {
+  const { data: userData } = userQueries.useLoginUserQuery();
 
-function CommentItem({ comment }: CommentItemProps) {
+  const { mutate: deleteComment, isPending } = commentQueries.useDeleteComment(
+    comment.id
+  );
+
+  const handleDeleteComment = async () => {
+    await deleteComment({ articleId: articleId, commentId: comment.id });
+  };
+  const isAuth = getCookie('access');
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -67,6 +84,26 @@ function CommentItem({ comment }: CommentItemProps) {
         <p className="text-[14px] text-pc-400">
           {dayjs().to(dayjs(comment.created))}
         </p>
+        <div>
+          {isAuth ? (
+            userData.data.id === comment.author.id ? (
+              <IconButton
+                aria-label="delete"
+                size="small"
+                onClick={handleDeleteComment}
+              >
+                {!isPending ? (
+                  <DeleteIcon
+                    fontSize="inherit"
+                    className="hover:text-second-100"
+                  />
+                ) : (
+                  <CircularProgress size={19} />
+                )}
+              </IconButton>
+            ) : null
+          ) : null}
+        </div>
       </div>
       <p className="mt-2">{comment.content}</p>
       <div className="w-full h-[1px]"></div>

@@ -150,7 +150,7 @@ function ArticleCard(props: ArticleCardProps) {
         <CardActionArea onClick={() => handleNavigate(props.article.id)}>
           <CardMedia
             component="img"
-            className="w-full  h-auto md:max-h-[420px] cursor-pointer"
+            className="w-full  h-auto md:max-h-[550px] cursor-pointer"
             image={props.article.photo}
             alt={props.article.title}
             title={props.article.title}

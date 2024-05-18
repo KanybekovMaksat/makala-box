@@ -6,7 +6,10 @@ export function getComments(id: number) {
 }
 
 export function createComment(params: { comment: CreateComment }) {
-  return $api.post(`articles/${params.comment.article}/comment/`, params.comment);
+  return $api.post(
+    `articles/${params.comment.article}/comment/`,
+    params.comment
+  );
 }
 
 export function updateComment(
@@ -17,6 +20,11 @@ export function updateComment(
   return $api.patch(`aricles/${articleId}/comment/${commentId}/`, comment);
 }
 
-export function deleteComment(articleId: number, commentId: number) {
-  return $api.delete(`articles/${articleId}/comment/${commentId}/`);
+export function deleteComment(params: {
+  articleId: number;
+  commentId: number;
+}) {
+  return $api.delete(
+    `articles/${params.articleId}/comment/${params.commentId}/`
+  );
 }
