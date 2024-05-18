@@ -48,13 +48,8 @@ function Page() {
   return (
     <>
       <Helmet>
-      <title>{title}</title>
-        <link
-          type="image/png"
-          sizes="32x32"
-          rel="shortcut icon"
-          href="/public/icon-makala.png"
-        />
+        <title>{title}</title>
+        <meta name="description" content={subtitle} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={subtitle} />
         <meta property="og:type" content="website" />

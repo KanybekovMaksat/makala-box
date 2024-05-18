@@ -6,6 +6,7 @@ export function HomePage() {
   return (
     <>
       <Helmet>
+        <title>Makala Box</title>
         <meta
           property="og:title"
           content="Makalabox - Платформа для научных статей"
@@ -13,6 +14,10 @@ export function HomePage() {
         <meta
           property="og:description"
           content="Платформа Makalabox предоставляет удобное решение для публикации научных статей. Присоединяйтесь к нашему сообществу и делитесь своими исследованиями."
+        />
+        <meta
+          name="description"
+          content="Платформа для публикации научных статей Makalabox"
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.makalabox.com/" />
