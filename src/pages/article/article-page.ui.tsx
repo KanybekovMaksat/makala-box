@@ -62,9 +62,6 @@ function Page() {
         <link rel="canonical" href={ogUrl} />
         <meta property="og:image" content={ogImage} />
         <meta property="og:image:type" content="image/png" />
-        <meta name="robots" content="all" />
-        <meta name="googlebot" content="all" />
-        <meta name="yandex" content="all" />
         <meta property="og:locale" content="ru_RU" />
       </Helmet>
       <Container maxWidth="md" className="mx-auto my-[65px] ">
