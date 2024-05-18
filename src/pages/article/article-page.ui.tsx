@@ -41,34 +41,31 @@ function Page() {
       <div className="my-20 text-center">Error fetching article data.</div>
     );
   }
+  const { title, subtitle, id: articleId, photo } = articleData.data;
+  const ogUrl = `https://www.makalabox.com/${articleId}`;
+  const ogImage = photo || '/public/maka.png';
 
   return (
     <>
       <Helmet>
-        <title>{articleData.data.title}</title>
+      <title>{title}</title>
         <link
           type="image/png"
           sizes="32x32"
           rel="shortcut icon"
           href="/public/icon-makala.png"
         />
-        <meta property="og:title" content={articleData.data.title} />
-        <meta property="og:description" content={articleData.data.subtitle} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={subtitle} />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={`https://www.makalabox.com/${articleData.data.id}`}
-        />
-        <link
-          rel="canonical"
-          href={`https://www.makalabox.com/${articleData.data.id}`}
-        />
-        <meta property="og:image" content={articleData.data.photo} />
+        <meta property="og:url" content={ogUrl} />
+        <link rel="canonical" href={ogUrl} />
+        <meta property="og:image" content={ogImage} />
         <meta property="og:image:type" content="image/png" />
         <meta name="robots" content="all" />
         <meta name="googlebot" content="all" />
         <meta name="yandex" content="all" />
-        <meta property="og:locale" content="ru_Ru" />
+        <meta property="og:locale" content="ru_RU" />
       </Helmet>
       <Container maxWidth="md" className="mx-auto my-[65px] ">
         {articleData && (
