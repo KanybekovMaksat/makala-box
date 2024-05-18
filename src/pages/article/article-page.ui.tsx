@@ -42,22 +42,11 @@ function Page() {
     );
   }
   const { title, subtitle, id: articleId, photo } = articleData.data;
-  const ogUrl = `https://www.makalabox.com/${articleId}`;
-  const ogImage = photo || '/public/maka.png';
-
   return (
     <>
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={subtitle} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={subtitle} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={ogUrl} />
-        <link rel="canonical" href={ogUrl} />
-        <meta property="og:image" content={ogImage} />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:locale" content="ru_RU" />
       </Helmet>
       <Container maxWidth="md" className="mx-auto my-[65px] ">
         {articleData && (
