@@ -79,7 +79,7 @@ export function useGetTokenMutation() {
     onSuccess: async (response) => {
       setCookie('access', response.data.access);
       setCookie('refresh', response.data.refresh);
-      localStorage.removeItem('email');
+      localStorage.removeItem('username');
       localStorage.removeItem('password');
       toast.success('Вы успешно авторизовались!', { autoClose: 500 });
       navigate(pathKeys.profile.root());

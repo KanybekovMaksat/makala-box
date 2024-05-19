@@ -38,9 +38,9 @@ function Page() {
               <Field
                 as={TextField}
                 fullWidth
-                id="useraname"
+                id="username"
                 name="username"
-                label="Ваш псевдоним"
+                label="Псевдоним или email"
                 size="small"
               />
               <ErrorMessage name="email" />
