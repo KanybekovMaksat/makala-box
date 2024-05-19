@@ -21,7 +21,7 @@ export function getFavoriteArticles() {
 }
 
 export function getWriterArticles() {
-  return $api.get<Article>('articles/me/');
+  return $api.get<ArticlesList>('articles/me/');
 }
 
 export function likeArticleQuery(id: number) {
@@ -32,8 +32,8 @@ export function createArticleMutation(props: CreateArticleDto = {}) {
   return $api.post(`articles/me/`, props);
 }
 
-export function editArticle(id: number, props: any = {}) {
-  return $api.patch(`articles/${id}`, props);
+export function editArticle(props: any = {}) {
+  return $api.patch(`articles/me/${String(props.data.id)}/`, props.data);
 }
 
 export function favoriteArticleQuery(id: number) {

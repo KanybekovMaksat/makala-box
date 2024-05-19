@@ -20,7 +20,7 @@ import { toast } from 'react-toastify';
 import { queryClient } from './../../shared/lib/react-query/react-query.lib';
 import { Article } from './article.types';
 import { AxiosResponse } from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 type AxiosErrorType = {
   code: string;
@@ -191,13 +191,15 @@ export function useCreateArticleMutation() {
   });
 }
 
-export function useUpdateArticle() {
+export function useUpdateArticle(id) {
+  const navigate = useNavigate();
   return useMutation({
     mutationKey: keys.updateArticle(),
     mutationFn: editArticle,
     onSuccess: async () => {
       toast.success('Статья успешна отправлена на модерацию');
-      localStorage.setItem('savedImage', null);
+      localStorage.removeItem(`editContent-${id}`);
+      navigate('/profile');
     },
     onError: (error: AxiosErrorType) => {
       if (error.response && error.response.data) {

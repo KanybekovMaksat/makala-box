@@ -4,21 +4,22 @@ import {
   CardMedia,
   Tooltip,
   CircularProgress,
+  IconButton,
 } from '@mui/material';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
 import { articleQueries, articleTypes } from '~entities/article';
 import { ShareButton } from '~features/article/share-button';
 import { LikeButton } from '~features/article/like-button';
 import { FavoriteButton } from '~features/article/favorite-button';
 import { StatusMenu } from '~features/article/status-menu';
-
+import { ArchiveButton } from '~features/article/archive-button';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import { ArchiveButton } from '~features/article/archive-button';
 
 dayjs.locale('ru');
 
@@ -55,10 +56,13 @@ export function WriterArticlesList() {
   );
 }
 
-
 type ArticleCardProps = { article: articleTypes.Article };
 
 function ArticleCard(props: ArticleCardProps) {
+  const navigate = useNavigate();
+  const handleEdit = () => {
+    navigate(`/article/edit/${props.article.id}/`);
+  };
   return (
     <Card className="min-w-full max-w-full  shadow-none border border-sc-100 p-2 card">
       <div className="flex flex-col-reverse md:flex-row items-center md:justify-between">
@@ -98,9 +102,9 @@ function ArticleCard(props: ArticleCardProps) {
               className="card-info"
               to={pathKeys.article.byId({ id: props.article.id })}
             > */}
-              <h4 className="font-bold text-xl title duration-300">
-                {props.article.title}
-              </h4>
+            <h4 className="font-bold text-xl title duration-300">
+              {props.article.title}
+            </h4>
             {/* </Link> */}
             <div className="pt-2 flex items-center gap-1">
               <LikeButton
@@ -113,6 +117,11 @@ function ArticleCard(props: ArticleCardProps) {
               <FavoriteButton id={props.article.id} />
               <ShareButton id={props.article.id} />
               <ArchiveButton id={props.article.id} />
+              <Tooltip title="Редактировать">
+                <IconButton onClick={handleEdit}>
+                  <EditIcon/>
+                </IconButton>
+              </Tooltip>
             </div>
           </div>
         </CardContent>

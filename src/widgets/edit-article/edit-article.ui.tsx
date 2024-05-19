@@ -42,17 +42,6 @@ const schema = BlockNoteSchema.create({
   },
 });
 
-async function saveToStorage(jsonBlocks: Block[]) {
-  localStorage.setItem('sandboxContent', JSON.stringify(jsonBlocks));
-}
-
-async function loadFromStorage() {
-  const storageString = localStorage.getItem('sandboxContent');
-  return storageString
-    ? (JSON.parse(storageString) as PartialBlock[])
-    : undefined;
-}
-
 const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
   title: 'Заметки',
   onItemClick: () => {
@@ -78,27 +67,36 @@ async function uploadFile(file: File) {
   }
 }
 
-export function CreateArticle() {
-  const [initialContent, setInitialContent] = useState<
-    PartialBlock[] | undefined | 'loading'
-  >('loading');
+type EditArticleProps = {
+  id: number;
+  body: any;
+};
 
+export function EditArticle(props: EditArticleProps) {
+  const saveToStorage = async (jsonBlocks: Block[]) => {
+    localStorage.setItem(`editContent-${props.id}`, JSON.stringify(jsonBlocks));
+  };
+
+  const loadFromStorage = async () => {
+    const storageString = localStorage.getItem(`editContent-${props.id}`);
+    return storageString ? (JSON.parse(storageString) as PartialBlock[]) : undefined;
+  };
+
+  const [initialContent, setInitialContent] = useState<PartialBlock[] | 'loading'>('loading');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(false);
-  }, []);
+    const fetchInitialContent = async () => {
+      const storedContent = await loadFromStorage();
+      setInitialContent(storedContent || props.body);
+      setIsLoading(false);
+    };
 
-  useEffect(() => {
-    loadFromStorage().then((content) => {
-      setInitialContent(content);
-    });
-  }, []);
+    fetchInitialContent();
+  }, [props.id, props.body]);
 
   const editor = useMemo(() => {
-    if (initialContent === 'loading') {
-      return undefined;
-    }
+    if (initialContent === 'loading') return undefined;
     return BlockNoteEditor.create({ schema, initialContent, uploadFile });
   }, [initialContent]);
 

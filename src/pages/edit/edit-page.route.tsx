@@ -4,6 +4,7 @@ import { pathKeys } from '~shared/lib/react-router';
 import { getCookie } from 'typescript-cookie';
 import { EditPage } from './edit-page.ui';
 
+
 export const editPageRoute: RouteObject = {
   path: '/article/edit/:id',
   element: createElement(EditPage),
