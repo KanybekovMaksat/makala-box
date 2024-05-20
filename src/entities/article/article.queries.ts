@@ -184,8 +184,6 @@ export function useCreateArticleMutation() {
         Object.keys(errors).forEach((field) => {
           toast.error(`${field}: ${errors[field]}`);
         });
-      } else {
-        toast.error('Ошибка при выполнении запроса');
       }
     },
   });
@@ -198,7 +196,7 @@ export function useUpdateArticle(id) {
     mutationFn: editArticle,
     onSuccess: async () => {
       toast.success('Статья успешна отправлена на модерацию');
-      localStorage.removeItem(`editContent-${id}`);
+      // localStorage.removeItem(`editContent-${id}`);
       navigate('/profile');
     },
     onError: (error: AxiosErrorType) => {
