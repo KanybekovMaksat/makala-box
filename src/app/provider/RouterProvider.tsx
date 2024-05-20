@@ -13,6 +13,8 @@ import { sandboxPageRoute } from '~pages/sandbox';
 import { profilePageRoute } from '~pages/profile';
 import { verifyPageRoute } from '~pages/verify';
 import { editPageRoute } from '~pages/edit';
+import { ratingPageRoute } from '~pages/rating';
+
 import { GenericLayout, IntroLayout } from '~pages/Layout';
 
 function BubbleError() {
@@ -34,7 +36,8 @@ const router = createBrowserRouter([
           articlePageRoute,
           profilePageRoute,
           sandboxPageRoute,
-          editPageRoute
+          editPageRoute,
+          ratingPageRoute,
         ],
       },
       {

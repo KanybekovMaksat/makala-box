@@ -23,6 +23,9 @@ export const pathKeys = {
   favorites() {
     return pathKeys.root.concat('favorites/');
   },
+  rating(){
+    return pathKeys.root.concat('rating/')
+  },
   page404() {
     return pathKeys.root.concat('404/');
   },
