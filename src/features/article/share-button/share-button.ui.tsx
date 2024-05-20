@@ -129,6 +129,7 @@ import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 
 type ShareButtonProps = {
   id: number;
+  title?: string;
 };
 
 export function ShareButton(props: ShareButtonProps) {
@@ -175,7 +176,7 @@ export function ShareButton(props: ShareButtonProps) {
       try {
         await navigator.share({
           title: 'Makalabox',
-          text: 'Это отличная статья, которую вы должны прочитать!',
+          text: props.title || "Это отличная статья, которую вы должны прочитать!",
           url: articlePath,
         });
       } catch (error) {

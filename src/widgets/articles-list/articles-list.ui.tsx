@@ -167,7 +167,7 @@ function ArticleCard(props: ArticleCardProps) {
             />
             <FavoriteButton id={props.article.id} />
           </div>
-          <ShareButton id={props.article.id} />
+          <ShareButton title={props.article.title} id={props.article.id} />
         </div>
       </div>
     </Card>
