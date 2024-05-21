@@ -9,7 +9,7 @@ import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
 import { CommentList } from '~widgets/comment-list';
 import { CommentForm } from '~widgets/comment-form';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 function Page() {
   const { id } = useParams();
@@ -44,9 +44,16 @@ function Page() {
   const { title, subtitle, id: articleId, photo } = articleData.data;
   return (
     <>
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>{title}</title>
         <meta name="description" content={subtitle} />
+        <link
+          rel="canonical"
+          href={`https://www.makalabox.com/articles/${articleId}`}
+        />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={subtitle} />
+        <meta property="og:image" content={photo} />
       </Helmet>
       <Container maxWidth="md" className="mx-auto my-[65px] ">
         {articleData && (

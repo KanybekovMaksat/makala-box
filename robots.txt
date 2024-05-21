@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: 
 Sitemap: https://www.makalabox.com/
 favicon: https://makalabox.com/public/icon-makala.png
