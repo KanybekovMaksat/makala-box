@@ -54,6 +54,8 @@ function Page() {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={subtitle} />
         <meta property="og:image" content={photo} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:locale" content="ru_Ru" />
       </Helmet>
       <Container maxWidth="md" className="mx-auto my-[65px] ">
         {articleData && (

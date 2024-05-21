@@ -8,6 +8,10 @@ export function HomePage() {
     <>
       <Helmet>
         <meta
+          name="description"
+          content="MakalaBox - платформа для обмена знаниями между преподавателями и студентами колледжей. Здесь они могут публиковать статьи по различным темам."
+        />
+        <meta
           property="og:title"
           content="MakalaBox - платформа для обмена знаниями между преподавателями и студентами колледжей. Здесь они могут публиковать статьи по различным темам."
         />
@@ -17,6 +21,8 @@ export function HomePage() {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.makalabox.com/" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:locale" content="ru_Ru" />
         <meta
           property="og:image"
           content="https://api.makalabox.com/media/article/photos/2024/05/14/33bd14ef-220b-450c-99df-c92da7f7c540.png"
