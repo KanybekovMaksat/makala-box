@@ -43,7 +43,7 @@ function Page() {
   }
   const { title, subtitle, id: articleId, photo } = articleData.data;
   return (
-    <>
+    <div>
       <Helmet prioritizeSeoTags>
         <title>{title}</title>
         <meta name="description" content={subtitle} />
@@ -78,7 +78,7 @@ function Page() {
           <CommentList id={parseInt(id)} />
         </div>
       </Container>
-    </>
+    </div>
   );
 }
 

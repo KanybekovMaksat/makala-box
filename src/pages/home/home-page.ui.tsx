@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 
 export function HomePage() {
   return (
-    <>
+    <div>
       <Helmet>
         <meta
           name="description"
@@ -53,6 +53,6 @@ export function HomePage() {
         </h2>
         <ArticlesList />
       </Container>
-    </>
+    </div>
   );
 }

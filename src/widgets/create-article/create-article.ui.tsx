@@ -28,11 +28,14 @@ import { codeStyleSpec } from './../../features/blocknote/code-toolbar/code-tool
 import { CustomToolbar } from '~features/blocknote/custom-toolbar';
 import { useEffect, useMemo, useState } from 'react';
 import { CircularProgress } from '@mui/material';
+import { YouTubeBlock } from '~features/blocknote/youtube-block';
+import { RiYoutubeFill } from 'react-icons/ri';
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs,
     alert: AlertBlock,
+    youtube: YouTubeBlock,
     procode: CodeBlock,
   },
   styleSpecs: {
@@ -63,6 +66,22 @@ const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
   aliases: ['alert', 'notification', 'info', 'note'],
   group: 'Advanced',
   icon: <RiAlertFill />,
+});
+
+
+const insertYouTubeVideo = (editor: typeof schema.BlockNoteEditor) => ({
+  title: 'YouTube Видео',
+  onItemClick: () => {
+    insertOrUpdateBlock(editor, {
+      type: 'youtube',
+      props: {
+        url: '',
+      },
+    });
+  },
+  aliases: ['youtube', 'video', 'embed', 'media'],
+  group: 'Advanced',
+  icon: <RiYoutubeFill />,
 });
 
 async function uploadFile(file: File) {
@@ -99,7 +118,11 @@ export function CreateArticle() {
     if (initialContent === 'loading') {
       return undefined;
     }
-    return BlockNoteEditor.create({ schema, initialContent, uploadFile });
+    return BlockNoteEditor.create({
+      schema,
+      initialContent,
+      uploadFile,
+    });
   }, [initialContent]);
 
   if (editor === undefined) {
@@ -129,6 +152,7 @@ export function CreateArticle() {
           filterSuggestionItems(
             [
               ...getDefaultReactSlashMenuItems(editor),
+              insertYouTubeVideo(editor),
               insertAlert(editor),
               insertCode(),
             ],

@@ -4,8 +4,8 @@ import AvatarEditor from 'react-avatar-editor';
 import React, { useRef, useState } from 'react';
 
 const boxStyle = {
-  width: '500px',
-  height: '370px',
+  width: '770px',
+  height: '400px',
   display: 'flex',
   flexFlow: 'column',
   justifyContent: 'center',
@@ -49,10 +49,8 @@ const CropperModal: React.FC<CropperModalProps> = ({
         <AvatarEditor
           ref={cropRef}
           image={src || ''}
-          border={20}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          color={[0, 0, 0, 0.72]}
-          scale={slideValue / 10}
+          
+         
           rotate={0}
         />
         <Slider

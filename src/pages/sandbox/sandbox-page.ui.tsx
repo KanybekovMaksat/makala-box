@@ -164,6 +164,9 @@ function Page() {
             <h4 className="text-lg font-medium mt-3">
               Загрузите обложку для статьи
             </h4>
+            <em className="text-xs">
+              Рекомендуемый размер картинки 765px*400px
+            </em>
             <CoverCropper update={false} />
 
             <div className="mt-4 flex justify-between">

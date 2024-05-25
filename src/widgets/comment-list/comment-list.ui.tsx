@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { getCookie } from 'typescript-cookie';
 
 dayjs.extend(relativeTime);
+
 type CommentListProps = {
   id: number;
 };

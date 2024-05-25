@@ -6,18 +6,21 @@ import {
 import { BlockNoteView, useCreateBlockNote } from '@blocknote/react';
 import { CodeBlock } from '@defensestation/blocknote-code';
 import { AlertBlock } from '~features/blocknote/alert-block';
+import { YouTubeBlock } from '~features/blocknote/youtube-block';
 import { codeStyleSpec } from '~features/blocknote/code-toolbar';
 import {
   CommentToolbarController,
   commentStyleSpec,
 } from '@defensestation/blocknote-comments';
 import '@blocknote/core/fonts/inter.css';
+
 import '@blocknote/react/style.css';
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs,
     alert: AlertBlock,
+    youtube: YouTubeBlock,
     procode: CodeBlock,
   },
   styleSpecs: {
@@ -36,7 +39,6 @@ export function ArticleViewer(props: ArticleViewerProps) {
     schema,
     initialContent: props.body,
   });
-
 
   return (
     <BlockNoteView
