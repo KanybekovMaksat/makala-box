@@ -43,7 +43,7 @@ function Page() {
   }
   const { title, subtitle, id: articleId, photo } = articleData.data;
   return (
-    <>
+    <div>
       <Helmet prioritizeSeoTags>
         <title>{title}</title>
         <meta name="description" content={subtitle} />
@@ -54,6 +54,8 @@ function Page() {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={subtitle} />
         <meta property="og:image" content={photo} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:locale" content="ru_Ru" />
       </Helmet>
       <Container maxWidth="md" className="mx-auto my-[65px] ">
         {articleData && (
@@ -76,7 +78,7 @@ function Page() {
           <CommentList id={parseInt(id)} />
         </div>
       </Container>
-    </>
+    </div>
   );
 }
 

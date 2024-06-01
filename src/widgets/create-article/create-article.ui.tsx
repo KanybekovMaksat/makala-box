@@ -9,12 +9,11 @@ import {
   filterSuggestionItems,
   insertOrUpdateBlock,
 } from '@blocknote/core';
-import "@blocknote/mantine/style.css";
+import '@blocknote/mantine/style.css';
 import {
   SuggestionMenuController,
   getDefaultReactSlashMenuItems,
 } from '@blocknote/react';
-
 import { CodeBlock, insertCode } from '@defensestation/blocknote-code';
 import { AlertBlock } from '~features/blocknote/alert-block';
 import { RiAlertFill } from 'react-icons/ri';
@@ -32,6 +31,7 @@ const schema = BlockNoteSchema.create({
     ...defaultBlockSpecs,
     youtube: YouTubeBlock,
     alert: AlertBlock,
+    youtube: YouTubeBlock,
     procode: CodeBlock,
   },
   styleSpecs: {
@@ -66,7 +66,6 @@ const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
 
 const insertYouTubeVideo = (editor: typeof schema.BlockNoteEditor) => ({
   title: 'YouTube Видео',
-  subtext: "Used to insert a block with 'Hello World' below.",
   onItemClick: () => {
     insertOrUpdateBlock(editor, {
       type: 'youtube',
@@ -93,7 +92,6 @@ async function uploadFile(file: File) {
   }
 }
 
-
 export function CreateArticle() {
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | 'loading'
@@ -115,7 +113,11 @@ export function CreateArticle() {
     if (initialContent === 'loading') {
       return undefined;
     }
-    return BlockNoteEditor.create({ schema, initialContent, uploadFile });
+    return BlockNoteEditor.create({
+      schema,
+      initialContent,
+      uploadFile,
+    });
   }, [initialContent]);
 
   if (editor === undefined) {
