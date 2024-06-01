@@ -3,75 +3,115 @@ import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import './slider-banner.ui.css';
+import 'swiper/css/effect-fade';
 
 export function SliderBanner() {
   return (
-    <div className="flex gap-10 max-h-[450px]">
-      <div className="slider-banner">
+    <div className="flex flex-col md:flex-row gap-5  md:min-h-[450px]">
+      <div className="slider-banner md:max-w-[50%] md:min-w-[50%]">
         <Swiper
           modules={[Pagination, EffectFade, Autoplay]}
           spaceBetween={15}
           slidesPerView={1}
+          loop={true}
           autoplay={{
-            delay: 1500,
+            delay: 5000,
             disableOnInteraction: false,
           }}
           effect="fade"
           pagination={{ clickable: true }}
         >
           <SwiperSlide>
-          <div
-          className=" bg-center bg-cover rounded"
-          style={{
-            height:"450px" ,
-            backgroundImage: `url('https://the-tech.kz/wp-content/uploads/2024/04/378516037_338027448658224_8911445700177030421_n.jpg')`,
-          }}
-        >
-          <h3 className='text-pc-100 font-bold'>
-          4 Custom React Hooks Every Developer Should Know
-          </h3>
-        </div>
+            <div
+              className="swiper-card rounded "
+              style={{
+                backgroundSize: 'cover',
+                height: '450px',
+                backgroundImage: `url('https://i.pinimg.com/564x/a9/a2/f3/a9a2f3487118b187b72e410db0ed07c3.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                Как дизайнеру и любителю технологий жить после Apple Vision Pro
+              </h3>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src="https://i.pinimg.com/564x/f7/a8/9d/f7a89ddb7fc4dfe1dd704f0c51a5b0f5.jpg"
-              alt=""
-            />
+            <div
+              className="swiper-card rounded "
+              style={{
+                backgroundSize: 'cover',
+                height: '450px',
+                backgroundImage: `url('https://i.pinimg.com/564x/a9/a2/f3/a9a2f3487118b187b72e410db0ed07c3.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                Как дизайнеру и любителю технологий жить после Apple Vision Pro
+              </h3>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src="https://i.pinimg.com/564x/f4/05/e9/f405e94ace11d60ff68176590646eb25.jpg"
-              alt=""
-            />
+            <div
+              className="swiper-card rounded "
+              style={{
+                backgroundSize: 'cover',
+                height: '450px',
+                backgroundImage: `url('https://i.pinimg.com/564x/a9/a2/f3/a9a2f3487118b187b72e410db0ed07c3.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                Как дизайнеру и любителю технологий жить после Apple Vision Pro
+              </h3>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src="https://i.pinimg.com/736x/95/2b/5a/952b5a371c5e0e411afaaca340f7ab8d.jpg"
-              alt=""
-            />
+            <div
+              className="swiper-card bg-center bg-cover rounded"
+              style={{
+                height: '450px',
+                backgroundImage: `url('https://habrastorage.org/r/w780/getpro/habr/upload_files/453/128/8f0/4531288f06638490cc72b5a387d92412.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                A JavaScript Interview Question That 90% of People Get Wrong
+              </h3>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div
+              className="swiper-card bg-center bg-cover rounded"
+              style={{
+                height: '450px',
+                backgroundImage: `url('https://habrastorage.org/r/w780/getpro/habr/upload_files/840/4b8/7ce/8404b87ced286d27eda1425c08e022ab.jpg')`,
+              }}
+            >
+              <h3 className="text-pc-100 font-bold text-xl p-3 md:p-8">
+                История геймдизайна от классических игр до современных
+                технологий
+              </h3>
+            </div>
           </SwiperSlide>
         </Swiper>
       </div>
-      <div className='flex flex-col justify-between'>
+      <div className="flex flex-col min-w-[30%] max-w-[30%]  h-[450px]">
         <div
-          className="h-[45%] bg-center bg-cover rounded slider-card"
+          className="h-[200px] md:h-full bg-center bg-cover rounded slider-card "
           style={{
-            backgroundImage: `url('https://the-tech.kz/wp-content/uploads/2024/04/378516037_338027448658224_8911445700177030421_n.jpg')`,
+            backgroundImage: `url('/public/maka.png')`,
           }}
         >
-          <h3 className='text-pc-100 font-bold'>
-          4 Custom React Hooks Every Developer Should Know
+          <h3 className="text-pc-100 text-lg font-bold">
+            Освоение инструментов редактора Makala Box.Практическое Руководство
           </h3>
         </div>
+
         <div
-          className="h-[45%] bg-center bg-cover rounded slider-card"
+          className="h-[200px] md:h-full bg-center bg-cover rounded slider-card "
           style={{
-            backgroundImage: `url('https://the-tech.kz/wp-content/uploads/2024/04/378516037_338027448658224_8911445700177030421_n.jpg')`,
+            backgroundImage: `url('/public/maka.png')`,
           }}
         >
-          <h3 className='text-pc-100 font-bold'>
-          4 Custom React Hooks Every Developer Should Know
+          <h3 className="text-pc-100 text-lg font-bold">
+            Освоение инструментов редактора Makala Box.Практическое Руководство
           </h3>
         </div>
       </div>

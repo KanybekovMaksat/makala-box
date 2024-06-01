@@ -6,28 +6,29 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 
 export function Footer() {
   return (
-    <footer className="border-t-2 border-pc-200">
+    <footer className="bg-pc-100 border-t-2 border-pc-200">
       <Container maxWidth="lg" className="py-6 flex justify-between ">
         <div>
-          <p className="font-bold">
-            © 2024–{new Date().getFullYear()}, Comtehno
-          </p>
-          <p className="text-sm font-semibold">Legacy by Usta Soft</p>
+          <p className="font-bold">{new Date().getFullYear()} Comtehno</p>
+          <p className="text-sm font-semibold">© Legacy by Usta Soft</p>
         </div>
         <ul className="flex gap-5">
           <li>
-            <a href="">
-              <InstagramIcon />
+            <a target="_blank" href="https://www.instagram.com/comtehno.kg/">
+              <InstagramIcon className=" hover:text-second-100" />
             </a>
           </li>
           <li>
-            <a href="">
-              <EmailIcon />
+            <a
+              target="_blank"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=comtehno.kg@gmail.com"
+            >
+              <EmailIcon className="hover:text-second-100" />
             </a>
           </li>
           <li>
-            <a href="">
-              <TelegramIcon />
+            <a target="_blank" href="https://t.me/Gulnurs777">
+              <TelegramIcon className="hover:text-second-100" />
             </a>
           </li>
         </ul>

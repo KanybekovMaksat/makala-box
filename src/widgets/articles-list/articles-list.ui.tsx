@@ -1,100 +1,259 @@
-// import components
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   CardMedia,
-  IconButton,
   Tooltip,
+  CircularProgress,
+  CardActionArea,
 } from '@mui/material';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import { Link, useNavigate } from 'react-router-dom';
+import { pathKeys } from '~shared/lib/react-router';
+import { articleQueries, articleTypes } from '~entities/article';
+import { ShareButton } from '~features/article/share-button';
+import { LikeButton } from '~features/article/like-button';
+import { FavoriteButton } from '~features/article/favorite-button';
 
-
-// import icons
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import ShareIcon from '@mui/icons-material/Share';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+// import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
+dayjs.locale('ru');
 
 export function ArticlesList() {
-  return (
-      <div className="flex flex-col items-center gap-5">
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
+  const {
+    data: articleData,
+    isLoading,
+    isSuccess,
+    isError,
+  } = articleQueries.useGetArticles();
+
+  if (isLoading) {
+    return (
+      <div>
+        <CircularProgress className="w-[50px] mx-auto flex justify-center" />
+        <p className="text-center mt-2">Загрузка статей...</p>
       </div>
+    );
+  }
+
+  if (isError) {
+    return <div className="my-20">Error fetching user data.</div>;
+  }
+
+  const articles = articleData?.data?.results;
+
+  const publishedArticles = !articles
+    ? []
+    : articles.filter((article) => article.status === 'approved');
+
+  if (publishedArticles.length == 0) {
+    return (
+      <div className="text-center font-medium">
+        К сожалению, у вас нет избранных статей📖
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col mx-auto gap-5 max-w-[95%] md:max-w-[90%] ">
+      {isSuccess &&
+        articles.map((article) => (
+          <ArticleCard article={article} key={article.id} />
+        ))}
+      {/* <Link
+        className="flex justify-end underline text-pc-500 my-3"
+        to={pathKeys.feed()}
+      >
+        Смотреть больше
+        <NavigateNextIcon />
+      </Link> */}
+    </div>
   );
 }
 
-
 // Article Card Component
-function ArticleCard() {
+type ArticleCardProps = { article: articleTypes.Article };
+
+function ArticleCard(props: ArticleCardProps) {
+  const navigate = useNavigate();
+  const handleNavigate = (id: number) => {
+    navigate(pathKeys.article.byId({ id }));
+  };
   return (
-    <Card className="max-w-full hover:shadow-xl shadow-none border border-sc-100 p-2 card">
-      <div className="flex flex-col-reverse md:flex-row items-center md:justify-between">
-        <CardContent className='md:p-[12px] p-2'>
+    <Card className="min-w-full max-w-full shadow-none border border-sc-100  card">
+      <div className="flex flex-col">
+        <CardContent className="md:p-5 p-3">
           <div className="flex justify-between items-center pb-3">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1">
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://comtehno.kg/wp-content/uploads/2019/11/cropped-cropped-1789_oooo.plus_-2-300x300.png"
-                />
-                <p className="text-md font-bold">Comtehno College</p>
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
+              <div className="flex items-center gap-4 cursor-pointer">
+                <div className="flex items-center gap-2">
+                  <Avatar
+                    sizes="large"
+                    className="duration-500 card-avatar border-2 border-[white] h-10 w-10"
+                    alt={props.article.author.fullName}
+                    src={props.article.author.photo}
+                  />
+                  <h5 className="flex text-base md:text-base font-bold">
+                    {props.article.author.fullName}
+                  </h5>
+                </div>
+                <div className="md:flex items-center gap-3 hidden">
+                  <p className="text-md text-pc-400 text-sm">
+                    {dayjs(props.article.created)
+                      .format('MMMM D, YYYY')
+                      .toUpperCase()}
+                  </p>
+                  <p className="text-md text-pc-400 flex items-center gap-1 text-sm">
+                    <VisibilityIcon className="w-5" />
+                    {props.article.viewCount}
+                  </p>
+                  <Tooltip title="Время чтения">
+                    <p className="text-md text-pc-400 flex items-center gap-1 text-sm">
+                      <AccessTimeFilledIcon className="w-4" />
+                      {props.article.readTime} мин
+                    </p>
+                  </Tooltip>
+                </div>
               </div>
-              <p className="text-md text-pc-400 text-sm hidden md:block">
-                Апрель 2, 2024
-              </p>
-              <p className="text-md text-pc-400 flex items-center gap-1 text-sm">
-                <VisibilityIcon className="w-5" />
-                566
-              </p>
             </div>
           </div>
-          <Box>
-            <h4 className="font-bold text-xl title">
-              4 Custom React Hooks Every Developer Should Know
-            </h4>
-            <p className="text-md text-pc-500">
-              4 Custom React Hooks to Improve Your Efficiency — My friends, if I
-              had learned these 4 React hooks earlier, maybe I could have
-              written more beautiful code. They greatly improved my work
-              efficiency and the...
+          <div className="flex items-center gap-3 px-1 mb-2 md:hidden">
+            <p className="text-md text-pc-400 text-sm">
+              {dayjs(props.article.created)
+                .format('MMMM D, YYYY')
+                .toUpperCase()}
             </p>
-            <div className="pt-2 flex items-center gap-1">
-              <div className="flex items-center ">
-                <Tooltip title="Нравится">
-                  <IconButton aria-label="нравится">
-                    <ThumbUpIcon />
-                  </IconButton>
-                </Tooltip>
-                <p className="text-sm text-pc-400">66</p>
-              </div>
-              <Tooltip title="В Избранное">
-                <IconButton aria-label="В Избранное">
-                  <BookmarkAddIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Поделиться">
-                <IconButton aria-label="поделиться">
-                  <ShareIcon />
-                </IconButton>
-              </Tooltip>
-            </div>
-          </Box>
+            <p className="text-md text-pc-400 flex items-center gap-1 text-sm">
+              <VisibilityIcon className="w-5" />
+              {props.article.viewCount}
+            </p>
+            <Tooltip title="Время чтения">
+              <p className="text-md text-pc-400 flex items-center gap-1 text-sm">
+                <AccessTimeFilledIcon className="w-4" />
+                {props.article.readTime} мин
+              </p>
+            </Tooltip>
+          </div>
+          <div
+            className="hover:cursor-pointer"
+            onClick={() => handleNavigate(props.article.id)}
+          >
+            <h4 className="font-bold text-xl title duration-300">
+              {props.article.title}
+            </h4>
+            <p className="text-md mt-2">{props.article.subtitle}...</p>
+          </div>
         </CardContent>
-  
-        <CardMedia
-          component="img"
-          className="w-full md:max-w-[300px] h-[200px] md:max-h-[200px] md:min-h-[200px] rounded md:rounded-md md:mr-[12px]"
-          image="https://i.pinimg.com/564x/b4/1a/8a/b41a8acccf85813efcddf1d93061ecc6.jpg"
-          alt="Live from space album cover"
-          title="Makala Box"
-        />
+        <CardActionArea onClick={() => handleNavigate(props.article.id)}>
+          <CardMedia
+            component="img"
+            className="w-full  h-auto md:max-h-[550px] cursor-pointer"
+            image={props.article.photo}
+            alt={props.article.title}
+            title={props.article.title}
+          />
+        </CardActionArea>
+        <div className="md:px-5 py-2 md:py-3 px-1 flex items-center justify-between">
+          <div className="flex gap-3">
+            <LikeButton
+              like={{
+                id: props.article.id,
+                likeCount: props.article.likeCount,
+                likes: props.article.likes,
+              }}
+            />
+            <FavoriteButton id={props.article.id} />
+          </div>
+          <ShareButton title={props.article.title} id={props.article.id} />
+        </div>
       </div>
     </Card>
   );
 }
+<<<<<<< HEAD
+=======
+
+// function ArticleCard(props: ArticleCardProps) {
+//   return (
+//     <Card className="min-w-full max-w-full  shadow-none border border-sc-100 p-2 card">
+//       <div className="flex flex-col-reverse md:flex-row items-center md:justify-between">
+//         <CardContent className="md:p-[12px] p-2">
+//           <div className="flex justify-between items-center pb-3">
+//             <div className="flex flex-col md:flex-row md:items-center gap-3">
+//               <div className="flex items-center gap-4 cursor-pointer">
+//                 <div className="flex items-center">
+//                   <Avatar
+//                     className="duration-500 card-avatar border-2 border-[white]"
+//                     alt={props.article.author}
+//                     src={props.article.authorPhoto}
+//                   />
+//                   <h5 className="flex text-sm md:text-base  font-bold duration-300">
+//                     {props.article.author}
+//                   </h5>
+//                 </div>
+//                 <Tooltip title="Время чтения">
+//                   <p className="text-md text-pc-400 flex items-center md:hidden gap-1 text-sm">
+//                     <AccessTimeFilledIcon className="w-4" />
+//                     {props.article.readTime} мин
+//                   </p>
+//                 </Tooltip>
+//               </div>
+//               <div className="flex items-center gap-3">
+//                 <p className="text-md text-pc-400 text-sm ">
+//                   {dayjs(props.article.created)
+//                     .format('MMMM D, YYYY')
+//                     .toUpperCase()}
+//                 </p>
+//                 <p className="text-md text-pc-400 flex items-center gap-1 text-sm">
+//                   <VisibilityIcon className="w-5" />
+//                   {props.article.viewCount}
+//                 </p>
+//                 <Tooltip title="Время чтения">
+//                   <p className="text-md text-pc-400 hidden md:flex items-center gap-1 text-sm">
+//                     <AccessTimeFilledIcon className="w-4" />
+//                     {props.article.readTime} мин
+//                   </p>
+//                 </Tooltip>
+//               </div>
+//             </div>
+//           </div>
+//           <div>
+//             <Link
+//               className="card-info"
+//               to={pathKeys.article.byId({ id: props.article.id })}
+//             >
+//               <h4 className="font-bold text-xl title duration-300">
+//                 {props.article.title}
+//               </h4>
+//               <p className="text-md text-pc-500 min-h-[70px]">
+//                 {props.article.subtitle}...
+//               </p>
+//             </Link>
+//             <div className="pt-2 flex items-center gap-1">
+//               <LikeButton
+//                 like={{
+//                   id: props.article.id,
+//                   likeCount: props.article.likeCount,
+//                   likes: props.article.likes,
+//                 }}
+//               />
+//               <FavoriteButton id={props.article.id} />
+//               <ShareButton id={props.article.id} />
+//             </div>
+//           </div>
+//         </CardContent>
+//         <CardMedia
+//           component="img"
+//           className="w-[95%] md:max-w-[250px] min-h-[230px] max-h-[230px] rounded md:mr-[12px] cursor-pointer"
+//           image={props.article.photo}
+//           alt={props.article.title}
+//           title={props.article.title}
+//         />
+//       </div>
+//     </Card>
+//   );
+// }
+>>>>>>> d9983b19aca4ed10765fba4ec03fae6cd3a9878d

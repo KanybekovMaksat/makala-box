@@ -14,6 +14,7 @@ export default {
       'pc-400': '#898989',
       'pc-500': '#676767',
       'sc-100': '#EFEFEF',
+      'second-100': '#0a85d1',
     },
     extend: {},
   },

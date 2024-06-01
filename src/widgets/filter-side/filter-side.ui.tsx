@@ -6,14 +6,14 @@ import { FilterSelect } from '~features/filter-bar/filter-select';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  border: '1px solid gray',
+  border: '2px solid #EFEFEF',
   width: '100%',
+  background:"white",
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
-
   position: 'absolute',
   pointerEvents: 'none',
   display: 'flex',
@@ -46,9 +46,8 @@ export function FilterSide() {
       </Search>
       <div className="mt-4">
         <FilterSelect />
-        <FilterSelect />
       </div>
-      <Button className="w-full bg-[#2C9D62]" variant="contained">
+      <Button className="w-full bg-second-100" variant="contained">
         Применить
       </Button>
     </div>

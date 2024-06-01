@@ -6,25 +6,15 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from 'react';
-import CheckIcon from '@mui/icons-material/Check';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 const categories = [
   'Все',
-  'Программирование',
-  'Гуманитарий',
-  'Дизайн',
-  'Front-End',
-  'Стартапам',
-  'Искусственный интеллект',
-  'Психология',
-  'Все',
-  'Программирование',
-  'Гуманитарий',
-  'Дизайн',
-  'Front-End',
-  'Стартапам',
-  'Искусственный интеллект',
-  'Психология',
+  'Comtehno College',
+  'International University of Innovation Technology',
+  'Kite',
+  'Usta Soft',
 ];
 
 export function FilterSelect() {
@@ -32,7 +22,7 @@ export function FilterSelect() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
@@ -51,28 +41,33 @@ export function FilterSelect() {
     <Accordion
       expanded={expanded === 'panel2'}
       onChange={handleChange('panel2')}
-      className="my-5 shadow-none border-2 border-sc-100 before:bg-pc-100"
+      className="my-5 shadow-none border-2 border-sc-100 "
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel2bh-content"
         id="panel2bh-header"
+        className='text-pc-400'
       >
         Организации
       </AccordionSummary>
-      <AccordionDetails className="max-h-[300px] overflow-y-auto p-0">
+      <AccordionDetails className="max-h-[300px] overflow-y-auto p-0 break-words">
         {categories.map((name) => (
           <MenuItem
             key={name}
             onClick={() => handleCategorySelect(name)}
-            className={`flex justify-between p-3 border-b border-solid ${
+            className={`overflow-hidden max-w-[300px] duration-300 flex justify-between p-4 border-b border-solid  ${
               isCategorySelected(name)
-                ? 'bg-[#2C9D62] text-pc-100'
-                : 'bg-white text-[gray]'
+                ? 'bg-second-100/80 text-pc-100'
+                : 'bg-white text-pc-400'
             }`}
           >
-            {name}
-            {isCategorySelected(name) && <CheckIcon />}
+            <p className="truncate"> {name}</p>
+            {isCategorySelected(name) ? (
+              <TaskAltIcon />
+            ) : (
+              <RadioButtonUncheckedIcon />
+            )}
           </MenuItem>
         ))}
       </AccordionDetails>
