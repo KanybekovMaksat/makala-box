@@ -173,8 +173,6 @@ function ArticleCard(props: ArticleCardProps) {
     </Card>
   );
 }
-<<<<<<< HEAD
-=======
 
 // function ArticleCard(props: ArticleCardProps) {
 //   return (
@@ -256,4 +254,3 @@ function ArticleCard(props: ArticleCardProps) {
 //     </Card>
 //   );
 // }
->>>>>>> d9983b19aca4ed10765fba4ec03fae6cd3a9878d
