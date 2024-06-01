@@ -3,7 +3,7 @@ import {
   defaultBlockSpecs,
   defaultStyleSpecs,
 } from '@blocknote/core';
-import { BlockNoteView, useCreateBlockNote } from '@blocknote/react';
+import {  useCreateBlockNote } from '@blocknote/react';
 import { CodeBlock } from '@defensestation/blocknote-code';
 import { AlertBlock } from '~features/blocknote/alert-block';
 import { codeStyleSpec } from '~features/blocknote/code-toolbar';
@@ -13,6 +13,7 @@ import {
 } from '@defensestation/blocknote-comments';
 import '@blocknote/core/fonts/inter.css';
 import '@blocknote/react/style.css';
+import { BlockNoteView } from '@blocknote/mantine';
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
@@ -47,7 +48,7 @@ export function ArticleViewer(props: ArticleViewerProps) {
       formattingToolbar={false}
       editable={false}
     >
-      <CommentToolbarController />
+
     </BlockNoteView>
   );
 }

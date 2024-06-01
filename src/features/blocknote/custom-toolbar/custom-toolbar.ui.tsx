@@ -3,24 +3,23 @@ import {
   BlockTypeSelect,
   ColorStyleButton,
   CreateLinkButton,
+  FileCaptionButton,
+  FileReplaceButton,
   FormattingToolbar,
   FormattingToolbarController,
-  ImageCaptionButton,
   NestBlockButton,
-  ReplaceImageButton,
   TextAlignButton,
   UnnestBlockButton,
 } from '@blocknote/react';
 import { CodeButton } from '../code-toolbar';
-import { CreateCommentButton } from '@defensestation/blocknote-comments';
 
 export const CustomToolbar = () => (
   <FormattingToolbarController
     formattingToolbar={() => (
       <FormattingToolbar>
         <BlockTypeSelect key={'blockTypeSelect'} />
-        <ImageCaptionButton key={'imageCaptionButton'} />
-        <ReplaceImageButton key={'replaceImageButton'} />
+        <FileCaptionButton key={'fileCaptionButton'} />
+        <FileReplaceButton key={'replaceFileButton'} />
         <BasicTextStyleButton basicTextStyle={'bold'} key={'boldStyleButton'} />
         <BasicTextStyleButton
           basicTextStyle={'italic'}
@@ -35,7 +34,6 @@ export const CustomToolbar = () => (
           key={'strikeStyleButton'}
         />
         <CodeButton />
-        <CreateCommentButton key={'createCommentButtin'} />
         <TextAlignButton textAlignment={'left'} key={'textAlignLeftButton'} />
         <TextAlignButton
           textAlignment={'center'}

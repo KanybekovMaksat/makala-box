@@ -22,6 +22,8 @@ function getTranslatedText(title: string): string {
       return 'Таблица';
     case 'Image':
       return 'Изображение';
+    case 'Video':
+      return 'Видео';
     default:
       return title;
   }
@@ -46,9 +48,14 @@ export function CustomSlashMenu(
     }
   }, [props.selectedIndex]);
 
+  const filteredItems = props.items.filter((item) => {
+    const unwantedTitles = ['Audio', 'File', 'Check List'];
+    return !unwantedTitles.includes(item.title);
+  });
+
   return (
     <div className="slash-menu bg-none max-h-48 overflow-y-auto" ref={menuRef}>
-      {props.items.map((item, index) => (
+      {filteredItems.map((item, index) => (
         <div
           key={index}
           className={`slash-menu-item border-b border-b-second-100/40 p-3 ${

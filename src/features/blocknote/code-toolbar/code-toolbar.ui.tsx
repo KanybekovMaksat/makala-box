@@ -1,13 +1,11 @@
 import { BlockSchema, InlineContentSchema, StyleSchema } from '@blocknote/core';
 import {
-  ToolbarButton,
   useBlockNoteEditor,
+  useComponentsContext,
   useEditorContentOrSelectionChange,
 } from '@blocknote/react';
 import { useState } from 'react';
 import { RiCodeFill } from 'react-icons/ri';
-
-
 
 export function CodeButton() {
   const editor = useBlockNoteEditor<
@@ -15,6 +13,8 @@ export function CodeButton() {
     InlineContentSchema,
     StyleSchema
   >();
+
+  const Components = useComponentsContext()!;
 
   const [isSelected, setIsSelected] = useState<boolean>(
     editor.getActiveStyles().code === 'rgba(135,131,120,.15)'
@@ -38,9 +38,10 @@ export function CodeButton() {
   };
 
   return (
-    <ToolbarButton
+    <Components.FormattingToolbar.Button
+      label="Set code snippet"
       mainTooltip={'Code'}
-      icon={RiCodeFill}
+      icon={<RiCodeFill />}
       onClick={toggleCodeStyle}
       isSelected={isSelected}
     />

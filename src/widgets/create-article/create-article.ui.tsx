@@ -9,35 +9,33 @@ import {
   filterSuggestionItems,
   insertOrUpdateBlock,
 } from '@blocknote/core';
-import '@blocknote/core/fonts/inter.css';
+import "@blocknote/mantine/style.css";
 import {
-  BlockNoteView,
   SuggestionMenuController,
   getDefaultReactSlashMenuItems,
 } from '@blocknote/react';
-import '@blocknote/react/style.css';
+
 import { CodeBlock, insertCode } from '@defensestation/blocknote-code';
 import { AlertBlock } from '~features/blocknote/alert-block';
 import { RiAlertFill } from 'react-icons/ri';
 import { CustomSlashMenu } from '~features/blocknote/custom-slash';
-import {
-  commentStyleSpec,
-  CommentToolbarController,
-} from '@defensestation/blocknote-comments';
 import { codeStyleSpec } from './../../features/blocknote/code-toolbar/code-toolbar.stylespec';
 import { CustomToolbar } from '~features/blocknote/custom-toolbar';
 import { useEffect, useMemo, useState } from 'react';
 import { CircularProgress } from '@mui/material';
+import { BlockNoteView } from '@blocknote/mantine';
+import { YouTubeBlock } from '~features/blocknote/youtube-block';
+import { RiYoutubeFill } from 'react-icons/ri';
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs,
+    youtube: YouTubeBlock,
     alert: AlertBlock,
     procode: CodeBlock,
   },
   styleSpecs: {
     ...defaultStyleSpecs,
-    comment: commentStyleSpec,
     code: codeStyleSpec,
   },
 });
@@ -62,7 +60,24 @@ const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
   },
   aliases: ['alert', 'notification', 'info', 'note'],
   group: 'Advanced',
+  subtext: "Used to insert a block with 'Hello World' below.",
   icon: <RiAlertFill />,
+});
+
+const insertYouTubeVideo = (editor: typeof schema.BlockNoteEditor) => ({
+  title: 'YouTube Видео',
+  subtext: "Used to insert a block with 'Hello World' below.",
+  onItemClick: () => {
+    insertOrUpdateBlock(editor, {
+      type: 'youtube',
+      props: {
+        url: '',
+      },
+    });
+  },
+  aliases: ['youtube', 'video', 'embed', 'media'],
+  group: 'Advanced',
+  icon: <RiYoutubeFill />,
 });
 
 async function uploadFile(file: File) {
@@ -77,6 +92,7 @@ async function uploadFile(file: File) {
     throw new Error('File upload failed');
   }
 }
+
 
 export function CreateArticle() {
   const [initialContent, setInitialContent] = useState<
@@ -121,14 +137,14 @@ export function CreateArticle() {
       onChange={() => saveToStorage(editor.document)}
     >
       <CustomToolbar />
-      <CommentToolbarController />
       <SuggestionMenuController
         triggerCharacter={'/'}
         suggestionMenuComponent={CustomSlashMenu}
-        getItems={async (query: string) =>
+        getItems={async (query) =>
           filterSuggestionItems(
             [
               ...getDefaultReactSlashMenuItems(editor),
+              insertYouTubeVideo(editor),
               insertAlert(editor),
               insertCode(),
             ],

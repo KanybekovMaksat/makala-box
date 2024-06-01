@@ -11,7 +11,6 @@ import {
 } from '@blocknote/core';
 import '@blocknote/core/fonts/inter.css';
 import {
-  BlockNoteView,
   SuggestionMenuController,
   getDefaultReactSlashMenuItems,
 } from '@blocknote/react';
@@ -28,6 +27,7 @@ import { codeStyleSpec } from './../../features/blocknote/code-toolbar/code-tool
 import { CustomToolbar } from '~features/blocknote/custom-toolbar';
 import { useEffect, useMemo, useState } from 'react';
 import { CircularProgress } from '@mui/material';
+import { BlockNoteView } from '@blocknote/mantine';
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
@@ -119,7 +119,6 @@ export function EditArticle(props: EditArticleProps) {
       onChange={() => saveToStorage(editor.document)}
     >
       <CustomToolbar />
-      <CommentToolbarController />
       <SuggestionMenuController
         triggerCharacter={'/'}
         suggestionMenuComponent={CustomSlashMenu}
