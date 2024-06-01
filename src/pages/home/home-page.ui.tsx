@@ -1,37 +1,15 @@
 import { ArticlesList } from '~widgets/articles-list';
 import { IntroBlock } from '~widgets/intro-block';
 import { Container } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+
 
 export function HomePage() {
   return (
-    <div>
-      <Helmet>
-        <meta
-          name="description"
-          content="MakalaBox - платформа для обмена знаниями между преподавателями и студентами колледжей. Здесь они могут публиковать статьи по различным темам."
-        />
-        <meta
-          property="og:title"
-          content="MakalaBox - платформа для обмена знаниями между преподавателями и студентами колледжей. Здесь они могут публиковать статьи по различным темам."
-        />
-        <meta
-          property="og:description"
-          content="Платформа Makalabox предоставляет удобное решение для публикации научных статей. Присоединяйтесь к нашему сообществу и делитесь своими исследованиями."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.makalabox.com/" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:locale" content="ru_Ru" />
-        <meta
-          property="og:image"
-          content="https://api.makalabox.com/media/article/photos/2024/05/14/33bd14ef-220b-450c-99df-c92da7f7c540.png"
-        />
-      </Helmet>
+    <>
       <Container maxWidth="md" className="md:mx-auto my-20">
         <div className="w-[95%] md:w-[90%] mx-auto bg-[white] my-5  p-5 rounded-md flex flex-col-reverse md:flex-row items-center md:justify-center gap-5 translate-y-5 md:translate-y-px border-2 border-[#eae8e885]">
           <img
-            src="/public/typing.svg"
+            src="/typing.svg"
             alt=""
             className="h-[150px] translate-y-px"
           />
@@ -53,6 +31,6 @@ export function HomePage() {
         </h2>
         <ArticlesList />
       </Container>
-    </div>
+    </>
   );
 }

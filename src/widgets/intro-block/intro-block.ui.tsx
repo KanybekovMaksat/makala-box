@@ -13,27 +13,27 @@ interface ICard {
 
 const cards: ICard[] = [
   {
-    image: '/public/Reading.svg',
+    image: '/Reading.svg',
     title: 'Знания',
     description: 'База проверенных и достоверных статей',
   },
   {
-    image: '/public/knowledge.svg',
+    image: '/knowledge.svg',
     title: 'Разнообразие',
     description: 'Читай то что интересно. Статьи на самые разные темы.',
   },
   {
-    image: '/public/oc-project-development.svg',
+    image: '/oc-project-development.svg',
     title: 'Авторство',
     description: 'Публикация своих исследований и опыта',
   },
   {
-    image: '/public/Teamworks.svg',
+    image: '/Teamworks.svg',
     title: 'Сообщество',
     description: 'Обсуждение и обмен мнениями с другими.',
   },
   {
-    image: '/public/oc-puzzle.svg',
+    image: '/oc-puzzle.svg',
     title: 'Удобство',
     description: 'Удобный и понятный дизайн',
   },
