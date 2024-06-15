@@ -44,19 +44,34 @@ function Page() {
   const { title, subtitle, id: articleId, photo } = articleData.data;
   return (
     <div>
-      <Helmet prioritizeSeoTags>
-        <title>{title}</title>
-        <meta name="description" content={subtitle} />
-        <link
-          rel="canonical"
-          href={`https://www.makalabox.com/articles/${articleId}`}
-        />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={subtitle} />
-        <meta property="og:image" content={photo} />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:locale" content="ru_Ru" />
-      </Helmet>
+      <Helmet
+        htmlAttributes={{ lang: 'ru'}}
+        title={title}
+        base={{ target: '_blank', href: 'https://makalabox.com/' }}
+        meta={[
+          { property: 'og:title', content: title },
+          { name: 'description', content: subtitle },
+          { property: 'og:image', content: articleData.data.photo },
+          { property: 'og:type', content: 'article' },
+        ]}
+        script={[
+          {
+            type: 'application/ld+json',
+            innerHTML: `    {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": "${title}",
+              "description": "${articleData.data.subtitle}",
+              "image": "${photo}"
+              "author": {
+                "@type": "Person",
+                "name": "${articleData.data.author.fullName}"
+              },
+              "datePublished": "${articleData.data.created}",
+            }`,
+          },
+        ]}
+      />
       <Container maxWidth="md" className="mx-auto my-[65px] ">
         {articleData && (
           <div className="max-w-full md:max-w-[95%] bg-[white] px-2 md:px-5  mb-5">

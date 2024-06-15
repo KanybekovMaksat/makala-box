@@ -34,6 +34,8 @@ export function TopBar() {
     data: { firstName = '', lastName = '', role = '', photo = '' } = {},
   } = userData || {};
 
+
+  
   const navigate = useNavigate();
 
   const handleNavigateToPage = (pageName: string) => {

@@ -39,17 +39,15 @@ export function ArticlesList() {
     );
   }
 
+  
   if (isError) {
     return <div className="my-20">Error fetching user data.</div>;
-  }
+    }
+    
+    const articles = articleData?.data?.results;
 
-  const articles = articleData?.data?.results;
 
-  const publishedArticles = !articles
-    ? []
-    : articles.filter((article) => article.status === 'approved');
-
-  if (publishedArticles.length == 0) {
+  if (articles.length == 0) {
     return (
       <div className="text-center font-medium">
         К сожалению, у вас нет избранных статей📖

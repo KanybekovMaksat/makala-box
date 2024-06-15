@@ -8,7 +8,7 @@ const Search = styled('div')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   border: '2px solid #EFEFEF',
   width: '100%',
-  background:"white",
+  background: 'white',
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -32,24 +32,44 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export function FilterSide() {
+export function FilterSide({ searchQuery, setSearchQuery, getArticle, selectedCategoryIds, setSelectedCategoryIds }) {
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    getArticle(searchQuery, selectedCategoryIds);
+  };
+
   return (
-    <div className="md:fixed  w-full md:w-[300px]">
+    <div className="md:fixed w-full md:w-[300px]">
       <Search>
         <SearchIconWrapper>
           <SearchIcon className="text-pc-500" />
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
+          value={searchQuery}
+          onChange={handleSearchChange}
           inputProps={{ 'aria-label': 'search' }}
         />
       </Search>
-      <div className="mt-4">
-        <FilterSelect />
-      </div>
-      <Button className="w-full bg-second-100" variant="contained">
+      <FilterSelect selectedCategoryIds={selectedCategoryIds} setSelectedCategoryIds={setSelectedCategoryIds} />
+      <Button
+        className="mt-5 w-full bg-second-100"
+        variant="contained"
+        onClick={handleSearchSubmit}
+      >
         Применить
       </Button>
     </div>
   );
 }
+
+
+
+  // const handleSearchChange = (event) => {
+  //   const query = event.target.value;
+  //   setSearchQuery(query);
+  //   getArticle(query);
+  // };

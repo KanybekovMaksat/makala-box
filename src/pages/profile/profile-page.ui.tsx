@@ -9,6 +9,8 @@ export function ProfilePage() {
     isError,
   } = userQueries.useLoginUserQuery();
 
+
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }

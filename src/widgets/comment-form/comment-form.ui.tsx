@@ -39,6 +39,7 @@ export function CommentForm({ id }: CommentFormProps) {
     mutate: createComment,
     isPending,
     isError,
+    isSuccess
   } = commentQueries.useCreateCommentMutation(id);
 
   const initialData: commentTypes.CreateComment = {

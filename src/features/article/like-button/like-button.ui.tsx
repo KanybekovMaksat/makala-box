@@ -14,13 +14,15 @@ export function LikeButton(props: LikeButtonProps) {
   const navigate = useNavigate();
 
   const redirectToRegisterPage = () => {
-    navigate(pathKeys.register());
+    navigate(pathKeys.login());
   };
   const { data: userData } = userQueries.useLoginUserQuery();
 
   const userId = userData?.data?.id;
 
   const isLikedByUser = userId && props.like.likes.includes(userId);
+  console.log(props.like.id ,props.like.likes);
+  
 
   const { mutate: like, isPending } = articleQueries.useLikeArticle(
     props.like.id
