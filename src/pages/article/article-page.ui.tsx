@@ -19,6 +19,8 @@ function Page() {
     setPreLoad(false);
   }, []);
 
+  
+
   const {
     data: articleData,
     isLoading,
@@ -26,6 +28,41 @@ function Page() {
   } = articleQueries.useGetArticleDetail(parseInt(id));
 
   articleQueries.useUpdateArticleView(Number(id));
+
+  useEffect(() => {
+    if (articleData) {
+      document.title = articleData.data.title;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', articleData.data.subtitle);
+      } else {
+        const meta = document.createElement('meta');
+        meta.name = 'description';
+        meta.content = articleData.data.subtitle;
+        document.head.appendChild(meta);
+      }
+
+      const scriptTag = document.createElement('script');
+      scriptTag.type = 'application/ld+json';
+      scriptTag.innerHTML = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": articleData.data.title,
+        "description": articleData.data.subtitle,
+        "image": articleData.data.photo,
+        "author": {
+          "@type": "Person",
+          "name": articleData.data.author.fullName
+        },
+        "datePublished": articleData.data.created,
+      });
+      document.head.appendChild(scriptTag);
+
+      return () => {
+        document.head.removeChild(scriptTag);
+      };
+    }
+  }, [articleData]);
 
   if (isLoading) {
     return (

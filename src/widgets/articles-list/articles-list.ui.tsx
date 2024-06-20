@@ -56,7 +56,7 @@ export function ArticlesList() {
   }
 
   return (
-    <div className="flex flex-col mx-auto gap-5 max-w-[95%] md:max-w-[90%] ">
+    <div className="flex flex-col items-center mx-auto gap-5 max-w-[95%] md:max-w-[90%] ">
       {isSuccess &&
         articles.map((article) => (
           <ArticleCard article={article} key={article.id} />
@@ -81,7 +81,7 @@ function ArticleCard(props: ArticleCardProps) {
     navigate(pathKeys.article.byId({ id }));
   };
   return (
-    <Card className="min-w-full max-w-full shadow-none border border-sc-100  card">
+    <Card className="min-w-full max-w-full md:min-w-[650px] md:max-w-[650px] shadow-none border border-sc-100  ">
       <div className="flex flex-col">
         <CardContent className="md:p-5 p-3">
           <div className="flex justify-between items-center pb-3">

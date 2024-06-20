@@ -4,18 +4,22 @@ import { getCookie } from 'typescript-cookie';
 import { Footer } from '~widgets/footer';
 import { GuestBar } from '~widgets/guest-bar';
 import { TopBar } from '~widgets/top-bar';
+import { NavBar } from '~widgets/nav-bar';
+import { Container } from '@mui/material';
 
 export function GenericLayout() {
-  const isAuth = getCookie("access")
+  const isAuth = getCookie('access');
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="flex-grow">
-        <ScrollTop />
-        {isAuth ? <TopBar /> : <GuestBar />}
+    <>
+      <ScrollTop />
+      {isAuth ? <TopBar /> : <GuestBar />}
+      <Container maxWidth="lg" className="flex relative mt-14">
+        <div className="w-[270px]">
+          <NavBar />
+        </div>
         <Outlet />
-      </div>
-      <Footer />
-    </div>
+      </Container>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Button, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { FilterSelect } from '~features/filter-bar/filter-select';
+import { useSearchParams } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -32,44 +33,64 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export function FilterSide({ searchQuery, setSearchQuery, getArticle, selectedCategoryIds, setSelectedCategoryIds }) {
+export function FilterSide() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    searchParams.set('search', event.target.value);
+    setSearchParams(searchParams);
   };
 
   const handleSearchSubmit = () => {
-    getArticle(searchQuery, selectedCategoryIds);
+    setSearchParams(searchParams);
+  };
+
+  const handleCategorySelect = (id) => {
+    let selectedCategories = searchParams.getAll('categories');
+    if (selectedCategories.includes(id.toString())) {
+      selectedCategories = selectedCategories.filter((catId) => catId !== id.toString());
+    } else {
+      selectedCategories.push(id.toString());
+    }
+    searchParams.delete('categories');
+    selectedCategories.forEach((catId) => searchParams.append('categories', catId));
+    setSearchParams(searchParams);
   };
 
   return (
-    <div className="md:fixed w-full md:w-[300px]">
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon className="text-pc-500" />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search…"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          inputProps={{ 'aria-label': 'search' }}
+    <div className="w-full ">
+      <div>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon className="text-pc-500" />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            value={searchParams.get('search') || ''}
+            onChange={handleSearchChange}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+      </div>
+      <div className="flex  items-center">
+        <FilterSelect
+          selectedCategoryIds={searchParams.getAll('categories').map(Number)}
+          setSelectedCategoryIds={handleCategorySelect}
         />
-      </Search>
-      <FilterSelect selectedCategoryIds={selectedCategoryIds} setSelectedCategoryIds={setSelectedCategoryIds} />
-      <Button
-        className="mt-5 w-full bg-second-100"
-        variant="contained"
-        onClick={handleSearchSubmit}
-      >
-        Применить
-      </Button>
+        <Button
+          className="w-full bg-second-100 shadow-none"
+          variant="contained"
+          onClick={handleSearchSubmit}
+        >
+          Применить
+        </Button>
+      </div>
     </div>
   );
 }
 
-
-
-  // const handleSearchChange = (event) => {
-  //   const query = event.target.value;
-  //   setSearchQuery(query);
-  //   getArticle(query);
-  // };
+// const handleSearchChange = (event) => {
+//   const query = event.target.value;
+//   setSearchQuery(query);
+//   getArticle(query);
+// };

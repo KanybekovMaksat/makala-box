@@ -34,8 +34,6 @@ export function TopBar() {
     data: { firstName = '', lastName = '', role = '', photo = '' } = {},
   } = userData || {};
 
-
-  
   const navigate = useNavigate();
 
   const handleNavigateToPage = (pageName: string) => {
@@ -52,12 +50,11 @@ export function TopBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
- 
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    navigate(`${pathKeys.profile.root()}`)
+    navigate(`${pathKeys.profile.root()}`);
   };
 
   const handleLogout = () => {
@@ -132,11 +129,6 @@ export function TopBar() {
                   <BookmarkAddedIcon className="hover:text-second-100" />
                 </IconButton>
               </Link>
-              <Link to={pathKeys.feed()}>
-                <IconButton aria-label="navigate to article page">
-                  <SearchIcon className="hover:text-second-100" />
-                </IconButton>
-              </Link>
               {role === 'writer' ? (
                 <Button
                   onClick={() => navigate(pathKeys.editor.root())}
@@ -165,9 +157,7 @@ export function TopBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  Профиль
-                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>Профиль</MenuItem>
                 <MenuItem onClick={handleLogout}>Выйти</MenuItem>
               </Menu>
             </div>

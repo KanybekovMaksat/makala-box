@@ -11,7 +11,7 @@ import { articleTypes } from '~entities/article';
 import { FilterSide } from '~widgets/filter-side';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { LikeButton } from '~features/article/like-button';
 import { FavoriteButton } from '~features/article/favorite-button';
 import { ShareButton } from '~features/article/share-button';
@@ -25,12 +25,13 @@ dayjs.locale('ru');
 export function FeedPage() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const getArticle = async (query = '', categoryIds = []) => {
+  const getArticle = async () => {
     setIsLoading(true);
     try {
+      const query = searchParams.get('search') || '';
+      const categoryIds = searchParams.getAll('categories') || [];
       const categoryParams = categoryIds
         .map((id) => `categories=${id}`)
         .join('&');
@@ -46,33 +47,26 @@ export function FeedPage() {
 
   useEffect(() => {
     getArticle();
-  }, []);
+  }, [searchParams]);
 
   return (
-    <div className="flex flex-col-reverse md:flex-row md:w-[80%] my-24 mx-2 md:mx-auto gap-10">
+    <div className="flex flex-col-reverse  md:w-[80%] my-24 mx-2 md:mx-auto gap-10">
       <div className="md:min-w-[865px] max-w-full flex flex-col items-center justify-center gap-3 ">
         {isLoading ? (
-          <>
+          <Card className="min-w-full max-w-full md:min-w-[655px] md:max-w-[655px] shadow-none border border-sc-100 flex justify-center items-center p-3">
             <CircularProgress />
             <p className="text-pc-400">Поиск...</p>
-          </>
+          </Card>
         ) : articles.length > 0 ? (
           articles.map((item) => <ArticleCard key={item.id} article={item} />)
         ) : (
-          <>
-            <img src="/not-found.svg" alt="" className="w-[300px] h-[300px]" />
-            <p className='font-bold'>Ничего не найдено по вашему запросу</p>
-          </>
+          <Card className="min-w-full max-w-full md:min-w-[650px] md:max-w-[650px] shadow-none border border-sc-100 flex flex-col items-center p-3">
+            <p className="font-bold">Ничего не найдено по вашему запросу</p>
+          </Card>
         )}
       </div>
       <div className="min-w-[320px]">
-        <FilterSide
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          getArticle={getArticle}
-          selectedCategoryIds={selectedCategoryIds}
-          setSelectedCategoryIds={setSelectedCategoryIds}
-        />
+        <FilterSide />
       </div>
     </div>
   );
@@ -86,7 +80,7 @@ function ArticleCard(props: ArticleCardProps) {
     navigate(pathKeys.article.byId({ id }));
   };
   return (
-    <Card className="min-w-full max-w-full shadow-none border border-sc-100  card">
+    <Card className="min-w-full max-w-full md:min-w-[650px] md:max-w-[650px] shadow-none border border-sc-100">
       <div className="flex flex-col">
         <CardContent className="md:p-5 p-3">
           <div className="flex justify-between items-center pb-3">

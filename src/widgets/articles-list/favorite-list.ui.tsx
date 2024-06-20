@@ -20,7 +20,6 @@ import { userQueries } from '~entities/user';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
-
 dayjs.locale('ru');
 
 export function FavoriteArticlesList() {
@@ -44,10 +43,8 @@ export function FavoriteArticlesList() {
     return <div className="my-20">Error fetching user data.</div>;
   }
 
-
   const articles = articleData?.data?.favoriteArticles;
 
-  
   const publishedArticles = !articles
     ? []
     : articles.filter((article) => article.status === 'approved');

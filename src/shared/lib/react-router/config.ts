@@ -3,6 +3,9 @@ export const pathKeys = {
   home() {
     return pathKeys.root;
   },
+  about() {
+    return pathKeys.root.concat('about/');
+  },
   register() {
     return pathKeys.root.concat('register/');
   },
@@ -23,8 +26,8 @@ export const pathKeys = {
   favorites() {
     return pathKeys.root.concat('favorites/');
   },
-  rating(){
-    return pathKeys.root.concat('rating/')
+  rating() {
+    return pathKeys.root.concat('rating/');
   },
   page404() {
     return pathKeys.root.concat('404/');
