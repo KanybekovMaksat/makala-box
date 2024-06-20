@@ -98,11 +98,11 @@ export function TableRating() {
   }
 
   return (
-    <div className="w-full flex flex-col bg-[white] rounded-md border border-sc-100 py-3">
+    <div className="w-full flex flex-col bg-[white] rounded-md border border-sc-100 py-3 overflow-x-auto">
       <h2 className="text-2xl font-bold text-center">
         Рейтинг
       </h2>
-      <table className="mt-4 w-full min-w-max table-auto text-left">
+      <table className="mt-4 w-[100%] text-left overflow-x-auto">
         <thead>
           <tr className="border-b border-blue-gray-100 bg-blue-gray-50/50">
             {TABLE_HEAD.map((head) => (

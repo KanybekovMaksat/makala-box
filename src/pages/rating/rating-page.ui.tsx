@@ -237,17 +237,22 @@ export function RatingPage() {
       maxWidth="md"
       className="flex flex-col items-center mt-5 gap-8 mb-10"
     >
-      <div className="bg-[white] rounded-md border border-sc-100 pr-4 py-3 w-full">
+      <div className="bg-[white] rounded-md border border-sc-100 pr-4 py-3 w-full overflow-x-auto">
         <h2 className="text-2xl font-bold text-center">
           Рейтинг по институтам
         </h2>
-        <Chart width={'100%'} {...chartConfig} />
+        <div className="min-w-[700px] max-w-full">
+          <Chart width={'100%'} {...chartConfig} />
+        </div>
       </div>
-      <div className="bg-[white] rounded-md border border-sc-100 pr-4 py-3 w-full">
+      <div className="bg-[white] rounded-md border border-sc-100 pr-4 py-3 overflow-x-auto w-full">
         <h2 className="text-2xl font-bold text-center">
           Статистика по публикациям
         </h2>
-        <Chart width={'100%'} {...chartLineConfig} />
+        <div className="min-w-[700px] max-w-full">
+          <Chart width={'100%'} {...chartLineConfig} />
+        </div>
+       
       </div>
 
       <TableRating />
