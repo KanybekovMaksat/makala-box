@@ -17,6 +17,7 @@ const Provider = () => {
 
     removeLoader();
   }, []);
+
   return (
     <HelmetProvider>
       <QueryClientProvider>

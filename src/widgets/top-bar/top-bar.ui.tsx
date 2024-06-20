@@ -21,13 +21,8 @@ import { pathKeys } from '~shared/lib/react-router';
 import { userQueries } from '~entities/user';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 
-const pages = {
-  feed: 'Лента',
-  favorites: 'Избранные',
-};
 
 export function TopBar() {
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { data: userData } = userQueries.useLoginUserQuery();
   const {
@@ -36,20 +31,8 @@ export function TopBar() {
 
   const navigate = useNavigate();
 
-  const handleNavigateToPage = (pageName: string) => {
-    const path = `/${pageName.toLowerCase()}`;
-    navigate(path);
-  };
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -80,7 +63,7 @@ export function TopBar() {
             Makala Box
           </Link>
 
-          <div className="flex md:hidden">
+          {/* <div className="flex md:hidden">
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -113,7 +96,7 @@ export function TopBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </div>
+          </div> */}
 
           <div className="flex md:hidden">
             <WidgetsIcon />

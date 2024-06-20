@@ -31,7 +31,6 @@ const schema = BlockNoteSchema.create({
     ...defaultBlockSpecs,
     youtube: YouTubeBlock,
     alert: AlertBlock,
-    youtube: YouTubeBlock,
     procode: CodeBlock,
   },
   styleSpecs: {

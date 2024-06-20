@@ -1,11 +1,11 @@
 import ScrollTop from '~shared/lib/react-router/scroll-top';
 import { Outlet } from 'react-router-dom';
 import { getCookie } from 'typescript-cookie';
-import { Footer } from '~widgets/footer';
 import { GuestBar } from '~widgets/guest-bar';
 import { TopBar } from '~widgets/top-bar';
 import { NavBar } from '~widgets/nav-bar';
 import { Container } from '@mui/material';
+import { Footer } from '~widgets/footer';
 
 export function GenericLayout() {
   const isAuth = getCookie('access');
@@ -14,10 +14,11 @@ export function GenericLayout() {
       <ScrollTop />
       {isAuth ? <TopBar /> : <GuestBar />}
       <Container maxWidth="lg" className="flex relative mt-14">
-        <div className="w-[270px]">
+        <div className="w-[270px] hidden md:block">
           <NavBar />
         </div>
         <Outlet />
+        <Footer/>
       </Container>
     </>
   );
