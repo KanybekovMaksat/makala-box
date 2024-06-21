@@ -45,20 +45,16 @@ export function FilterSide() {
     setSearchParams(searchParams);
   };
 
-  const handleCategorySelect = (id) => {
-    let selectedCategories = searchParams.getAll('categories');
-    if (selectedCategories.includes(id.toString())) {
-      selectedCategories = selectedCategories.filter((catId) => catId !== id.toString());
-    } else {
-      selectedCategories.push(id.toString());
-    }
+  const handleCategorySelect = (selectedCategoryIds) => {
     searchParams.delete('categories');
-    selectedCategories.forEach((catId) => searchParams.append('categories', catId));
+    selectedCategoryIds.forEach((catId) =>
+      searchParams.append('categories', catId.toString())
+    );
     setSearchParams(searchParams);
   };
 
   return (
-    <div className="w-full ">
+    <div className="max-w-[650px] mx-auto ">
       <div>
         <Search>
           <SearchIconWrapper>
@@ -72,10 +68,10 @@ export function FilterSide() {
           />
         </Search>
       </div>
-      <div className="flex  items-center">
+      <div className="flex flex-col gap- items-center">
         <FilterSelect
-          selectedCategoryIds={searchParams.getAll('categories').map(Number)}
-          setSelectedCategoryIds={handleCategorySelect}
+          selectCategory={searchParams.getAll('categories').map(Number)}
+          handleChange={handleCategorySelect}
         />
         <Button
           className="w-full bg-second-100 shadow-none"

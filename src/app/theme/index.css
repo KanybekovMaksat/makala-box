@@ -6,6 +6,7 @@
 body {
   background: #009dff0e;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* Scroll */

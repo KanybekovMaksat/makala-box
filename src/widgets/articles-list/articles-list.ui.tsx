@@ -39,13 +39,11 @@ export function ArticlesList() {
     );
   }
 
-  
   if (isError) {
     return <div className="my-20">Error fetching user data.</div>;
-    }
-    
-    const articles = articleData?.data?.results;
+  }
 
+  const articles = articleData?.data?.results;
 
   if (articles.length == 0) {
     return (
@@ -139,10 +137,13 @@ function ArticleCard(props: ArticleCardProps) {
             className="hover:cursor-pointer"
             onClick={() => handleNavigate(props.article.id)}
           >
-            <h4 className="font-bold text-xl title duration-300">
-              {props.article.title}
-            </h4>
-            <p className="text-md mt-2">{props.article.subtitle}...</p>
+            <Link
+              to={`article/${String(props.article.id)}`}
+              className="font-bold text-xl title duration-300"
+            >
+              {props.article.title} 
+            </Link>
+            <Link to={`article/${String(props.article.id)}`} className="text-md mt-2">{props.article.subtitle}...</Link>
           </div>
         </CardContent>
         <CardActionArea onClick={() => handleNavigate(props.article.id)}>

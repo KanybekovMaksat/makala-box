@@ -1,3 +1,15 @@
 User-agent: *
-Disallow: 
-Sitemap: https://www.makalabox.com/
+Disallow:
+
+
+Disallow: /register
+Disallow: /login
+Disallow: /verify
+Disallow: /sandbox
+Disallow: /edit
+
+Sitemap: https://www.makalabox.com/sitemap.xml
+
+
+Allow: /*.css$
+Allow: /*.js$

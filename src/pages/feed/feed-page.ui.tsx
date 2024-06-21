@@ -50,7 +50,7 @@ export function FeedPage() {
   }, [searchParams]);
 
   return (
-    <div className="flex flex-col-reverse  md:w-[80%] my-24 mx-2 md:mx-auto gap-10">
+    <div className="flex flex-col-reverse   md:w-[80%] my-24 mx-2 md:mx-auto gap-10 ">
       <div className="md:min-w-[865px] max-w-full flex flex-col items-center justify-center gap-3 ">
         {isLoading ? (
           <Card className="min-w-full max-w-full md:min-w-[655px] md:max-w-[655px] shadow-none border border-sc-100 flex justify-center items-center p-3">
@@ -60,7 +60,7 @@ export function FeedPage() {
         ) : articles.length > 0 ? (
           articles.map((item) => <ArticleCard key={item.id} article={item} />)
         ) : (
-          <Card className="min-w-full max-w-full md:min-w-[650px] md:max-w-[650px] shadow-none border border-sc-100 flex flex-col items-center p-3">
+          <Card className="min-w-full max-w-full md:min-w-[650px] md:max-w-[650px] shadow-none border border-sc-100 flex flex-col items-center ">
             <p className="font-bold">Ничего не найдено по вашему запросу</p>
           </Card>
         )}
