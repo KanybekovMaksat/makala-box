@@ -7,6 +7,7 @@ dayjs.locale('ru');
 
 import Chart from 'react-apexcharts';
 import { TableRating } from '~widgets/table-rating';
+import { Helmet } from 'react-helmet-async';
 
 export function RatingPage() {
   const [data, setData] = useState([]);
@@ -237,6 +238,19 @@ export function RatingPage() {
       maxWidth="md"
       className="flex flex-col items-center mt-5 gap-8 mb-10"
     >
+      <Helmet prioritizeSeoTags>
+        <title>Makalabox - Рейтинг</title>
+        <meta
+          name="description"
+          content="На сайте есть рейтинги публикаций и организаций, а также различные номинации."
+        />
+        <meta property="og:title" content="Makalabox - Рейтинг" />
+        <meta
+          property="og:description"
+          content="На сайте есть рейтинги публикаций и организаций, а также различные номинации."
+        />
+        <meta property="og:locale" content="ru_Ru" />
+      </Helmet>
       <div className="bg-[white] rounded-md border border-sc-100 pr-4 py-3 w-full overflow-x-auto">
         <h2 className="text-2xl font-bold text-center">
           Рейтинг по институтам
@@ -252,7 +266,6 @@ export function RatingPage() {
         <div className="min-w-[700px] max-w-full">
           <Chart width={'100%'} {...chartLineConfig} />
         </div>
-       
       </div>
 
       <TableRating />
