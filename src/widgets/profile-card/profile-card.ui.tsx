@@ -74,7 +74,7 @@ export function ProfileCard() {
 
   return (
     <>
-      <div className="w-[650px] h-[360px] bg-[white] border-2 border-sc-100 rounded ">
+      <div className="max-w-[650px] md:w-[650px] bg-[white] border-2 border-sc-100 rounded h-[380px]">
         <div>
           <img
             src="/BG.png"
@@ -98,17 +98,16 @@ export function ProfileCard() {
           <h2 className="text-xl font-bold text-primary-800">{`${firstName} ${lastName}`}</h2>
           <p className=" text-pc-500">@{username}, Автор</p>
           <p className=" text-pc-500">{email}</p>
-        <Button
-          size="small"
-          variant="contained"
-          className="shadow-none"
-          startIcon={<EditIcon />}
-          onClick={() => setActive(true)}
-        >
-          Редактировать
-        </Button>
+          <Button
+            size="small"
+            variant="contained"
+            className="shadow-none"
+            startIcon={<EditIcon />}
+            onClick={() => setActive(true)}
+          >
+            Редактировать
+          </Button>
         </div>
-
       </div>
       <ModalPopup active={active} setActive={setActive}>
         <Formik

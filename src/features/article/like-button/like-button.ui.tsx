@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { CircularProgress, IconButton, Tooltip } from '@mui/material';
+import {  IconButton, Tooltip } from '@mui/material';
 import { articleQueries, articleTypes } from '~entities/article';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { getCookie } from 'typescript-cookie';
 import { userQueries } from '~entities/user';
 import { useNavigate } from 'react-router-dom';
@@ -15,9 +13,9 @@ const smallProps: ConfettiProps = {
   force: 0.3,
   duration: 1800,
   particleCount: 17,
-  particleSize:4,
+  particleSize: 4,
   width: 400,
-  colors: ['#0a85d1', '#EE4E4E', "#FFF455"]
+  colors: ['#0a85d1', '#EE4E4E', '#FFF455'],
 };
 
 export function LikeButton(props: LikeButtonProps) {
@@ -56,7 +54,6 @@ export function LikeButton(props: LikeButtonProps) {
       try {
         await like();
       } catch (error) {
-        // If the request fails, rollback the state changes
         setIsLiked(!newIsLiked);
         setLocalLikeCount((prevCount) =>
           newIsLiked ? prevCount - 1 : prevCount + 1

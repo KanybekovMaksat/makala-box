@@ -10,6 +10,9 @@ import { ErrorHandler } from '~shared/ui/error';
 import { CommentList } from '~widgets/comment-list';
 import { CommentForm } from '~widgets/comment-form';
 import { Helmet } from 'react-helmet-async';
+import { LikeButton } from '~features/article/like-button';
+import { FavoriteButton } from '~features/article/favorite-button';
+import { ShareButton } from '~features/article/share-button';
 
 function Page() {
   const { id } = useParams();
@@ -47,10 +50,12 @@ function Page() {
         { property: 'og:type', content: 'article' },
         { property: 'og:url', content: window.location.href },
         { property: 'article:published_time', content: created },
-        { property: 'article:author', content: author.fullName }
+        { property: 'article:author', content: author.fullName },
       ];
-      ogTags.forEach(tag => {
-        let metaTag = document.querySelector(`meta[property="${tag.property}"]`);
+      ogTags.forEach((tag) => {
+        let metaTag = document.querySelector(
+          `meta[property="${tag.property}"]`
+        );
         if (metaTag) {
           metaTag.setAttribute('content', tag.content);
         } else {
@@ -60,48 +65,50 @@ function Page() {
           document.head.appendChild(metaTag);
         }
       });
-  
+
       const structuredData = {
-        "@context": "https://schema.org/",
-        "@type": "Article",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": window.location.href
+        '@context': 'https://schema.org/',
+        '@type': 'Article',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': window.location.href,
         },
-        "headline": title,
-        "description": subtitle,
-        "image": {
-          "@type": "ImageObject",
-          "url": photo,
-          "width": "200",
-          "height": "98"
+        headline: title,
+        description: subtitle,
+        image: {
+          '@type': 'ImageObject',
+          url: photo,
+          width: '200',
+          height: '98',
         },
-        "author": {
-          "@type": "Person",
-          "name": author.fullName
+        author: {
+          '@type': 'Person',
+          name: author.fullName,
         },
-        "publisher": {
-          "@type": "Organization",
-          "name": author.fullName,
-          "logo": {
-            "@type": "ImageObject",
-            "url": "",
-            "width": "",
-            "height": ""
-          }
+        publisher: {
+          '@type': 'Organization',
+          name: author.fullName,
+          logo: {
+            '@type': 'ImageObject',
+            url: '',
+            width: '',
+            height: '',
+          },
         },
-        "datePublished": created
+        datePublished: created,
       };
-  
+
       const scriptTag = document.createElement('script');
       scriptTag.type = 'application/ld+json';
       scriptTag.innerHTML = JSON.stringify(structuredData);
       document.head.appendChild(scriptTag);
-  
+
       return () => {
         document.head.removeChild(scriptTag);
-        ogTags.forEach(tag => {
-          const metaTag = document.querySelector(`meta[property="${tag.property}"]`);
+        ogTags.forEach((tag) => {
+          const metaTag = document.querySelector(
+            `meta[property="${tag.property}"]`
+          );
           if (metaTag) {
             document.head.removeChild(metaTag);
           }
@@ -109,7 +116,6 @@ function Page() {
       };
     }
   }, [articleData]);
-  
 
   if (isLoading) {
     return (
@@ -143,9 +149,9 @@ function Page() {
         <meta property="og:image:type" content="image/png" data-rh="true" />
         <meta property="og:locale" content="ru_Ru" data-rh="true" />
       </Helmet>
-      <Container maxWidth="md" className="mx-auto my-[65px]">
+      <Container maxWidth="md" className="mx-auto mb-[65px]">
         {articleData && (
-          <div className="max-w-full md:max-w-[95%] bg-[white] px-2 md:px-5  mb-5">
+          <div className="max-w-full md:max-w-[95%] bg-[white] px-2 md:px-5 mb-5">
             <ArticleInfo article={articleData.data} />
             <Divider />
             {preLoad ? (
@@ -154,7 +160,25 @@ function Page() {
                 Загрузка...
               </div>
             ) : (
-              <ArticleViewer body={articleData.data.body} />
+              <>
+                <ArticleViewer body={articleData.data.body} />
+                <div className='flex justify-between pb-5'>
+                  <div className='flex gap-2'>
+                  <LikeButton
+                    like={{
+                      id: articleData.data.id,
+                      likeCount: articleData.data.likeCount,
+                      likes: articleData.data.likes,
+                    }}
+                  />
+                  <FavoriteButton id={articleData.data.id} />
+                  </div>
+                  <ShareButton
+                    title={articleData.data.title}
+                    id={articleData.data.id}
+                  />
+                </div>
+              </>
             )}
           </div>
         )}
@@ -178,21 +202,3 @@ const SuspensedPage = withSuspense(Page, {
 export const ArticlePage = withErrorBoundary(SuspensedPage, {
   fallbackRender: ({ error }) => <ErrorHandler error={error} />,
 });
-
-// const [articleData, setArticleData] = useState(null);
-// const [isLoading, setIsLoading] = useState(true);
-// const [error, setError] = useState(null);
-
-// useEffect(() => {
-//   const fetchArticle = async () => {
-//     try {
-//       const response = await $api.get(`articles/${id}/`);
-//       setArticleData(response);
-//       setIsLoading(false);
-//     } catch (error) {
-//       setError(error);
-//       setIsLoading(false);
-//     }
-//   };
-//   fetchArticle();
-// }, []);

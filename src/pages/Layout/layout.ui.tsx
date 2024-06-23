@@ -13,7 +13,7 @@ export function GenericLayout() {
     <>
       <ScrollTop />
       {isAuth ? <TopBar /> : <GuestBar />}
-      <Container maxWidth="lg" className="flex relative mt-14">
+      <Container maxWidth="lg" className="flex relative mt-14 p-0">
         <div className="w-[270px] hidden md:block">
           <NavBar />
         </div>

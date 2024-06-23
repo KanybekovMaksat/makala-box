@@ -11,7 +11,7 @@ import { articleTypes } from '~entities/article';
 import { FilterSide } from '~widgets/filter-side';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { LikeButton } from '~features/article/like-button';
 import { FavoriteButton } from '~features/article/favorite-button';
 import { ShareButton } from '~features/article/share-button';
@@ -50,7 +50,7 @@ export function FeedPage() {
   }, [searchParams]);
 
   return (
-    <div className="flex flex-col-reverse   md:w-[80%] my-24 mx-2 md:mx-auto gap-10 ">
+    <div className="flex flex-col-reverse  md:w-[80%] my-5  mx-2 md:mx-auto gap-10 mb-20">
       <div className="md:min-w-[865px] max-w-full flex flex-col items-center justify-center gap-3 ">
         {isLoading ? (
           <Card className="min-w-full max-w-full md:min-w-[655px] md:max-w-[655px] shadow-none border border-sc-100 flex justify-center items-center p-3">
@@ -138,10 +138,18 @@ function ArticleCard(props: ArticleCardProps) {
             className="hover:cursor-pointer"
             onClick={() => handleNavigate(props.article.id)}
           >
-            <h4 className="font-bold text-xl title duration-300">
+            <Link
+              to={`article/${String(props.article.id)}`}
+              className="font-bold text-lg md:text-xl title duration-300 block"
+            >
               {props.article.title}
-            </h4>
-            <p className="text-md mt-2">{props.article.subtitle}...</p>
+            </Link>
+            <Link
+              to={`article/${String(props.article.id)}`}
+              className="text-[16px] md:text-md mt-2"
+            >
+              {props.article.subtitle}...
+            </Link>
           </div>
         </CardContent>
         <CardActionArea onClick={() => handleNavigate(props.article.id)}>

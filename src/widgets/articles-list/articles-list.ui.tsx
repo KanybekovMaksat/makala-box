@@ -54,7 +54,7 @@ export function ArticlesList() {
   }
 
   return (
-    <div className="flex flex-col items-center mx-auto gap-5 max-w-[95%] md:max-w-[90%] ">
+    <div className="flex flex-col items-center mx-auto gap-5 max-w-[100%] md:max-w-[90%] ">
       {isSuccess &&
         articles.map((article) => (
           <ArticleCard article={article} key={article.id} />
@@ -165,13 +165,13 @@ function ArticleCard(props: ArticleCardProps) {
           >
             <Link
               to={`article/${String(props.article.id)}`}
-              className="font-bold text-xl title duration-300 block"
+              className="font-bold text-lg md:text-xl title duration-300 block"
             >
               {props.article.title}
             </Link>
             <Link
               to={`article/${String(props.article.id)}`}
-              className="text-md mt-2"
+              className="text-[16px] md:text-md mt-2"
             >
               {props.article.subtitle}...
             </Link>
