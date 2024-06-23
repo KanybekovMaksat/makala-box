@@ -19,7 +19,7 @@ import { pathKeys } from '~shared/lib/react-router';
 import { userQueries, userTypes } from '~entities/user';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
 
@@ -56,8 +56,8 @@ function Page() {
     isSuccess,
   } = userQueries.useRegisterMutation();
 
-  function saveCredentialsToLocalStorage(username:string, password:string) {
-    localStorage.setItem('username', username);
+  function saveCredentialsToLocalStorage(email:string, password:string) {
+    localStorage.setItem('email', email);
     localStorage.setItem('password', password);
   }
 
@@ -72,8 +72,8 @@ function Page() {
   }
 
   return (
-    <div className="my-20 w-[380px] bg-[white] mx-auto rounded-md px-5 py-7 border border-sc-100">
-      <h1 className="font-bold text-center text-2xl text-pc-500">
+    <div className="w-[380px]  mx-auto rounded-md px-5 py-7 ">
+      <h1 className="font-bold text-2xl text-pc-500">
         Регистрация
       </h1>
       <Formik
@@ -81,7 +81,7 @@ function Page() {
         validate={validateForm}
         onSubmit={(user) => {
           registerUser({ user });
-          saveCredentialsToLocalStorage(user.username, user.password);
+          saveCredentialsToLocalStorage(user.email, user.password);
         }}
       >
         <Form>
@@ -214,10 +214,10 @@ function Page() {
           Ошибка при выполнении запроса
         </p>
       )}
-      <p className="flex justify-center gap-1">
+      <p className=" text-sm flex items-center justify-center mt-2 gap-1">
         Уже есть аккаунт?
-        <Link className="underline text-second-100" to={pathKeys.login()}>
-          Войти
+        <Link className="font-bold text-second-100" to={pathKeys.login()}>
+          Войдите
         </Link>
       </p>
     </div>

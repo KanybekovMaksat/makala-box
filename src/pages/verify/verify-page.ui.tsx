@@ -23,9 +23,9 @@ export function VerifyPage() {
 
   useEffect(() => {
     if (isActivationSuccess) {
-      const username = localStorage.getItem('username');
+      const email = localStorage.getItem('email');
       const password = localStorage.getItem('password');
-      loginToken({ user: { username, password } });
+      loginToken({ user: { email, password } });
     }
   }, [isActivationSuccess]);
 

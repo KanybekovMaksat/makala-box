@@ -80,7 +80,7 @@ export function TableRating() {
       ({ fullName, email, articleCount, username }, index) =>
         `${
           index + 1
-        },${fullName},https://makalabox.com/@${username},${email},${articleCount}`
+        },${fullName},https://makalabox.com/${username},${email},${articleCount}`
     );
     return [header, ...rows].join('\n');
   }

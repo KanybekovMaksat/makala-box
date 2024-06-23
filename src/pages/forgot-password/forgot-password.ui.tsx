@@ -6,31 +6,22 @@ import { formikContract } from '~shared/lib/zod';
 import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { ModalPopup } from '~widgets/modal-popup';
 
 function Page() {
-  const [visibility, setVisibility] = useState(false);
-  const [active, setActive] = useState(false);
-
-  const handleClickShowPassword = () =>
-    setVisibility((visibility) => !visibility);
 
   const {
-    mutate: loginToken,
+    mutate: sendEmail,
     isPending,
     isError,
-  } = userQueries.useGetTokenMutation();
+  } = userQueries.useResetPaswordSendEmail();
 
   return (
     <div className="w-[380px]  mx-auto rounded-md px-5 py-7 ">
-      <h1 className="font-bold  text-2xl text-pc-500">Вход в Makala Box</h1>
+      <h1 className="font-bold  text-2xl text-pc-500">Восстановление доступа</h1>
       <Formik
         initialValues={initialUser}
         validate={validateForm}
-        onSubmit={(user) => loginToken({ user })}
+        onSubmit={(email) => sendEmail({ email })}
       >
         <Form>
           <fieldset disabled={isPending} className="text-xs text-[red]">
@@ -40,41 +31,11 @@ function Page() {
                 fullWidth
                 id="email"
                 name="email"
-                label="Псевдоним или email"
+                label="Email"
                 size="small"
                 className="rounded-lg"
               />
               <ErrorMessage name="email" />
-            </fieldset>
-            <fieldset className="my-5">
-              <Link
-                className="block font-bold text-second-100 text-right mb-2"
-                to={pathKeys.forgotPassword()}
-              >
-                Восстановить
-              </Link>
-              <Field
-                as={TextField}
-                fullWidth
-                id="password"
-                name="password"
-                label="Пароль"
-                type={visibility ? 'text' : 'password'}
-                size="small"
-                InputProps={{
-                  endAdornment: (
-                    <IconButton
-                      aria-label="password-visibility"
-                      size="small"
-                      color="info"
-                      onClick={handleClickShowPassword}
-                    >
-                      {visibility ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  ),
-                }}
-              />
-              <ErrorMessage name="password" />
             </fieldset>
           </fieldset>
           {isPending ? (
@@ -83,7 +44,7 @@ function Page() {
               disabled
               className=" text-center  w-full"
             >
-              Выполняется вход...
+              Отправка данных...
             </Button>
           ) : (
             <SubmitButton />
@@ -97,9 +58,9 @@ function Page() {
         </p>
       )}
       <p className=" text-sm flex items-center justify-center mt-2 gap-1">
-        Нет аккаунта?
-        <Link className="font-bold text-second-100" to={pathKeys.register()}>
-          Зарегистрируйтесь
+        Есть аккаунт?
+        <Link className="font-bold text-second-100" to={pathKeys.login()}>
+         Вернуться к авторизации
         </Link>
       </p>
     </div>
@@ -108,7 +69,6 @@ function Page() {
 
 const initialUser: userTypes.LoginUserDto = {
   email: '',
-  password: '',
 };
 
 function SubmitButton() {
@@ -120,13 +80,13 @@ function SubmitButton() {
       className="w-full mb-2 bg-second-100 shadow-none"
       disabled={!isValid || isValidating}
     >
-      Войти
+      Отправить
     </Button>
   );
 }
 
-const validateForm = formikContract(userContracts.LoginUserDtoSchema);
+const validateForm = formikContract(userContracts.SendEmail);
 
-export const LoginPage = withErrorBoundary(Page, {
+export const ForgotPasswordPage = withErrorBoundary(Page, {
   fallbackRender: ({ error }) => <ErrorHandler error={error} />,
 });

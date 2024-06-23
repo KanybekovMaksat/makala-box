@@ -34,15 +34,25 @@ export const ActivationData = z.object({
   token: z.string(),
 });
 
-export const ResetPasswordConfirm = z.object({
+export const UpdatePassword = z.object({
   uid: z.string(),
   token: z.string(),
-  newPassword: z.string(),
+  newPassword: z
+    .string()
+    .min(6, 'Пароль должен состоять минимум из 6 символов'),
+  confirmPassword: z.string(),
 });
 
 export const TokensDtoSchema = z.object({
   access: z.string(),
   refresh: z.string(),
+});
+
+export const SendEmail = z.object({
+  email: z
+    .string()
+    .email('Введите действительный  email')
+    .min(1, 'Введите ваш  email'),
 });
 
 export const UserDtoSchema = z.object({

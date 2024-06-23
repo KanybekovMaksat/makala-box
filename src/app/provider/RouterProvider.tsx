@@ -18,6 +18,7 @@ import { GenericLayout, IntroLayout } from '~pages/Layout';
 import { aboutPageRoute } from '~pages/about';
 import { userPageRoute } from '~pages/user';
 import { changePasswordPageRoute } from '~pages/change-password';
+import { forgotPasswordPageRoute } from '~pages/forgot-password';
 
 function BubbleError() {
   const error = useRouteError();
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
           loginPageRoute,
           verifyPageRoute,
           changePasswordPageRoute,
+          forgotPasswordPageRoute,
         ],
       },
     ],

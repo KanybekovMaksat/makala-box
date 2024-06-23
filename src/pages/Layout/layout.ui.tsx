@@ -18,7 +18,7 @@ export function GenericLayout() {
           <NavBar />
         </div>
         <Outlet />
-        <Footer/>
+        <Footer />
       </Container>
     </>
   );
@@ -26,17 +26,8 @@ export function GenericLayout() {
 
 export function IntroLayout() {
   return (
-    <div className="intro relative flex justify-center">
-      <video
-        className="object-cover w-full h-full"
-        src="/public/intro.mp4"
-        autoPlay
-        muted
-        loop
-      ></video>
-      <div className="absolute ">
-        <Outlet />
-      </div>
+    <div className="h-screen  flex items-center justify-center">
+      <Outlet />
     </div>
   );
 }

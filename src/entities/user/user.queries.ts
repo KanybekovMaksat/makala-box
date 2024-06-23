@@ -6,6 +6,7 @@ import {
   loginUserQuery,
   registerUserMutation,
   resetPasswordConfirm,
+  resetPasswordEmail,
 } from './user.api';
 import {
   useMutation,
@@ -148,6 +149,25 @@ export function useActivationMutation() {
     mutationFn: emailActivationMutation,
     onSuccess: async () => {
       await toast.success('Success');
+    },
+    onError: (error: AxiosErrorType) => {
+      if (error.response && error.response.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach((field) => {
+          toast.error(`${field}: ${errors[field][0]}`);
+        });
+      } else {
+        toast.error('Ошибка при выполнении запроса');
+      }
+    },
+  });
+}
+export function useResetPaswordSendEmail() {
+  return useMutation({
+    mutationKey: keys.root(),
+    mutationFn: resetPasswordEmail,
+    onSuccess: async () => {
+      await toast.success('На вашу почту отправлено сообщение для сброса пароля');
     },
     onError: (error: AxiosErrorType) => {
       if (error.response && error.response.data) {

@@ -4,8 +4,9 @@ import {
   CreateUserSchema,
   EditUserProfile,
   LoginUserDto,
-  ResetPasswordConfirm,
+  SendEmail,
   TokensDtoSchema,
+  UpdatePassword,
   UserDtoSchema,
 } from './user.types';
 import $api from '~shared/api';
@@ -36,10 +37,10 @@ export function getUserByUsername(username: string) {
   return axios.get(`${API}/${username}/`);
 }
 
-export function resetPasswordEmail(email: string) {
-  return axios.post(`${API}/reset_password/`, email);
+export function resetPasswordEmail(params: { email: SendEmail }) {
+  return axios.post(`${API}/reset_password/`, params.email);
 }
 
-export function resetPasswordConfirm(params: { data: ResetPasswordConfirm }) {
+export function resetPasswordConfirm(params: { data: UpdatePassword }) {
   return axios.post(`${API}/reset_password_confirm/`, params.data);
 }

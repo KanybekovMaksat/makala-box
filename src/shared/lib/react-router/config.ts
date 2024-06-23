@@ -9,6 +9,9 @@ export const pathKeys = {
   register() {
     return pathKeys.root.concat('register/');
   },
+  forgotPassword() {
+    return pathKeys.root.concat('change-password/')
+  },
   login() {
     return pathKeys.root.concat('login/');
   },
