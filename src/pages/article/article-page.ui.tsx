@@ -27,14 +27,108 @@ function Page() {
 
   articleQueries.useUpdateArticleView(Number(id));
 
-
+  useEffect(() => {
+    if (articleData) {
+      const { title, subtitle, photo, author, created } = articleData.data;
+  
+      // Update document title
+      document.title = title;
+  
+      // Update meta description
+      let metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', subtitle);
+      } else {
+        metaDescription = document.createElement('meta');
+        metaDescription.name = 'description';
+        metaDescription.content = subtitle;
+        document.head.appendChild(metaDescription);
+      }
+  
+      // Add Open Graph tags
+      const ogTags = [
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: subtitle },
+        { property: 'og:image', content: photo },
+        { property: 'og:type', content: 'article' },
+        { property: 'og:url', content: window.location.href },
+        { property: 'article:published_time', content: created },
+        { property: 'article:author', content: author.fullName }
+      ];
+  
+      ogTags.forEach(tag => {
+        let metaTag = document.querySelector(`meta[property="${tag.property}"]`);
+        if (metaTag) {
+          metaTag.setAttribute('content', tag.content);
+        } else {
+          metaTag = document.createElement('meta');
+          metaTag.setAttribute('property', tag.property);
+          metaTag.content = tag.content;
+          document.head.appendChild(metaTag);
+        }
+      });
+  
+      // Add structured data script
+      const structuredData = {
+        "@context": "https://schema.org/",
+        "@type": "Article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": window.location.href
+        },
+        "headline": title,
+        "description": subtitle,
+        "image": {
+          "@type": "ImageObject",
+          "url": photo,
+          "width": "200",
+          "height": "98"
+        },
+        "author": {
+          "@type": "Person",
+          "name": author.fullName
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": author.fullName,
+          "logo": {
+            "@type": "ImageObject",
+            "url": "",
+            "width": "",
+            "height": ""
+          }
+        },
+        "datePublished": created
+      };
+  
+      const scriptTag = document.createElement('script');
+      scriptTag.type = 'application/ld+json';
+      scriptTag.innerHTML = JSON.stringify(structuredData);
+      document.head.appendChild(scriptTag);
+  
+      // Cleanup function to remove the script tag and Open Graph tags
+      return () => {
+        document.head.removeChild(scriptTag);
+        ogTags.forEach(tag => {
+          const metaTag = document.querySelector(`meta[property="${tag.property}"]`);
+          if (metaTag) {
+            document.head.removeChild(metaTag);
+          }
+        });
+      };
+    }
+  }, [articleData]);
+  
 
   if (isLoading) {
     return (
-      <div>
-        <CircularProgress className="w-[50px] mt-20 mx-auto flex justify-center" />
-        <p className="text-center mt-2">Загрузка статьи.</p>
-      </div>
+      <Container
+        maxWidth="md"
+        className="mx-auto my-[65px] px-2 md:px-5 mb-5 flex flex-col items-center"
+      >
+        <CircularProgress className="w-[50px] mt-20 mx-auto" />
+        <p className="text-center mt-2">Загрузка статьи...</p>
+      </Container>
     );
   }
 
@@ -44,39 +138,27 @@ function Page() {
     );
   }
   const { title, subtitle, id: articleId, photo } = articleData.data;
+
   return (
     <div>
       <Helmet prioritizeSeoTags>
         <title>{title}</title>
-        <meta
-          name="description"
-          content={subtitle}
-        />
-        <meta
-          property="og:title"
-          content={title}
-        />
-        <meta
-          property="og:description"
-          content={subtitle}
-        />
+        <meta name="description" content={subtitle} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={subtitle} />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:locale" content="ru_Ru" />
-        <meta
-          property="og:image"
-          content={photo}
-          data-rh="true"
-        />
+        <meta property="og:image" content={photo} data-rh="true" />
         <meta property="og:image:type" content="image/png" data-rh="true" />
         <meta property="og:locale" content="ru_Ru" data-rh="true" />
       </Helmet>
-      <Container maxWidth="md" className="mx-auto my-[65px] ">
+      <Container maxWidth="md" className="mx-auto my-[65px]">
         {articleData && (
           <div className="max-w-full md:max-w-[95%] bg-[white] px-2 md:px-5  mb-5">
             <ArticleInfo article={articleData.data} />
             <Divider />
             {preLoad ? (
-              <div className="flex flex-col items-center gap-3 my-20">
+              <div className="max-w-full md:max-w-[95%] bg-[white] px-2 md:px-5  mb-5">
                 <CircularProgress />
                 Загрузка...
               </div>

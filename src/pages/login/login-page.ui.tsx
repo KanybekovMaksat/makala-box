@@ -38,9 +38,9 @@ function Page() {
               <Field
                 as={TextField}
                 fullWidth
-                id="username"
-                name="username"
-                label="Псевдоним или email"
+                id="email"
+                name="email"
+                label="Email"
                 size="small"
               />
               <ErrorMessage name="email" />
@@ -70,7 +70,13 @@ function Page() {
               <ErrorMessage name="password" />
             </fieldset>
           </fieldset>
-          <SubmitButton />
+          {isPending ? (
+            <p className="text-center text-sm text-pc-500">
+              Выполняется вход...
+            </p>
+          ) : (
+            <SubmitButton />
+          )}
         </Form>
       </Formik>
       {isError && (

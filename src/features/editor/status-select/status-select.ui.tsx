@@ -19,13 +19,16 @@ export function StatusSelect({
       variant="outlined"
       aria-label="Basic button group"
       size="small"
-      className="my-4"
+      className="my-4  "
     >
       {Object.values(ArticleStatus).map((statusOption) => (
         <Button
           key={statusOption}
           onClick={() => handleStatusChange(statusOption)}
           variant={status === statusOption ? 'contained' : 'outlined'}
+          className={`shadow-none ${
+            status === statusOption ? 'bg-second-100' : 'none'
+          }`}
         >
           {statusOption === ArticleStatus.Draft ? 'Черновик' : 'Публиковать'}
         </Button>

@@ -126,6 +126,10 @@ import { Sidebar, Menu } from 'react-pro-sidebar';
 import { Box } from '@mui/material';
 import { NavbarItem } from './nav-bar.item';
 import { CategoryNavbar } from './nav-bar.category';
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 export function NavBar() {
   const [selected, setSelected] = useState('');
@@ -163,125 +167,37 @@ export function NavBar() {
             <NavbarItem
               title="Главная"
               to="/"
-              icon={
-                <svg
-                  width="20"
-                  height="22"
-                  viewBox="0 0 20 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M16.75 20.995H3.25C2.01 20.995 1 19.985 1 18.745V8.605C1 7.895 1.34 7.235 1.9 6.805L9.32 1.225C9.73 0.925 10.27 0.925 10.67 1.225L18.09 6.805C18.65 7.235 18.99 7.895 18.99 8.605V18.745C18.99 19.985 17.98 20.995 16.74 20.995H16.75Z"
-                    stroke="#3B3B3D"
-                    stroke-width="1.5"
-                    stroke-miterlimit="10"
-                  />
-                  <path
-                    d="M7.12 20.9949V16.3649C7.12 14.7749 8.4 13.4849 10 13.4849C11.6 13.4849 12.88 14.7649 12.88 16.3649V20.9949"
-                    stroke="#3B3B3D"
-                    stroke-width="1.5"
-                    stroke-miterlimit="10"
-                  />
-                </svg>
-              }
+              icon={<HomeRoundedIcon className='text-pc-500'  />}
               selected={selected}
               setSelected={setSelected}
             />
             <NavbarItem
               title="Обзор"
               to="/feed"
-              icon={
-                <svg
-                  width="21"
-                  height="21"
-                  viewBox="0 0 21 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M18.5 9.75C18.5 12.18 17.52 14.35 15.94 15.94C14.35 17.53 12.18 18.5 9.75 18.5C4.91 18.5 1 14.59 1 9.75C1 4.91 4.91 1 9.75 1C14.59 1 18.5 4.91 18.5 9.75Z"
-                    stroke="#3B3B3D"
-                    stroke-width="1.5"
-                    stroke-miterlimit="10"
-                  />
-                  <path
-                    d="M17.15 16.1L20.24 18.01C20.99 18.47 21.23 19.47 20.75 20.22C20.27 20.97 19.29 21.21 18.54 20.73C18.33 20.59 18.15 20.42 18.03 20.22L16.12 17.13C15.89 16.78 16.01 16.3 16.36 16.09C16.61 15.94 16.92 15.94 17.16 16.09L17.15 16.1Z"
-                    fill="#3B3B3D"
-                  />
-                </svg>
-              }
+              icon={<ExploreRoundedIcon className='text-pc-500' />}
               selected={selected}
               setSelected={setSelected}
             />
             <NavbarItem
               title="Рейтинг"
               to="/rating/"
-              icon={
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11 21C16.52 21 21 16.52 21 11C21 5.48 16.52 1 11 1C5.48 1 1 5.48 1 11C1 16.52 5.48 21 11 21Z"
-                    stroke="#3B3B3D"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M7.17001 11.9302V16.6902"
-                    stroke="#3B3B3D"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M10.98 9.08008V16.7001"
-                    stroke="#3B3B3D"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M14.79 6.22021V16.7002"
-                    stroke="#3B3B3D"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              }
+              icon={<BarChartRoundedIcon className='text-pc-500' />}
               selected={selected}
               setSelected={setSelected}
             />
             <NavbarItem
               title="О Проекте"
               to="/about"
-              icon={
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2.25C6.62402 2.25 2.25 6.62402 2.25 12C2.25 17.376 6.62402 21.75 12 21.75C17.376 21.75 21.75 17.376 21.75 12C21.75 6.62402 17.376 2.25 12 2.25ZM12 3.75C16.5645 3.75 20.25 7.43555 20.25 12C20.25 16.5645 16.5645 20.25 12 20.25C7.43555 20.25 3.75 16.5645 3.75 12C3.75 7.43555 7.43555 3.75 12 3.75ZM11.25 7.5V9H12.75V7.5H11.25ZM11.25 10.5V16.5H12.75V10.5H11.25Z"
-                    fill="black"
-                  />
-                </svg>
-              }
+              icon={<InfoRoundedIcon className='text-pc-500' />}
               selected={selected}
               setSelected={setSelected}
             />
-            <h5 className='text-meduim text-sm mt-4 text-pc-500'>Категории</h5>
+            <h5 className="text-meduim text-sm mt-4 text-pc-500">Категории</h5>
             <CategoryNavbar />
 
-            <p className="text-meduim text-sm mt-4 text-pc-500">&reg; Makalabox 2024 </p>
+            <p className="text-meduim text-sm mt-4 text-pc-500">
+              &reg; Makalabox 2024{' '}
+            </p>
           </Box>
         </Menu>
       </Sidebar>

@@ -246,9 +246,10 @@ const validateForm = (values) => {
   } else if (!/^\S+@\S+\.\S+$/.test(values.email)) {
     errors.email = 'Неправильный формат email';
   }
-
   if (!values.username) {
     errors.username = 'Обязательное поле';
+  } else if (!/^[a-z0-9_.]+$/.test(values.username)) {
+    errors.username = 'Можно использовать символы a-z, 0-9 и _.';
   }
 
   if (!values.firstName) {

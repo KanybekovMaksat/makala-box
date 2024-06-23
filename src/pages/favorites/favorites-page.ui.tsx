@@ -4,7 +4,7 @@ import { FavoriteArticlesList } from '~widgets/articles-list';
 
 export function FavoritesPage() {
   return (
-    <Container maxWidth="md" className="md:mx-auto my-20">
+    <Container maxWidth="md" className="md:mx-auto">
       <Helmet prioritizeSeoTags>
         <title>Makalabox - Избранные</title>
         <meta

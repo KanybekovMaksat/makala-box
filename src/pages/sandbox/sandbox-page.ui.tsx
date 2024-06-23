@@ -19,6 +19,7 @@ import { CoverCropper } from '~features/editor/cover-cropper';
 import { URLtoFile, calculateReadingTime } from '~shared/utils/editor';
 import { withErrorBoundary } from 'react-error-boundary';
 import { ErrorHandler } from '~shared/ui/error';
+import Confetti from 'react-confetti';
 
 interface StepperViewProps {
   activeStep: number;
@@ -36,6 +37,7 @@ function Page() {
   }
 
   const [activeStep, setActiveStep] = useState(0);
+  const [activeConfetti, setActiveConfetti] = useState(false);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -45,8 +47,11 @@ function Page() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const { mutate: createArticle, isPending } =
-    articleQueries.useCreateArticleMutation();
+  const {
+    mutate: createArticle,
+    isPending,
+    isSuccess,
+  } = articleQueries.useCreateArticleMutation();
 
   const [title, setTitle] = useState('');
   const [selectedValues, setSelectedValues] = useState([]);
@@ -85,6 +90,7 @@ function Page() {
       formData.append('readTime', calculateReadingTime(blocks).toString());
       selectedValues.forEach((value) => formData.append('categories', value));
       await createArticle(formData);
+      setActiveConfetti(true);
     } catch (error) {
       console.log(error);
     }
@@ -109,9 +115,10 @@ function Page() {
   };
 
   return (
-    <div className="my-20">
-      <Container maxWidth="md" className="min-h-[700px]">
+    <>
+      <Container maxWidth="md" className="min-h-[700px] my-10">
         <StepperView activeStep={activeStep} />
+
         {activeStep === 0 && (
           <div className="w-full my-5 flex flex-col bg-[white] border border-sc-100 p-5 rounded">
             <div className="w-full px-[20px] mb-5">
@@ -124,7 +131,7 @@ function Page() {
               <CreateArticle />
             </div>
             <Button
-              className="self-end"
+              className="self-end shadow-none bg-second-100"
               variant="contained"
               onClick={handleNext}
             >
@@ -165,21 +172,31 @@ function Page() {
               Загрузите обложку для статьи
             </h4>
             <em className="text-xs">
-              Рекомендуемый размер картинки 765px*400px
+              Рекомендуемый размер картинки 650px*400px
             </em>
             <CoverCropper update={false} />
-
             <div className="mt-4 flex justify-between">
-              <Button variant="contained" onClick={handleBack}>
+              <Button
+                variant="contained"
+                className="shadow-none  bg-second-100"
+                onClick={handleBack}
+              >
                 Назад
               </Button>
               {isPending ? (
-                <Button variant="outlined" className="cursor-wait flex gap-2">
+                <Button
+                  variant="outlined"
+                  className="cursor-wait flex gap-2  bg-second-100"
+                >
                   <CircularProgress size={20} />
                   Отправка данных...
                 </Button>
               ) : (
-                <Button variant="contained" onClick={handleSubmit}>
+                <Button
+                  variant="contained"
+                  className="shadow-none  bg-second-100"
+                  onClick={handleSubmit}
+                >
                   Завершить
                 </Button>
               )}
@@ -187,7 +204,14 @@ function Page() {
           </div>
         )}
       </Container>
-    </div>
+      <Confetti
+        recycle={false}
+        run={activeConfetti}
+        tweenDuration={300}
+        width={window.innerWidth}
+        height={window.innerHeight}
+      />
+    </>
   );
 }
 

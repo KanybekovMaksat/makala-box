@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { articleQueries } from '~entities/article';
 
@@ -16,9 +16,9 @@ export function ArchiveButton({ id }: IDeleteButton) {
 
   return (
     <Tooltip title="Архивировать статью">
-      <IconButton onClick={handleArchived}>
-        <ArchiveIcon className="hover:text-[#ff7c5b]" />
-      </IconButton>
+      <Button onClick={handleArchived} className='w-full' startIcon={<ArchiveIcon/>}>
+        Архивировать
+      </Button>
     </Tooltip>
   );
 }

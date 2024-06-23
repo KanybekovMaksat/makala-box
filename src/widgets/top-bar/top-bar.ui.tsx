@@ -21,7 +21,6 @@ import { pathKeys } from '~shared/lib/react-router';
 import { userQueries } from '~entities/user';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 
-
 export function TopBar() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { data: userData } = userQueries.useLoginUserQuery();
@@ -108,15 +107,17 @@ export function TopBar() {
           <div className="flex gap-4">
             <div className="hidden md:flex items-center ml-3">
               <Link to={pathKeys.favorites()}>
+              <Tooltip title="Сохранённые статьи">
                 <IconButton aria-label="navigate to favorites article page">
                   <BookmarkAddedIcon className="hover:text-second-100" />
                 </IconButton>
+              </Tooltip>
               </Link>
               {role === 'writer' ? (
                 <Button
                   onClick={() => navigate(pathKeys.editor.root())}
                   size="small"
-                  className="border-pc-400 text-pc-400  hover:bg-second-100 hover:text-[white]"
+                  className="border-pc-400 duration-300 text-pc-400 hover:border-[white]  hover:bg-second-100 hover:text-[white]"
                   variant="outlined"
                   endIcon={<EditIcon />}
                 >
@@ -140,7 +141,9 @@ export function TopBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>Профиль</MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link to="/profile">Профиль</Link>
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Выйти</MenuItem>
               </Menu>
             </div>

@@ -130,7 +130,6 @@ export function useLikeArticle(id: number) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: keys.root() });
-      await queryClient.invalidateQueries({ queryKey: ['user'] });
       await queryClient.invalidateQueries({ queryKey: key });
     },
   });

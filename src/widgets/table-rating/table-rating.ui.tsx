@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const TABLE_HEAD = ['№', 'Пользователи', 'Email', 'Публикации'];
 const TABLE_HEAD_CSV = [
@@ -99,9 +100,7 @@ export function TableRating() {
 
   return (
     <div className="w-full flex flex-col bg-[white] rounded-md border border-sc-100 py-3 overflow-x-auto">
-      <h2 className="text-2xl font-bold text-center">
-        Рейтинг
-      </h2>
+      <h2 className="text-2xl font-bold text-center">Рейтинг</h2>
       <table className="mt-4 w-[100%] text-left overflow-x-auto">
         <thead>
           <tr className="border-b border-blue-gray-100 bg-blue-gray-50/50">
@@ -139,12 +138,12 @@ export function TableRating() {
                         <Typography color="blue-gray" className="text-sm">
                           {fullName}
                         </Typography>
-                        <Typography
-                          color="blue-gray"
+                        <Link
+                          to={`/${username}`}
                           className="font-normal opacity-70 text-xs"
                         >
                           @{username}
-                        </Typography>
+                        </Link>
                       </div>
                     </div>
                   </td>

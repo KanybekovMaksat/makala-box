@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Slider } from '@mui/material';
+import { Box, Button, CardMedia, Modal, Slider } from '@mui/material';
 import Dropzone from 'react-dropzone';
 import AvatarEditor from 'react-avatar-editor';
 import React, { useRef, useState } from 'react';
@@ -30,7 +30,7 @@ const CropperModal: React.FC<CropperModalProps> = ({
   modalOpen,
   setModalOpen,
 }) => {
-  const [slideValue, setSlideValue] = useState<number>(10);
+  const [slideValue, setSlideValue] = useState<number>(1);
   const cropRef = useRef<AvatarEditor | null>(null);
 
   const handleSave = async () => {
@@ -46,16 +46,10 @@ const CropperModal: React.FC<CropperModalProps> = ({
   return (
     <Modal sx={modalStyle} open={modalOpen}>
       <Box sx={boxStyle}>
-        <AvatarEditor
-          ref={cropRef}
-          image={src || ''}
-          
-         
-          rotate={0}
-        />
+        <AvatarEditor width={650} height={450} ref={cropRef} image={src || ''}  scale={slideValue} />
         <Slider
-          min={10}
-          max={50}
+          min={1}
+          max={10}
           sx={{
             margin: '0 auto',
             width: '80%',
@@ -123,7 +117,7 @@ export function CoverCropper({ update, setUpdate, data }: CoverCropperProps) {
           <img
             src={data}
             alt=""
-            className="min-w-[350px] max-w-[350px] min-h-[270px] max-h-[270px] object-cover rounded mt-3"
+            className="mmax-w-[650px] min-h-[270px] max-h-[270px] object-cover rounded mt-3"
           />
           <p>Примерное отображения обложки на маленьких экранах</p>
         </div>
@@ -171,10 +165,12 @@ export function CoverCropper({ update, setUpdate, data }: CoverCropperProps) {
       ) : (
         <div>
           <div className="">
-            <img
-              src={imageRef}
-              alt=""
-              className="min-w-[700px] max-w-[700px] min-h-[400px] max-h-[400px] object-cover rounded "
+            <CardMedia
+              component="img"
+              className="w-full  h-auto md:max-h-[550px] cursor-pointer"
+              image={imageRef}
+              alt="Обложка"
+              title="Обложка"
             />
             <p>Примерное отображения обложки на больших экранах</p>
           </div>

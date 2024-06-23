@@ -73,10 +73,9 @@ function CommentItem({
     <div>
       <div className="flex items-center gap-2">
         <Avatar
-          variant="rounded"
           alt={comment.author.username}
           src={comment.author.photo}
-          className="w-[24px] h-[24px]"
+          className="w-[24px] h-[24px] rounded-full"
         />
         <h5 className="font-medium text-sm md:text-base">
           {comment.author.username}

@@ -1,13 +1,17 @@
 import {
+  editUserProfile,
   emailActivationMutation,
   getTokenMutation,
+  getUserByUsername,
   loginUserQuery,
   registerUserMutation,
+  resetPasswordConfirm,
 } from './user.api';
 import {
   useMutation,
   useQuery,
   queryOptions as tsqQueryOptions,
+  useQueryClient,
 } from '@tanstack/react-query';
 import { pathKeys } from '~shared/lib/react-router';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +24,8 @@ const keys = {
   root: () => ['user'],
   getToken: () => [...keys.root(), 'getToken'] as const,
   loginUser: () => [...keys.root(), 'loginUser'] as const,
-  registerUser: () => [keys.root(), 'registerUser'] as const,
+  registerUser: () => [...keys.root(), 'registerUser'] as const,
+  user: (username: string) => [...keys.root(), 'username', username] as const,
 };
 
 export const userService = {
@@ -115,6 +120,28 @@ export function useRegisterMutation() {
   });
 }
 
+export function useEditUserProfile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: keys.root(),
+    mutationFn: editUserProfile,
+    onSuccess: async () => {
+      await toast.success('Ваш профиль успешно изменен!');
+      await queryClient.invalidateQueries({ queryKey: keys.root() });
+    },
+    onError: (error: AxiosErrorType) => {
+      if (error.response && error.response.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach((field) => {
+          toast.error(`${field}: ${errors[field][0]}`);
+        });
+      } else {
+        toast.error('Ошибка при выполнении запроса');
+      }
+    },
+  });
+}
+
 export function useActivationMutation() {
   return useMutation({
     mutationKey: keys.registerUser(),
@@ -132,5 +159,32 @@ export function useActivationMutation() {
         toast.error('Ошибка при выполнении запроса');
       }
     },
+  });
+}
+
+export function useResetPasword() {
+  return useMutation({
+    mutationKey: keys.root(),
+    mutationFn: resetPasswordConfirm,
+    onSuccess: async () => {
+      await toast.success('Пароль успешно изменен!');
+    },
+    onError: (error: AxiosErrorType) => {
+      if (error.response && error.response.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach((field) => {
+          toast.error(`${field}: ${errors[field][0]}`);
+        });
+      } else {
+        toast.error('Ошибка при выполнении запроса');
+      }
+    },
+  });
+}
+
+export function useGetUserByUsername(username: string) {
+  return useQuery({
+    queryKey: keys.user(username),
+    queryFn: () => getUserByUsername(username),
   });
 }

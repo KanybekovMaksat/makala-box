@@ -7,18 +7,29 @@ import { getCookie } from 'typescript-cookie';
 import { userQueries } from '~entities/user';
 import { useNavigate } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
+import ConfettiExplosion, { ConfettiProps } from 'react-confetti-explosion';
 
 type LikeButtonProps = { like: articleTypes.ArticleLike };
+
+const smallProps: ConfettiProps = {
+  force: 0.3,
+  duration: 1800,
+  particleCount: 17,
+  particleSize:4,
+  width: 400,
+  colors: ['#0a85d1', '#EE4E4E', "#FFF455"]
+};
 
 export function LikeButton(props: LikeButtonProps) {
   const isAuth = getCookie('access');
   const navigate = useNavigate();
+  const [isSmallExploding, setIsSmallExploding] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [localLikeCount, setLocalLikeCount] = useState(props.like.likeCount);
 
   const { data: userData } = userQueries.useLoginUserQuery();
   const userId = userData?.data?.id;
-  
+
   useEffect(() => {
     if (userId && props.like.likes.includes(userId)) {
       setIsLiked(true);
@@ -29,33 +40,32 @@ export function LikeButton(props: LikeButtonProps) {
     navigate(pathKeys.login());
   };
 
-  const { mutate: like, isPending } = articleQueries.useLikeArticle(props.like.id);
+  const { mutate: like, isPending } = articleQueries.useLikeArticle(
+    props.like.id
+  );
 
-  const handleLike = async () => {
+  const handleLike = async (e) => {
     if (isAuth) {
       const newIsLiked = !isLiked;
       setIsLiked(newIsLiked);
-      setLocalLikeCount(prevCount => newIsLiked ? prevCount + 1 : prevCount - 1);
-      
+
+      setLocalLikeCount((prevCount) =>
+        newIsLiked ? prevCount + 1 : prevCount - 1
+      );
+      setIsSmallExploding(newIsLiked ? true : false);
       try {
         await like();
       } catch (error) {
         // If the request fails, rollback the state changes
         setIsLiked(!newIsLiked);
-        setLocalLikeCount(prevCount => newIsLiked ? prevCount - 1 : prevCount + 1);
+        setLocalLikeCount((prevCount) =>
+          newIsLiked ? prevCount - 1 : prevCount + 1
+        );
       }
     } else {
       redirectToRegisterPage();
     }
   };
-
-  // if (isPending) {
-  //   return (
-  //     <div className="p-1 mr-4">
-  //       <CircularProgress size={25} />
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="flex items-center">
@@ -69,10 +79,7 @@ export function LikeButton(props: LikeButtonProps) {
         }
       >
         <span>
-          <IconButton
-            aria-label="нравится"
-            onClick={handleLike}
-          >
+          <IconButton aria-label="нравится" onClick={handleLike}>
             {isLiked ? (
               <svg
                 width="22"
@@ -118,6 +125,7 @@ export function LikeButton(props: LikeButtonProps) {
                 />
               </svg>
             )}
+            {isSmallExploding && <ConfettiExplosion {...smallProps} />}
           </IconButton>
         </span>
       </Tooltip>

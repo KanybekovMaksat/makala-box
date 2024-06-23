@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { ArticleSchema } from '~entities/article/article.contracts';
 
 export const LoginUserDtoSchema = z.object({
-  username: z
+  email: z
     .string()
     .min(1, 'Введите ваш псевдоним или email')
     .refine((value) => {
@@ -14,15 +14,30 @@ export const LoginUserDtoSchema = z.object({
 
 export const createUserSchema = z.object({
   email: z.string().email(),
-  username: z.string().min(3, 'Псевдоним должен состоять минимум из 6 символов'),
+  username: z
+    .string()
+    .min(3, 'Псевдоним должен состоять минимум из 6 символов'),
   firstName: z.string(),
   lastName: z.string(),
   password: z.string().min(6, 'Пароль должен состоять минимум из 6 символов'),
 });
 
+export const editUserSchema = z.object({
+  email: z.string().email(),
+  firstName: z.string(),
+  lastName: z.string(),
+  photo: z.instanceof(File).optional(),
+});
+
 export const ActivationData = z.object({
   uid: z.string(),
   token: z.string(),
+});
+
+export const ResetPasswordConfirm = z.object({
+  uid: z.string(),
+  token: z.string(),
+  newPassword: z.string(),
 });
 
 export const TokensDtoSchema = z.object({
@@ -40,4 +55,5 @@ export const UserDtoSchema = z.object({
   role: z.string(),
   photo: z.string(),
   favoriteArticles: z.array(ArticleSchema),
+  articles: z.array(ArticleSchema),
 });

@@ -39,7 +39,7 @@ export function CommentForm({ id }: CommentFormProps) {
     mutate: createComment,
     isPending,
     isError,
-    isSuccess
+    isSuccess,
   } = commentQueries.useCreateCommentMutation(id);
 
   const initialData: commentTypes.CreateComment = {
@@ -59,11 +59,14 @@ export function CommentForm({ id }: CommentFormProps) {
           , чтобы оставить комментарий
         </div>
       ) : (
-        <div className=" border max-w-[380px] min-h-[100px] border-pc-300 rounded p-2 flex flex-col mb-5">
+        <div className=" border max-w-[380px] md:max-w-[450px] min-h-[100px] border-pc-300 rounded p-2 flex flex-col mb-5">
           <Formik
             initialValues={initialData}
             validate={validateForm}
-            onSubmit={(comment) => createComment({ comment })}
+            onSubmit={(comment, { resetForm }) => {
+              resetForm();
+              createComment({ comment });
+            }}
           >
             {() => (
               <Form className="flex flex-col">

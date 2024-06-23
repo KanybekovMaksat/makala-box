@@ -7,8 +7,6 @@ import { pathKeys } from '~shared/lib/react-router';
 export function VerifyPage() {
   const { uid, token } = useParams();
 
-  console.log(uid, token);
-
   const {
     mutate:emailActivation,
     isPending: isActivationPending,

@@ -1,16 +1,17 @@
-import { Avatar, Container, Divider } from '@mui/material';
+import { Avatar, Button, Container, Divider } from '@mui/material';
+import { useState } from 'react';
 import { userQueries } from '~entities/user';
 import { WriterArticlesList } from '~widgets/articles-list';
+import { ProfileCard } from '~widgets/profile-card';
 
 export function ProfilePage() {
+
   const {
     data: userData,
     isLoading,
     isError,
   } = userQueries.useLoginUserQuery();
 
-
-  
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -19,28 +20,19 @@ export function ProfilePage() {
     return <div>Error fetching user data.</div>;
   }
 
-  const { email, firstName, lastName, username, role, photo } = userData.data;
+  const { role } = userData.data;
+
 
   return (
-    <Container maxWidth="md" className="my-20 flex flex-col items-center">
-      <div className="w-auto mx-auto bg-[white] border-2 border-sc-100 rounded flex flex-col md:flex-row items-center gap-3 p-10">
-        <Avatar
-          className="h-20 w-20 rounded"
-          src={photo}
-          alt={`${firstName} ${lastName}`}
-        />
-        <div className='flex flex-col items-center md:items-start'>
-          <h2 className="text-xl font-bold text-primary-800">{username}</h2>
-          <h2 className="text-base text-pc-500">{`${firstName} ${lastName}`}</h2>
-          <h2 className="text-base text-pc-500">{email}</h2>
-        </div>
-      </div>
+    <Container maxWidth="md" className="my-10 flex flex-col items-center">
+      <ProfileCard />
       {role === 'writer' ? (
         <>
-          <h2 className="my-2 font-bold text-xl">Мои статьи</h2>
+          <h2 className="my-2 font-bold text-xl text-center">Мои статьи</h2>
           <WriterArticlesList />
         </>
       ) : null}
+
     </Container>
   );
 }

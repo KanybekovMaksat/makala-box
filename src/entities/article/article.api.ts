@@ -33,8 +33,24 @@ export function createArticleMutation(props: CreateArticleDto = {}) {
 }
 
 export function editArticle(props: any = {}) {
-  return $api.patch(`articles/me/${String(props.data.id)}/`, props.data);
+  const { data } = props;
+
+  const formData = new FormData();
+  for (const key in data) {
+    if (data[key] instanceof File) {
+      formData.append(key, data[key]);
+    } else {
+      formData.append(key, data[key]);
+    }
+  }
+
+  return $api.patch(`articles/me/`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 }
+
 
 export function favoriteArticleQuery(id: number) {
   return $api.get(`users/favorite/${id}/`);

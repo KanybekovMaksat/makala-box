@@ -14,9 +14,10 @@ import { profilePageRoute } from '~pages/profile';
 import { verifyPageRoute } from '~pages/verify';
 import { editPageRoute } from '~pages/edit';
 import { ratingPageRoute } from '~pages/rating';
-
 import { GenericLayout, IntroLayout } from '~pages/Layout';
 import { aboutPageRoute } from '~pages/about';
+import { userPageRoute } from '~pages/user';
+import { changePasswordPageRoute } from '~pages/change-password';
 
 function BubbleError() {
   const error = useRouteError();
@@ -39,12 +40,18 @@ const router = createBrowserRouter([
           sandboxPageRoute,
           editPageRoute,
           ratingPageRoute,
-          aboutPageRoute
+          aboutPageRoute,
+          userPageRoute,
         ],
       },
       {
         element: <IntroLayout />,
-        children: [registerPageRoute, loginPageRoute, verifyPageRoute],
+        children: [
+          registerPageRoute,
+          loginPageRoute,
+          verifyPageRoute,
+          changePasswordPageRoute,
+        ],
       },
     ],
   },
