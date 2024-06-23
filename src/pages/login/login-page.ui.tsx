@@ -40,7 +40,7 @@ function Page() {
                 fullWidth
                 id="email"
                 name="email"
-                label="Email"
+                label="email"
                 size="small"
               />
               <ErrorMessage name="email" />
@@ -95,7 +95,7 @@ function Page() {
 }
 
 const initialUser: userTypes.LoginUserDto = {
-  username: '',
+  email: '',
   password: '',
 };
 

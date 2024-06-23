@@ -30,11 +30,7 @@ function Page() {
   useEffect(() => {
     if (articleData) {
       const { title, subtitle, photo, author, created } = articleData.data;
-  
-      // Update document title
       document.title = title;
-  
-      // Update meta description
       let metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
         metaDescription.setAttribute('content', subtitle);
@@ -44,8 +40,6 @@ function Page() {
         metaDescription.content = subtitle;
         document.head.appendChild(metaDescription);
       }
-  
-      // Add Open Graph tags
       const ogTags = [
         { property: 'og:title', content: title },
         { property: 'og:description', content: subtitle },
@@ -55,7 +49,6 @@ function Page() {
         { property: 'article:published_time', content: created },
         { property: 'article:author', content: author.fullName }
       ];
-  
       ogTags.forEach(tag => {
         let metaTag = document.querySelector(`meta[property="${tag.property}"]`);
         if (metaTag) {
@@ -68,7 +61,6 @@ function Page() {
         }
       });
   
-      // Add structured data script
       const structuredData = {
         "@context": "https://schema.org/",
         "@type": "Article",
@@ -106,7 +98,6 @@ function Page() {
       scriptTag.innerHTML = JSON.stringify(structuredData);
       document.head.appendChild(scriptTag);
   
-      // Cleanup function to remove the script tag and Open Graph tags
       return () => {
         document.head.removeChild(scriptTag);
         ogTags.forEach(tag => {

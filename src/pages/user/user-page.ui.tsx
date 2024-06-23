@@ -31,7 +31,7 @@ export function UserPage() {
     >
       <div className="max-w-[650px] md:w-[650px] bg-[white] border-2 border-sc-100 rounded h-[380px]">
         <img
-          src="/public/BG.png"
+          src="/BG.png"
           alt=""
           className="w-full max-h-[140px] object-cover rounded"
         />

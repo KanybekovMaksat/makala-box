@@ -77,7 +77,7 @@ export function ProfileCard() {
       <div className="w-[650px] h-[360px] bg-[white] border-2 border-sc-100 rounded ">
         <div>
           <img
-            src="/public/BG.png"
+            src="/BG.png"
             alt=""
             className="w-full max-h-[140px] object-cover rounded"
           />
