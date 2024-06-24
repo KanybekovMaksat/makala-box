@@ -71,8 +71,7 @@ async function uploadFile(file: File) {
   const body = new FormData();
   body.append('image', file);
   try {
-    console.log(file);
-    const response = await $api.post('articles/image-upload/', body);
+    const response = await $api.post('articles/file-upload/', body);
     return response.data.image;
   } catch (error) {
     console.error('Error uploading file:', error);
