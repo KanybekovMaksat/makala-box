@@ -71,7 +71,7 @@ export function RatingPage() {
       dataLabels: {
         enabled: false,
       },
-      colors: ['#020617'],
+      colors: ['#004F80'],
       stroke: {
         lineCap: 'round',
         curve: 'smooth',
@@ -88,7 +88,7 @@ export function RatingPage() {
         },
         labels: {
           style: {
-            colors: '#616161',
+            colors: '#004F80',
             fontSize: '11px',
             fontFamily: 'inherit',
             fontWeight: 700,
@@ -110,7 +110,7 @@ export function RatingPage() {
       yaxis: {
         labels: {
           style: {
-            colors: '#616161',
+            colors: '#004F80',
             fontSize: '10px',
             fontFamily: 'inherit',
             fontWeight: 700,
@@ -161,7 +161,7 @@ export function RatingPage() {
       dataLabels: {
         enabled: false,
       },
-      colors: ['#020617'],
+      colors: ['#004F80'],
       stroke: {
         lineCap: 'round',
         curve: 'smooth',
@@ -178,32 +178,18 @@ export function RatingPage() {
         },
         labels: {
           style: {
-            colors: '#616161',
+            colors: '#004F80',
             fontSize: '10px',
             fontFamily: 'inherit',
             fontWeight: 700,
           },
         },
-        // categories: [
-        //   'Январь',
-        //   'Февраль',
-        //   'Март',
-        //   'Апрель',
-        //   'Май',
-        //   'Июнь',
-        //   'Июль',
-        //   'Август',
-        //   'Сентябрь',
-        //   'Октябрь',
-        //   'Ноябрь',
-        //   'Декабрь',
-        // ],
         categories: month,
       },
       yaxis: {
         labels: {
           style: {
-            colors: '#616161',
+            colors: '#004F80',
             fontSize: '10px',
             fontFamily: 'inherit',
             fontWeight: 700,

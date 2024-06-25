@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, Typography, Box, Link, Card, CardMedia, CardContent } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { IntroBlock } from '~widgets/intro-block';
 
@@ -9,42 +9,54 @@ export function AboutPage() {
       className="flex flex-col items-center mt-5 gap-8 mb-10"
     >
       <Helmet prioritizeSeoTags>
-        <title>Makalabox - О проектe</title>
-        <meta name="description" content="Makalabox.com — это инновационная платформа для
-            публикации и обмена статьями на самые разнообразные темы."/>
+        <title>Makalabox - О проекте</title>
+        <meta name="description" content="Makalabox.com — это инновационная платформа для публикации и обмена статьями на самые разнообразные темы." />
         <meta property="og:title" content="Makalabox - О Проекте" />
-        <meta property="og:description" content="Makalabox.com — это инновационная платформа для
-            публикации и обмена статьями на самые разнообразные темы." />
+        <meta property="og:description" content="Makalabox.com — это инновационная платформа для публикации и обмена статьями на самые разнообразные темы." />
         <meta property="og:locale" content="ru_Ru" />
       </Helmet>
-      <IntroBlock />
-      <div>
-        <div>
-          <h3>Руководство по текстовому редактору Makala Box.</h3>
-          <a href="https://makalabox.com/article/6/">
-            https://makalabox.com/article/6/
-          </a>
-          <p>
-            Описание платформы Makalabox.com — это инновационная платформа для
-            публикации и обмена статьями на самые разнообразные темы. Здесь вы
-            найдете уникальный контент от экспертов и энтузиастов в различных
-            областях знаний. Наши пользователи могут создавать и делиться своими
-            мыслями, исследованиями и опытом, обогащая сообщество новыми идеями
-            и полезной информацией. Что вы найдете на Makalabox.com: Широкий
-            спектр тем: От технологий и науки до искусства и культуры, от
-            бизнеса и стартапов до личного развития и здоровья. Качественный
-            контент: Мы стремимся к высокому стандарту публикаций, обеспечивая
-            интересные, информативные и полезные статьи. Активное сообщество:
-            Наши пользователи — это активные и увлеченные люди, готовые делиться
-            своими знаниями и участвовать в дискуссиях. Простота использования:
-            Удобный интерфейс позволяет легко создавать, редактировать и
-            публиковать статьи, а также находить интересующий вас контент.
-            Присоединяйтесь к Makalabox.com и станьте частью нашего динамичного
-            и творческого сообщества! Публикуйте свои статьи, делитесь знаниями
-            и узнавайте новое каждый день.
-          </p>
-        </div>
-      </div>
+      <Box className="w-full px-4 py-6 bg-[white] rounded-lg">
+        <Typography variant="h4" component="h1" className="mb-4 text-center sm:text-left">
+          О Makalabox
+        </Typography>
+        <Typography variant="body1" component="p" className="mb-4 text-justify">
+          <strong>Makalabox (Коробка Статей)</strong> — это университетский веб-сайт, организованный в формате системы тематических блогов, называемых боксами, и включающий элементы новостного портала. Платформа предназначена для публикации новостей, аналитических статей и размышлений на темы, связанные с информационными технологиями, бизнесом, интернетом и другими дисциплинами, представленными в Международном Университете Инновационных Технологий в Кыргызстане.
+        </Typography>
+        <IntroBlock />
+        <Typography variant="body1" component="p" className="mb-4 text-justify">
+          Контент сайта создается пользователями-добровольцами, которые ведут персональные блоги. Эта инновационная платформа позволяет публиковать и обмениваться статьями на самые разнообразные темы. Все статьи перед публикацией проходят обязательную модерацию экспертами.
+        </Typography>
+        <Box className="mt-8 w-full">
+          <Typography variant="h5" component="h2" className="mb-2 text-center sm:text-left">
+            Руководство по текстовому редактору Makala Box
+          </Typography>
+          <Link href="https://makalabox.com/article/6/" className='no-underline'>
+            <Card className="flex flex-col sm:flex-row mb-4 border border-pc-200 shadow-none hover:shadow-lg hover:shadow-second-100/30">
+              <CardMedia
+                component="img"
+                alt="Makala Box Editor Guide"
+                height="140"
+                image="/image.png"
+                className="w-full sm:w-[100px] object-cover"
+              />
+              <CardContent className="w-full sm:w-2/3">
+                <Typography variant="h6" component="h5" className='text-base'>
+                  Руководство по текстовому редактору Makala Box
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p" className="mb-2">
+                  Узнайте, как использовать текстовый редактор Makala Box для создания и редактирования статей.
+                </Typography>
+                <Link href="https://makalabox.com/article/6/" className="text-blue-500">
+                  https://makalabox.com/article/6/
+                </Link>
+              </CardContent>
+            </Card>
+          </Link>
+        </Box>
+        <Typography variant="body1" component="p" className="mt-4 text-center sm:text-left">
+          Присоединяйтесь к Makalabox.com и станьте частью нашего динамичного и творческого сообщества! Публикуйте свои статьи, делитесь знаниями и узнавайте новое каждый день.
+        </Typography>
+      </Box>
     </Container>
   );
 }

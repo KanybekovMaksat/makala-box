@@ -13,8 +13,6 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import SearchIcon from '@mui/icons-material/Search';
-import MenuIcon from '@mui/icons-material/Menu';
 import EditIcon from '@mui/icons-material/Edit';
 import { removeCookie } from 'typescript-cookie';
 import { pathKeys } from '~shared/lib/react-router';
@@ -41,7 +39,7 @@ export function TopBar() {
 
   const handleLogout = () => {
     removeCookie('access');
-    removeCookie('refresh');
+    localStorage.removeItem('refresh');
     navigate(`${pathKeys.home()}`);
     userQueries.userService.removeCache();
   };

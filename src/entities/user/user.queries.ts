@@ -84,7 +84,7 @@ export function useGetTokenMutation() {
     mutationFn: getTokenMutation,
     onSuccess: async (response) => {
       setCookie('access', response.data.access);
-      setCookie('refresh', response.data.refresh);
+      localStorage.setItem('refresh', response.data.refresh);
       localStorage.removeItem('username');
       localStorage.removeItem('password');
       toast.success('Вы успешно авторизовались!', { autoClose: 500 });

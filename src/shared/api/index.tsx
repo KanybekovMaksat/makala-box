@@ -32,7 +32,7 @@ $api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const refreshToken = getCookie('refresh');
+        const refreshToken = localStorage.getItem('refresh');
         const response = await axios.post(
           `${API_URL}jwt/refresh/`,
           {

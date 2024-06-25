@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { userQueries } from '~entities/user';
 import { ArticleCard } from '~features/article/article-card/article-card.ui';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import { Helmet } from 'react-helmet-async';
 
 export function UserPage() {
   const { username } = useParams();
@@ -23,12 +24,21 @@ export function UserPage() {
   const { role, photo, firstName, lastName, email, articles, official } =
     userData.data;
 
-
   return (
     <Container
       maxWidth="md"
       className="flex flex-col items-center mx-auto gap-5 max-w-[95%] md:max-w-[90%] my-10"
     >
+      <Helmet prioritizeSeoTags>
+        <title>
+          Makalabox - {firstName}
+          {lastName}
+        </title>
+        <meta name="description" content={username} />
+        <meta property="og:title" content={email} />
+        <meta property="og:description" content={username} />
+        <meta property="og:locale" content="ru_Ru" />
+      </Helmet>
       <div className="max-w-[650px] md:w-[650px] bg-[white] border-2 border-sc-100 rounded h-[380px]">
         <img
           src="/BG.png"
@@ -64,7 +74,11 @@ export function UserPage() {
             <h3 className="font-bold ">{articles.length}</h3>
             <p className="text-pc-500">Статьи</p>
           </div>
-          <Tooltip title={email}>
+          <p className="shadow-none text-xs flex-wrap justify-center relative top-2 flex items-center gap-2 p-2 bg-second-100/80 duration-100 rounded text-[white] hover:bg-second-100 md:hidden">
+            <EmailRoundedIcon />
+            {email}
+          </p>
+          <Tooltip title={email} className="hidden md:block">
             <a
               target="_blank"
               href={`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`}

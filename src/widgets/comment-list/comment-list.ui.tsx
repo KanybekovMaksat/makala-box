@@ -5,6 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { userQueries } from '~entities/user';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getCookie } from 'typescript-cookie';
+import { Link } from 'react-router-dom';
 
 dayjs.extend(relativeTime);
 
@@ -77,9 +78,12 @@ function CommentItem({
           src={comment.author.photo}
           className="w-[24px] h-[24px] rounded-full"
         />
-        <h5 className="font-medium text-sm md:text-base">
+        <Link
+         to={`/${comment.author.username}`}
+          className="font-medium text-sm md:text-base"
+        >
           {comment.author.username}
-        </h5>
+        </Link>
         <div className="w-[1px] h-[15px] bg-pc-400"></div>
         <p className="text-[14px] text-pc-400">
           {dayjs().to(dayjs(comment.created))}
