@@ -6,6 +6,7 @@ import {
 import { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../theme/index.css';
 
 type CustomThemeProviderProps = {
   children: ReactNode;
