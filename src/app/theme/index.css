@@ -23,6 +23,28 @@ body {
 }
 /* Scroll */
 
+body img {
+  animation: 1.8s infinite heartbeat;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* Blocknote viewer */
 .bn-container[data-changing-font-demo] .bn-editor * {
   font-family: 'Golos Text', sans-serif;
@@ -75,10 +97,10 @@ body {
   flex-direction: column;
   top: 8px;
 }
-@media screen and (max-width:500px) {
-  .bn-inline-content{
+@media screen and (max-width: 500px) {
+  .bn-inline-content {
     font-size: 16px !important;
-  }  
+  }
 }
 .slash-menu-item {
   background-color: white;
@@ -319,5 +341,3 @@ body {
     content: '...';
   }
 }
-
-
