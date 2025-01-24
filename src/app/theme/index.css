@@ -23,6 +23,7 @@ body {
 }
 /* Scroll */
 
+
 /* Blocknote viewer */
 .bn-container[data-changing-font-demo] .bn-editor * {
   font-family: 'Golos Text', sans-serif;
@@ -75,10 +76,10 @@ body {
   flex-direction: column;
   top: 8px;
 }
-@media screen and (max-width:500px) {
-  .bn-inline-content{
+@media screen and (max-width: 500px) {
+  .bn-inline-content {
     font-size: 16px !important;
-  }  
+  }
 }
 .slash-menu-item {
   background-color: white;
@@ -319,6 +320,7 @@ body {
     content: '...';
   }
 }
+<<<<<<< HEAD
 
 
 /* Стиль для скрытого состояния аккордеона */
@@ -334,3 +336,5 @@ body {
   opacity: 1;
   max-height: 500px; /* Устанавливаем максимальную высоту для видимого блока */
 }
+=======
+>>>>>>> 5d38ec5a993bee6dcb4f63454642c47faecd0cc9
