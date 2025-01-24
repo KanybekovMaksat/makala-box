@@ -72,12 +72,10 @@ export function TableRating() {
       });
   }, []);
 
-  console.log(data);
-
   function convertToCSV(data) {
     const header = TABLE_HEAD_CSV.join(',');
     const rows = data.map(
-      ({ fullName, email, articleCount, username }, index) =>
+      ({ fullName, email, articleCount, username, official }, index) =>
         `${
           index + 1
         },${fullName},https://makalabox.com/${username},${email},${articleCount}`
@@ -118,7 +116,10 @@ export function TableRating() {
         </thead>
         <tbody>
           {data.map(
-            ({ photo, fullName, email, articleCount, username }, index) => {
+            (
+              { photo, fullName, email, articleCount, username, official },
+              index
+            ) => {
               const isLast = index === data.length - 1;
               const classes = isLast
                 ? 'p-2 text-center'
@@ -135,14 +136,27 @@ export function TableRating() {
                         className="w-[34px] h-[34px]"
                       />
                       <div className="flex flex-col text-left">
-                        <Typography color="blue-gray" className="text-sm">
+                        <Typography color="blue-gray" className="text-sm flex items-center gap-1">
                           {fullName}
+                          {official ? (
+                            <Tooltip
+                              title="Официальный аккаунт"
+                              className="hover:cursor-pointer"
+                            >
+                              <img
+                                src="/official.svg"
+                                alt=""
+                                className="h-[20px]"
+                              />
+                            </Tooltip>
+                          ) : null}
                         </Typography>
                         <Link
                           to={`/${username}`}
                           className="font-normal opacity-70 text-xs"
                         >
                           @{username}
+
                         </Link>
                       </div>
                     </div>

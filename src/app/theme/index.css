@@ -321,3 +321,16 @@ body {
 }
 
 
+/* Стиль для скрытого состояния аккордеона */
+.accordion-content {
+  opacity: 0;
+  max-height: 0; /* Блок будет скрыт */
+  transition: opacity 0.3s ease-out, max-height 0.3s ease-out; /* Плавные переходы */
+  overflow: hidden;
+}
+
+/* Стиль для видимого состояния аккордеона */
+.accordion-content.show {
+  opacity: 1;
+  max-height: 500px; /* Устанавливаем максимальную высоту для видимого блока */
+}

@@ -146,7 +146,7 @@ function ArticleCard(props: ArticleCardProps) {
     <>
       <Card className="max-w-[650px] shadow-none border border-sc-100 p-2 card">
         <div className="flex flex-col-reverse md:flex-row items-center md:justify-between">
-          <CardContent>
+          <CardContent className='p-2 md:p-[16px]'>
             <div className="flex justify-between">
               <div className="flex flex-wrap items-center gap-2">
                 <StatusMenu initialStatus={props.article.status} />

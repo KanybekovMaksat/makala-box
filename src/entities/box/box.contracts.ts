@@ -55,15 +55,3 @@ export const CreateArticleDtoSchema = z.object({
   categories: z.array(z.string()),
   photo: z.instanceof(File),
 });
-
-export const CreateBoxDtoSchema = z.object({
-  name: z.string().min(3),
-  photo: z.instanceof(File),
-  organization: z.number(),
-  categories: z.array(z.string()),
-  status: z.enum(['draft', 'pending', 'approved', 'rejected', 'archived']),
-});
-
-export const AddArticleBoxDtoSchema = z.object({
-  articles: z.array(z.number()),
-});

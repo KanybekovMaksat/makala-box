@@ -5,25 +5,20 @@ import {
   queryOptions as tsqQueryOptions,
 } from '@tanstack/react-query';
 import {
-  addArticleInBox,
   archivedArticle,
   createArticleMutation,
-  createBox,
   editArticle,
   favoriteArticleQuery,
-  getArticleBoxes,
-  getArticleBoxesAll,
   getArticleDetailsQuery,
   getArticleQuery,
-  getDetailBox,
   getFavoriteArticles,
   getWriterArticles,
   likeArticleQuery,
   updateViewQuery,
-} from './article.api';
+} from './box.api';
 import { toast } from 'react-toastify';
-import { queryClient } from './../../shared/lib/react-query/react-query.lib';
-import { Article } from './article.types';
+import { queryClient } from '../../shared/lib/react-query/react-query.lib';
+import { Article } from './box.types';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,9 +38,6 @@ type AxiosErrorType = {
 
 const keys = {
   root: () => ['article'],
-  box: () => ['box'] as const,
-  boxMe: () => ['boxme'] as const,
-  boxDetail: (id: number) => [...keys.box(), 'byId', id] as const,
   getFavArticle: () => [...keys.root(), 'fav'] as const,
   getWriterArticle: () => [...keys.root(), 'writer'] as const,
   createArticle: () => [...keys.root(), 'create'] as const,
@@ -125,43 +117,6 @@ export function useUpdateArticleView(id: number) {
   });
 }
 
-export function useGetBoxes() {
-  return useQuery({
-    queryKey: keys.boxMe(),
-    queryFn: getArticleBoxes,
-  });
-}
-
-export function useGetAllBoxes() {
-  return useQuery({
-    queryKey: keys.box(),
-    queryFn: getArticleBoxesAll,
-  });
-}
-
-export function useGetDetailBox(id: number) {
-  return useQuery({
-    queryKey: keys.boxDetail(id),
-    queryFn: () => getDetailBox(id),
-  });
-}
-
-export function useAddArticleToBox() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationKey: keys.boxMe(),
-    mutationFn: addArticleInBox, 
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: keys.boxMe()});
-      toast.success("Действие успешно выполнено.")
-    },
-    onError: (error) => {
-      console.error('Ошибка при добавлении статьи в коробку:', error);
-    },
-  });
-}
-
 export function useLikeArticle(id: number) {
   const queryClient = useQueryClient();
   const key = keys.article(id);
@@ -228,28 +183,6 @@ export function useCreateArticleMutation() {
         Object.keys(errors).forEach((field) => {
           toast.error(`${field}: ${errors[field]}`);
         });
-      }
-    },
-  });
-}
-
-export function useBoxCreate() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationKey: keys.box(),
-    mutationFn: createBox,
-    onSuccess: async () => {
-      await toast.success('Коробка успешна создана!');
-      await queryClient.invalidateQueries({ queryKey: keys.box() });
-    },
-    onError: (error: AxiosErrorType) => {
-      if (error.response && error.response.data) {
-        const errors = error.response.data;
-        Object.keys(errors).forEach((field) => {
-          toast.error(`${field}: ${errors[field][0]}`);
-        });
-      } else {
-        toast.error('Ошибка при выполнении запроса');
       }
     },
   });

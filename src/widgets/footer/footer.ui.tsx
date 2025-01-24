@@ -44,8 +44,9 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { useNavigate } from 'react-router-dom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CreateIcon from '@mui/icons-material/Create';
 
 export function Footer() {
   const [value, setValue] = useState(0);
@@ -62,33 +63,37 @@ export function Footer() {
         navigate('/feed');
         break;
       case 2:
-        navigate('/rating');
+        navigate('/sandbox');
         break;
       case 3:
-        navigate('/favorites');
+        navigate('/profile');
         break;
       default:
         break;
     }
   };
   return (
-      <Paper
-        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
-        elevation={5}
-        className="shadow-none md:hidden"
+    <Paper
+      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+      elevation={5}
+      className="shadow-none md:hidden"
+    >
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          handleNavigation(newValue);
+        }}
       >
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            handleNavigation(newValue);
-          }}
-        >
-          <BottomNavigationAction icon={<HomeRoundedIcon />} />
-          <BottomNavigationAction icon={<ExploreRoundedIcon />} />
-          <BottomNavigationAction icon={<BarChartRoundedIcon />} />
-          <BottomNavigationAction icon={<FavoriteRoundedIcon />} />
-        </BottomNavigation>
-      </Paper>
+        <BottomNavigationAction label="Главная" icon={<HomeRoundedIcon />} />
+        <BottomNavigationAction label="Поиск" icon={<ExploreRoundedIcon />} />
+        <BottomNavigationAction
+          label="Написать"
+          icon={<CreateIcon />}
+        />
+        
+        <BottomNavigationAction label="Профиль" icon={<AccountCircleIcon />} />
+      </BottomNavigation>
+    </Paper>
   );
 }

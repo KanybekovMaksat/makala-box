@@ -19,6 +19,8 @@ import { aboutPageRoute } from '~pages/about';
 import { userPageRoute } from '~pages/user';
 import { changePasswordPageRoute } from '~pages/change-password';
 import { forgotPasswordPageRoute } from '~pages/forgot-password';
+import { boxesPageRoute } from '~pages/boxes';
+import { boxPageRoute } from '~pages/box';
 
 function BubbleError() {
   const error = useRouteError();
@@ -43,6 +45,8 @@ const router = createBrowserRouter([
           ratingPageRoute,
           aboutPageRoute,
           userPageRoute,
+          boxesPageRoute,
+          boxPageRoute
         ],
       },
       {

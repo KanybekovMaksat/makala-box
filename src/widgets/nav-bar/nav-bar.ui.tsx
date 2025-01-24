@@ -130,6 +130,8 @@ import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import WidgetsIcon from '@mui/icons-material/Widgets';  
+
 
 export function NavBar() {
   const [selected, setSelected] = useState('');
@@ -167,28 +169,35 @@ export function NavBar() {
             <NavbarItem
               title="Главная"
               to="/"
-              icon={<HomeRoundedIcon className='text-pc-500'  />}
+              icon={<HomeRoundedIcon className="text-pc-500" />}
               selected={selected}
               setSelected={setSelected}
             />
             <NavbarItem
               title="Обзор"
               to="/feed"
-              icon={<ExploreRoundedIcon className='text-pc-500' />}
+              icon={<ExploreRoundedIcon className="text-pc-500" />}
               selected={selected}
               setSelected={setSelected}
             />
             <NavbarItem
               title="Рейтинг"
               to="/rating/"
-              icon={<BarChartRoundedIcon className='text-pc-500' />}
+              icon={<BarChartRoundedIcon className="text-pc-500" />}
               selected={selected}
               setSelected={setSelected}
             />
             <NavbarItem
+              title="Коробки"
+              to="/boxes"
+              icon={<WidgetsIcon className="text-pc-500" />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+              <NavbarItem
               title="О Проекте"
               to="/about"
-              icon={<InfoRoundedIcon className='text-pc-500' />}
+              icon={<InfoRoundedIcon className="text-pc-500" />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -196,7 +205,7 @@ export function NavBar() {
             <CategoryNavbar />
 
             <p className="text-meduim text-sm mt-4 text-pc-500">
-              &reg; Makalabox 2024{' '}
+              &reg; Makalabox 2024
             </p>
           </Box>
         </Menu>

@@ -5,7 +5,7 @@ export function ModalPopup({ active, setActive, children }) {
   return (
     <div
       onClick={() => setActive(false)}
-      className={`fixed duration-500  h-screen w-screen bg-[black]/30 top-0 left-0 flex  pointer-events-none items-center justify-center ${
+      className={`fixed duration-500  h-screen w-screen bg-[black]/30 top-0 left-0 flex  pointer-events-none items-center justify-center z-10 ${
         active ? 'opacity-100 pointer-events-auto' : 'opacity-0'
       }`}
     >

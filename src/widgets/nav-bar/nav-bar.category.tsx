@@ -1,4 +1,3 @@
-import WidgetsIcon from '@mui/icons-material/Widgets';
 import { categoryQueries } from '~entities/category';
 import { NavbarItem } from './nav-bar.item';
 import { Avatar, CircularProgress } from '@mui/material';
@@ -22,7 +21,7 @@ export function CategoryNavbar() {
 
   return (
     <>
-      {categories.data.map((category) => (
+      {categories?.data?.map((category) => (
         <NavbarItem
           title={category.name}
           to={`/feed?categories=${category.id}`}

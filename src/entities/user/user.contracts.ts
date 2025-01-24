@@ -67,3 +67,5 @@ export const UserDtoSchema = z.object({
   favoriteArticles: z.array(ArticleSchema),
   articles: z.array(ArticleSchema),
 });
+
+

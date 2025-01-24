@@ -15,6 +15,9 @@ export const pathKeys = {
   login() {
     return pathKeys.root.concat('login/');
   },
+  boxes() {
+    return pathKeys.root.concat('boxes/')
+  },
   verify: {
     root() {
       return pathKeys.root.concat('#/activate/');
@@ -35,6 +38,7 @@ export const pathKeys = {
   page404() {
     return pathKeys.root.concat('404/');
   },
+
   article: {
     root() {
       return pathKeys.root.concat('article/');

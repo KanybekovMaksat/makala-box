@@ -48,7 +48,7 @@ export function ProfileCard() {
     return <div>Error fetching user data.</div>;
   }
 
-  const { email, firstName, lastName, username, photo } = userData.data;
+  const { email, firstName, lastName, username, photo } = userData?.data;
 
   const initialUser: userTypes.EditUserProfile = {
     email: email,

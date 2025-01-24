@@ -1,11 +1,5 @@
 import $api from '~shared/api';
-import {
-  ArticlesList,
-  Article,
-  CreateArticleDto,
-  CreateBox,
-  AddArticleBoxDtoSchema,
-} from './article.types';
+import { ArticlesList, Article, CreateArticleDto } from './box.types';
 import axios from 'axios';
 
 const API_URL = 'https://api.makalabox.com/api/';
@@ -38,10 +32,6 @@ export function createArticleMutation(props: CreateArticleDto = {}) {
   return $api.post(`articles/me/`, props);
 }
 
-export function createBox(params: { box: CreateBox }) {
-  return $api.post(`articles/boxs/me/`, params.box);
-}
-
 export function editArticle(props: any = {}) {
   const { data } = props;
 
@@ -72,21 +62,3 @@ export function archivedArticle(id: number) {
 // export function createArticleMutation(params: { article: CreateArticleDto }) {
 //   return $api.post(`articles/`, params.article);
 // }
-
-export function getArticleBoxes() {
-  return $api.get('articles/boxs/me/');
-}
-export function getArticleBoxesAll() {
-  return axios.get(`${API_URL}articles/boxs/`);
-}
-export function getDetailBox(id: number) {
-  return axios.get(`${API_URL}articles/boxs/${id}/`);
-}
-
-export function addArticleInBox(data: { id: number; articleId: number }) {
-  const { id, articleId } = data;
-
-  return $api.post(`articles/boxs/me/${id}/add_or_remove_article/`, {
-    articleId, 
-  });
-}

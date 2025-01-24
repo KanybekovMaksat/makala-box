@@ -50,8 +50,8 @@ export function FeedPage() {
   }, [searchParams]);
 
   return (
-    <div className="flex flex-col-reverse  md:w-[80%] my-5  mx-2 md:mx-auto gap-10 mb-20">
-      <div className="md:min-w-[865px] max-w-full flex flex-col items-center justify-center gap-3 ">
+    <div className="flex flex-col-reverse w-full  md:w-[80%] my-5  mx-2 md:mx-auto gap-10 mb-20">
+      <div className="md:min-w-[865px] min-w-full max-w-full flex flex-col items-center justify-center gap-3 ">
         {isLoading ? (
           <Card className="min-w-full max-w-full md:min-w-[655px] md:max-w-[655px] shadow-none border border-sc-100 flex justify-center items-center p-3">
             <CircularProgress />
@@ -65,7 +65,7 @@ export function FeedPage() {
           </Card>
         )}
       </div>
-      <div className="min-w-[320px]">
+      <div className="min-w-[32 0px]">
         <FilterSide />
       </div>
     </div>
