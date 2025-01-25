@@ -34,7 +34,6 @@
 //   const handleRemoveArticle = (boxId: number, articleId: number) => {
 //     addArticleToBox({ id: boxId, articleId });
 //   };
-  
 
 //   const articles = userData?.data?.articles || [];
 
@@ -155,8 +154,8 @@ import {
   Typography,
   Avatar,
   Chip,
-  IconButton,
   CircularProgress,
+  Button,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -164,6 +163,7 @@ import { articleQueries } from '~entities/article';
 import { userQueries } from '~entities/user';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 
 export const BoxesList = ({ boxesData }) => {
   const [expandedBoxId, setExpandedBoxId] = useState(null); // Состояние для отслеживания раскрытых коробок
@@ -198,9 +198,7 @@ export const BoxesList = ({ boxesData }) => {
     <div className="flex flex-col ">
       {boxesData?.data?.results?.map((box) => (
         <div key={box.id}>
-          <Card
-            className="flex flex-col md:flex-row shadow-none border-2 border-[gray]/50 p-4 gap-4 md:w-[650px] w-[320px] hover:shadow-xl hover:border-second-100 hover:cursor-pointer"
-          >
+          <Card className="flex flex-col md:flex-row shadow-none border-2 border-[gray]/50 p-4 gap-4 md:w-[650px] w-[320px] hover:border-second-100 hover:cursor-pointer">
             <CardMedia
               component="img"
               image={box.photo || '/placeholder.png'}
@@ -208,7 +206,7 @@ export const BoxesList = ({ boxesData }) => {
               className="md:w-[150px] w-full min-h-[145px] max-h-[150px] object-cover rounded-md border border-[gray]/50"
             />
             <CardContent className="flex-1 flex flex-col gap-1 p-0">
-              <div className="flex justify-between">
+              {/* <div className="flex justify-between">
                 <div className="flex items-center gap-2">
                   <Avatar
                     src={box.author.photo || '/placeholder.png'}
@@ -230,16 +228,13 @@ export const BoxesList = ({ boxesData }) => {
                     </Link>
                   </div>
                 </div>
-                <IconButton onClick={() => setExpandedBoxId(expandedBoxId === box.id ? null : box.id)}>
-                  <AddCircleIcon />
-                </IconButton>
-              </div>
+              </div> */}
               <Typography variant="h6" className="font-semibold">
                 {box.name}
               </Typography>
               <div className="flex items-center gap-2">
                 <Typography variant="body2" className="text-[gray]">
-                  Количество статей:{' '}
+                  Количество статей:
                   <span className="text-blue-500">{box.articles.length}</span>
                 </Typography>
               </div>
@@ -247,18 +242,31 @@ export const BoxesList = ({ boxesData }) => {
                 {box.categories?.map((category, index) => (
                   <Chip
                     key={index}
-                    className="rounded font-semibold bg-second-100 text-[white] text-[10px] h-[20px]"
+                    className="rounded font-semibold border bg-[none] border-second-100 text-second-100 text-[10px] h-[20px]"
                     label={category}
                   />
                 ))}
               </div>
+              <Button
+                variant="contained"
+                size="small"
+                className="shadow-none mt-3 flex items-center gap-2 bg-second-100"
+                onClick={() =>
+                  setExpandedBoxId(expandedBoxId === box.id ? null : box.id)
+                }
+              >
+                {expandedBoxId === box.id ? 'Скрыть статьи' : 'Показать статьи'}
+                {expandedBoxId === box.id ? <ExpandCircleDownIcon className='rotate-180'/> : <ExpandCircleDownIcon/>}
+              </Button>
             </CardContent>
           </Card>
           <div
-            className={`bg-[white] p-5 accordion-content ${expandedBoxId === box.id ? 'show' : ''}`}
+            className={`bg-[white] p-5 md:max-w-[650px] max-w-[320px] mb-5 accordion-content ${
+              expandedBoxId === box.id ? 'show' : ''
+            }`}
           >
-            <h3 className="font-bold">Ваши статьи:</h3>
-            <div className="flex flex-col gap-1">
+            <h3 className="font-bold mb-2">Ваши статьи:</h3>
+            <div className="flex flex-col gap-2">
               {articles.map((article) => {
                 const isArticleInBox = box.articles.some(
                   (boxArticle) => boxArticle.id === article.id
@@ -273,14 +281,18 @@ export const BoxesList = ({ boxesData }) => {
                     <button
                       onClick={() => {
                         if (isArticleInBox) {
-                          handleRemoveArticle(box.id, article.id); 
+                          handleRemoveArticle(box.id, article.id);
                         } else {
-                          handleAddArticle(box.id, article.id); 
+                          handleAddArticle(box.id, article.id);
                         }
                       }}
                       className="text-blue-500 hover:underline"
                     >
-                      {isArticleInBox ? <RemoveCircleIcon/> : <AddCircleIcon/>}
+                      {isArticleInBox ? (
+                        <RemoveCircleIcon className="text-[#F54A45]" />
+                      ) : (
+                        <AddCircleIcon className="text-[#34C724]" />
+                      )}
                     </button>
                   </div>
                 );
@@ -289,7 +301,6 @@ export const BoxesList = ({ boxesData }) => {
             {isAdding && <p>Добавление...</p>}
           </div>
         </div>
- 
       ))}
     </div>
   );

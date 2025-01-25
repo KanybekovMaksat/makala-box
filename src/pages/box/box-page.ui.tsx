@@ -37,7 +37,7 @@ export const BoxPage = () => {
 
   return (
     <Container maxWidth="md">
-      <Card className="mb-10 shadow-none border border-sc-100 p-6">
+      <Card className="my-5 max-w-[345px] mx-auto md:max-w-[650px] shadow-none border border-sc-100 p-6">
         <div className="flex items-center gap-4">
           <Avatar
             src={author?.photo || '/avatar-placeholder.png'}
@@ -45,7 +45,7 @@ export const BoxPage = () => {
             className="w-16 h-16"
           />
           <div>
-            <Typography variant="h5" className="font-medium">
+            <Typography variant="h5" className="font-medium text-[20px]">
               {author?.fullName || 'Неизвестный автор'}
             </Typography>
             <Typography variant="body2" className="text-gray flex gap-1">
@@ -66,8 +66,8 @@ export const BoxPage = () => {
           </div>
         </div>
       </Card>
-      <Card className="mb-10 shadow-none border border-sc-100">
-        <div className="flex gap-6 items-center p-6">
+      <Card className="mb-10 shadow-none border max-w-[345px] md:max-w-[650px] mx-auto border-sc-100">
+        <div className="flex flex-col md:flex-row   gap-6 items-center p-6">
           <CardMedia
             component="img"
             image={photo || '/placeholder.png'}
@@ -75,7 +75,7 @@ export const BoxPage = () => {
             className="w-32 h-32 object-cover rounded-md border border-[gray]"
           />
           <div>
-            <Typography variant="h4" className="font-semibold text-center mb-2">
+            <Typography variant="h4" className="font-semibold md:text-left text-center text-[24px] mb-2">
               {name || 'Название отсутствует'}
             </Typography>
             <Typography variant="body1" className="text-[gray]">
@@ -95,13 +95,13 @@ export const BoxPage = () => {
       </Card>
       <div>
         <Typography variant="h5" className="font-semibold mb-6 text-center">
-          Статьи:
+          Коробка статей:
         </Typography>
-        <div className="flex flex-wrap mb-20 gap-6">
+        <div className="flex md:flex-wrap flex-col md:flex-row items-center mb-20 gap-3 justify-center">
           {articles?.length > 0 ? (
             articles.map((article) => (
               <Link key={article.id} to={`/article/${article.id}/`}>
-                <Card className="shadow-none h-[300px] w-[250px] border border-sc-100 overflow-hidden flex flex-col">
+                <Card className="shadow-none h-[300px] w-[345px] md:w-[270px] border border-sc-100 overflow-hidden flex flex-col">
                   <CardMedia
                     component="img"
                     image={article?.photo || '/placeholder.png'}
@@ -114,7 +114,7 @@ export const BoxPage = () => {
                       className="font-bold text-[18px] leading-[25px] "
                       title={article.title || 'Без названия'}
                     >
-                   {article.title.slice(0, 50)}...
+                   {article.title.slice(0, 70)}...
                     </Typography>
                   </CardContent>
                 </Card>

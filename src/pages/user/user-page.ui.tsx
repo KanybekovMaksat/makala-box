@@ -66,13 +66,12 @@ export function UserPage() {
               ) : null}
             </h2>
             <h2 className="text-center text-base text-pc-500">
-              @{username}, Автор
+              @{username}
             </h2>
           </div>
 
           <div className="flex flex-col items-center">
-            <h3 className="font-bold ">{articles.length}</h3>
-            <p className="text-pc-500">Статьи</p>
+            <p className="text-pc-500 flex items-center gap-1">Статьи:<h3 className="font-bold ">{articles.length}</h3> </p>
           </div>
           <p className="shadow-none text-xs flex-wrap justify-center relative top-2 flex items-center gap-2 p-2 bg-second-100/80 duration-100 rounded text-[white] hover:bg-second-100 md:hidden">
             <EmailRoundedIcon />

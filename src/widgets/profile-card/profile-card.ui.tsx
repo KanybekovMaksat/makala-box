@@ -96,7 +96,7 @@ export function ProfileCard() {
         </div>
         <div className="flex flex-col items-center gap-2 relative top-[-50px]">
           <h2 className="text-xl font-bold text-primary-800">{`${firstName} ${lastName}`}</h2>
-          <p className=" text-pc-500">@{username}, Автор</p>
+          <p className=" text-pc-500">@{username}</p>
           <p className=" text-pc-500">{email}</p>
           <Button
             size="small"
