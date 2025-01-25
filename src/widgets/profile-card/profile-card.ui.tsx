@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  IconButton,
   LinearProgress,
   TextField,
   Tooltip,
@@ -10,7 +9,7 @@ import { useState } from 'react';
 import { userQueries, userTypes } from '~entities/user';
 import { ModalPopup } from '~widgets/modal-popup';
 import EditIcon from '@mui/icons-material/Edit';
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+
 
 import {
   ErrorMessage,

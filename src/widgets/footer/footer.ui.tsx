@@ -43,10 +43,9 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded';
-import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import { useNavigate } from 'react-router-dom';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CreateIcon from '@mui/icons-material/Create';
+import WidgetsIcon from '@mui/icons-material/Widgets';
 
 export function Footer() {
   const [value, setValue] = useState(0);
@@ -60,13 +59,13 @@ export function Footer() {
         navigate('/');
         break;
       case 1:
-        navigate('/feed');
+        navigate('/boxes');
         break;
       case 2:
-        navigate('/sandbox');
+        navigate('/feed');
         break;
       case 3:
-        navigate('/profile');
+        navigate('/sandbox');
         break;
       default:
         break;
@@ -74,9 +73,9 @@ export function Footer() {
   };
   return (
     <Paper
-      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+      sx={{ position: 'fixed', height: 80, bottom: 0, left: 0, right: 0 }}
       elevation={5}
-      className="shadow-none md:hidden"
+      className="shadow-none md:hidden  pt-5"
     >
       <BottomNavigation
         showLabels
@@ -85,14 +84,14 @@ export function Footer() {
           handleNavigation(newValue);
         }}
       >
-        <BottomNavigationAction label="Главная" icon={<HomeRoundedIcon />} />
-        <BottomNavigationAction label="Поиск" icon={<ExploreRoundedIcon />} />
         <BottomNavigationAction
-          label="Написать"
-          icon={<CreateIcon />}
+          className=""
+          label="Главная"
+          icon={<HomeRoundedIcon />}
         />
-        
-        <BottomNavigationAction label="Профиль" icon={<AccountCircleIcon />} />
+        <BottomNavigationAction label="Коробки" icon={<WidgetsIcon />} />
+        <BottomNavigationAction label="Поиск" icon={<ExploreRoundedIcon />} />
+        <BottomNavigationAction label="Написать" icon={<CreateIcon />} />
       </BottomNavigation>
     </Paper>
   );
